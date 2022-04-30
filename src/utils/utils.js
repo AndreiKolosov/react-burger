@@ -1,4 +1,4 @@
-// сортировка массива по ключу
+// сортировка массива по типу
 const sortItems = (type, arr) => {
   return arr.reduce((acc, item) => {
     if (item.type === type) {

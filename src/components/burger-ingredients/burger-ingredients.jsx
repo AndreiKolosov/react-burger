@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
-import IngredientsNav from '../ingredients-nav/ingredients-nav';
-import IngredientList from '../ingredient-list/ingredient-list';
+import IngredientsNav from './components/ingredients-nav/ingredients-nav';
+import IngredientList from './components/ingredient-list/ingredient-list';
 import { IngredientType } from '../../utils/variables';
 import { sortItems } from '../../utils/utils';
 
