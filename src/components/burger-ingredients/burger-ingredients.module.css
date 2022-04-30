@@ -1,0 +1,22 @@
+.ingredients {
+  width: 600px;
+  box-sizing: border-box;
+  height: calc(100vh - 130px);
+}
+
+.lists {
+  overflow-y: auto;
+  height: calc(100vh - 330px);
+}
+
+.lists::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lists::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.lists::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+}
