@@ -7,7 +7,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 const Main = () => {
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main} mb-10`}>
       <BurgerIngredients data={data} />
       <BurgerConstructor order={order} />
     </main>

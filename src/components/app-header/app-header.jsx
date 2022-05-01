@@ -9,7 +9,7 @@ import styles from './app-header.module.css';
 
 const AppHeader = () => {
   return (
-    <header className={`${styles.header} pt-4 pb-4`}>
+    <header className={`${styles.header} pt-4 pb-4 mt-10`}>
       <nav className={`${styles.navigation}`}>
         <div className={`${styles.container}`}>
           <menu className={`${styles.menuList} pt-4 pb-4`}>
