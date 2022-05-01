@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {
   ConstructorElement,
@@ -7,8 +7,9 @@ import {
   CurrencyIcon,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientType } from '../../utils/variables';
+import { IngredientType, ariaLables } from '../../utils/variables';
 import { sortItems } from '../../utils/utils';
+import { ingridientPropType, ariaLablePropType } from '../../utils/prop-types';
 
 const BurgerConstructor = (props) => {
   const bun = sortItems(IngredientType.Bun.type, props.order)[0];
@@ -23,9 +24,9 @@ const BurgerConstructor = (props) => {
   console.log(price);
 
   return (
-    <section className={`${styles.container} pt-25 pl-4`}>
+    <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
       <ul className={`${styles.ingredientList}`}>
-        <li className={`${styles.ingredienItem}`}>
+        <li className={`${styles.ingredienItem} ml-4`}>
           <ConstructorElement
             type='top'
             isLocked={true}
@@ -39,7 +40,9 @@ const BurgerConstructor = (props) => {
             {filling.map((item, index) => {
               return (
                 <li key={index} className={`${styles.fillingItem} mb-4 pr-2`}>
-                  <DragIcon />
+                  <div className={`mr-2`}>
+                    <DragIcon />
+                  </div>
                   <ConstructorElement
                     text={item.name}
                     price={item.price}
@@ -50,7 +53,7 @@ const BurgerConstructor = (props) => {
             })}
           </ul>
         </li>
-        <li className={`${styles.ingredienItem}`}>
+        <li className={`${styles.ingredienItem} ml-4`}>
           <ConstructorElement
             type='bottom'
             isLocked={true}
@@ -70,6 +73,11 @@ const BurgerConstructor = (props) => {
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  order: propTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  ariaLables: propTypes.arrayOf(ariaLablePropType),
 };
 
 export default BurgerConstructor;

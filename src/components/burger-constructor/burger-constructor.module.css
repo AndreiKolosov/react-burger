@@ -12,6 +12,7 @@
 
 .ingredientList {
   composes: list;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,14 +26,15 @@
 
 .fillingItem {
   display: flex;
+  max-width: 568px;
   width: 100%;
   box-sizing: border-box;
   align-items: center;
 }
 
-/* .ingredienItem {
-  align-self: center;
-} */
+.fillingItem:last-of-type {
+  margin: 0;
+}
 
 .fillingList::-webkit-scrollbar {
   width: 8px;
@@ -47,5 +49,7 @@
 }
 
 .order {
+  display: flex;
+  align-items: center;
   align-self: end;
 }

@@ -13,4 +13,9 @@ const IngredientType = {
   },
 };
 
-export { IngredientType };
+const ariaLables = {
+  ingredients: 'Соберите свой бургер',
+  constructor: 'Коструктор бургеров',
+};
+
+export { IngredientType, ariaLables };

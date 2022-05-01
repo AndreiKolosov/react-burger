@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const IngredientsNav = ({ tabs }) => {
@@ -16,7 +16,7 @@ const IngredientsNav = ({ tabs }) => {
 };
 
 IngredientsNav.propTypes = {
-  tabs: PropTypes.array.isRequired,
+  tabs: propTypes.array.isRequired,
 };
 
 export default IngredientsNav;
