@@ -9,20 +9,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientType, ariaLables } from '../../utils/variables';
 import { sortItems } from '../../utils/utils';
-import { ingridientPropType, ariaLablePropType } from '../../utils/prop-types';
+import { ingridientPropType } from '../../utils/prop-types';
 
 const BurgerConstructor = (props) => {
-  const bun = sortItems(IngredientType.Bun.type, props.order)[0];
+  const bun = sortItems(IngredientType.Bun.type, props.order)[0]; // Можно лучше?
   const filling = [];
   props.order.forEach((item) => {
     if (item.type !== IngredientType.Bun.type) {
       filling.push(item);
     }
   });
-
   const price = filling.reduce((summ, item) => summ + item.price, bun.price * 2);
-  console.log(price);
-
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
       <ul className={`${styles.ingredientList}`}>
@@ -30,16 +27,16 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type='top'
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image_mobile}
           />
         </li>
         <li className={`${styles.ingredienItem}`}>
           <ul className={`${styles.fillingList} mt-4 mb-4`}>
-            {filling.map((item, index) => {
+            {filling.map((item) => {
               return (
-                <li key={index} className={`${styles.fillingItem} mb-4 pr-2`}>
+                <li key={item._id + 1} className={`${styles.fillingItem} mb-4 pr-2`}>
                   <div className={`mr-2`}>
                     <DragIcon />
                   </div>
@@ -57,7 +54,7 @@ const BurgerConstructor = (props) => {
           <ConstructorElement
             type='bottom'
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (низ)`}
             price={bun.price}
             thumbnail={bun.image_mobile}
           />
@@ -77,7 +74,6 @@ const BurgerConstructor = (props) => {
 
 BurgerConstructor.propTypes = {
   order: propTypes.arrayOf(ingridientPropType.isRequired).isRequired,
-  ariaLables: propTypes.arrayOf(ariaLablePropType),
 };
 
 export default BurgerConstructor;

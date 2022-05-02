@@ -15,9 +15,4 @@ const ingridientPropType = propTypes.shape({
   __v: propTypes.number.isRequired,
 });
 
-const ariaLablePropType = propTypes.shape({
-  ingredients: propTypes.string,
-  constructor: propTypes.string,
-});
-
-export { ingridientPropType, ariaLablePropType };
+export { ingridientPropType };
