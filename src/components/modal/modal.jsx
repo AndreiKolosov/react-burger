@@ -18,12 +18,15 @@ const Modal = ({ handleCloseClick, handleKeydown, handleOverlayClick, heading, c
 
   return ReactDOM.createPortal(
     <section className={styles.popup}>
-      <div className={`${styles.popup__container} pt-30 pb-30`}>
-        {heading && <h2>{heading}</h2>}
-        {children}
+      <div className={`${styles.popup__container}`}>
+        {heading && (
+          <h2 className={`${styles.popup__heading} text text_type_main-large`}>{heading}</h2>
+        )}
         <button className={styles.popup__closeButton} onClick={handleCloseClick}>
           <CloseIcon type='primary' />
         </button>
+
+        {children}
       </div>
       <ModalOverlay handleClick={handleOverlayClick} />
     </section>,

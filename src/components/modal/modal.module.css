@@ -11,6 +11,12 @@
   animation: showPopup 0.3s linear;
 }
 
+.popup__heading {
+  align-self: start;
+  box-sizing: border-box;
+  padding: 50px 0 0 40px;
+}
+
 .popup__container {
   position: relative;
   display: flex;
@@ -28,10 +34,10 @@
   top: 60px;
   right: 40px;
   border: none;
-  margin: 0;
   padding: 0;
   background-color: transparent;
   cursor: pointer;
+  margin: 0 0 0 auto;
 }
 
 .popup__closeButton:hover {
@@ -46,3 +52,11 @@
     opacity: 1;
   }
 }
+
+/* .popup__headingContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40px 40px 0 40px;
+} */
