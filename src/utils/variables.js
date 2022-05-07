@@ -18,4 +18,11 @@ const ariaLables = {
   constructor: 'Коструктор бургеров',
 };
 
-export { IngredientType, ariaLables };
+const apiConfig = {
+  baseUrl: 'https://norma.nomoreparties.space/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+export { IngredientType, ariaLables, apiConfig };

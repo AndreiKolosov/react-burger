@@ -16,9 +16,21 @@ const BurgerIngredients = (props) => {
       <h2 className='text text_type_main-large mb-5'>Соберите бургер</h2>
       <IngredientsNav tabs={[IngredientType.Bun, IngredientType.Sauce, IngredientType.Main]} />
       <div className={`${styles.listsContainer} mt-10`}>
-        <IngredientList items={buns} itemsType={IngredientType.Bun} />
-        <IngredientList items={sauces} itemsType={IngredientType.Sauce} />
-        <IngredientList items={mains} itemsType={IngredientType.Main} />
+        <IngredientList
+          items={buns}
+          itemsType={IngredientType.Bun}
+          onIngredientClick={props.onIngredientClick}
+        />
+        <IngredientList
+          items={sauces}
+          itemsType={IngredientType.Sauce}
+          onIngredientClick={props.onIngredientClick}
+        />
+        <IngredientList
+          items={mains}
+          itemsType={IngredientType.Main}
+          onIngredientClick={props.onIngredientClick}
+        />
       </div>
     </section>
   );
