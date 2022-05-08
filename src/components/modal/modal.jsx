@@ -7,7 +7,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 const rootModals = document.getElementById('modals');
 
-const Modal = ({ handleCloseClick, handleKeydown, handleOverlayClick, heading, children }) => {
+const Modal = ({ closeModal, handleKeydown, heading, children }) => {
   useEffect(() => {
     document.addEventListener('keydown', handleKeydown);
 
@@ -22,13 +22,13 @@ const Modal = ({ handleCloseClick, handleKeydown, handleOverlayClick, heading, c
         {heading && (
           <h2 className={`${styles.popup__heading} text text_type_main-large`}>{heading}</h2>
         )}
-        <button className={styles.popup__closeButton} onClick={handleCloseClick}>
+        <button className={styles.popup__closeButton} onClick={closeModal}>
           <CloseIcon type='primary' />
         </button>
 
         {children}
       </div>
-      <ModalOverlay handleClick={handleOverlayClick} />
+      <ModalOverlay handleClick={closeModal} />
     </section>,
     rootModals
   );

@@ -13,6 +13,7 @@ import Modal from '../modal/modal';
 function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
   const [isloading, setIsloading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false);
   const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = useState(false);
   const [ingredient, setIngredient] = useState({});
@@ -20,13 +21,14 @@ function App() {
   const closeAllModals = () => {
     setIsIngredientDetailsOpened(false);
     setIsOrderDetailsOpened(false);
+    setHasError(false);
   };
 
   const handleEscKeydown = (e) => {
     e.key === 'Escape' && closeAllModals();
   };
 
-  const handleOnCloseClick = (e) => {
+  const handleCloseClick = (e) => {
     e.target && closeAllModals();
   };
 
@@ -51,6 +53,7 @@ function App() {
       .then((res) => setIngredientsData(res.data))
       .catch((err) => {
         setIsloading(false);
+        setHasError(true);
         console.log(err);
       })
       .finally(() => {
@@ -63,17 +66,21 @@ function App() {
       <AppHeader />
 
       <main className={`${styles.app__content}`}>
-        {!isloading && (
+        {!isloading && !hasError && (
           <BurgerIngredients data={ingredientsData} onIngredientClick={handleIngredientClick} />
         )}
         <BurgerConstructor order={order} onOrderConfirmClick={handleOrderClick} />
       </main>
 
-      {isOrderDetailsOpened && (
+      {!isloading && hasError && (
         <Modal
+          heading={'Что-то пошло не так... =('}
           handleKeydown={handleEscKeydown}
-          handleOverlayClick={handleOnCloseClick}
-          handleCloseClick={handleOnCloseClick}>
+          closeModal={handleCloseClick}
+        />
+      )}
+      {isOrderDetailsOpened && (
+        <Modal handleKeydown={handleEscKeydown} closeModal={handleCloseClick}>
           <OrderDetails />
         </Modal>
       )}
@@ -81,8 +88,7 @@ function App() {
         <Modal
           heading={'Детали ингредиента'}
           handleKeydown={handleEscKeydown}
-          handleOverlayClick={handleOnCloseClick}
-          handleCloseClick={handleOnCloseClick}>
+          closeModal={handleCloseClick}>
           <IngredientDetails ingredient={ingredient} />
         </Modal>
       )}

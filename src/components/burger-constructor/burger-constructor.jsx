@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {
   ConstructorElement,
@@ -73,7 +73,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  order: propTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  order: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
 };
 
 export default BurgerConstructor;

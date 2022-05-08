@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import IngredientsNav from './components/ingredients-nav/ingredients-nav';
 import IngredientList from './components/ingredient-list/ingredient-list';
@@ -37,7 +37,7 @@ const BurgerIngredients = (props) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: propTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  data: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
 };
 
 export default BurgerIngredients;
