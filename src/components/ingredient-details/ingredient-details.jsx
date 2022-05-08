@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { ingridientPropType } from '../../utils/prop-types';
+import NutritionValue from './components/nutrition-value';
 
 const IngredientDetails = ({ ingredient }) => {
   return (
@@ -11,30 +12,10 @@ const IngredientDetails = ({ ingredient }) => {
         {ingredient.name}
       </p>
       <ul className={`${styles.IngredientDetails__nutritionList} `}>
-        <li className={`${styles.IngredientDetails__valueItem}`}>
-          <p className={`text text_type_main-default text_color_inactive mb-2`}>Калории,ккал</p>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {ingredient.calories}
-          </span>
-        </li>
-        <li className={`${styles.IngredientDetails__valueItem}`}>
-          <p className={`text text_type_main-default text_color_inactive mb-2`}>Белки, г</p>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {ingredient.proteins}
-          </span>
-        </li>
-        <li className={`${styles.IngredientDetails__valueItem}`}>
-          <p className={`text text_type_main-default text_color_inactive mb-2`}>Жиры, г</p>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {ingredient.fat}
-          </span>
-        </li>
-        <li className={`${styles.IngredientDetails__valueItem}`}>
-          <p className={`text text_type_main-default text_color_inactive mb-2`}>Углеводы, г</p>
-          <span className={`text text_type_digits-default text_color_inactive`}>
-            {ingredient.carbohydrates}
-          </span>
-        </li>
+        <NutritionValue text='Калории,ккал' value={ingredient.calories} />
+        <NutritionValue text='Белки, г' value={ingredient.proteins} />
+        <NutritionValue text='Жиры, г' value={ingredient.fat} />
+        <NutritionValue text='Углеводы, г' value={ingredient.carbohydrates} />
       </ul>
     </div>
   );

@@ -7,10 +7,10 @@ import { IngredientType, ariaLables } from '../../utils/variables';
 import { sortItems } from '../../utils/utils';
 import { ingridientPropType } from '../../utils/prop-types';
 
-const BurgerIngredients = (props) => {
-  const buns = sortItems(IngredientType.Bun.type, props.data);
-  const mains = sortItems(IngredientType.Main.type, props.data);
-  const sauces = sortItems(IngredientType.Sauce.type, props.data);
+const BurgerIngredients = ({ data, onIngredientClick }) => {
+  const buns = sortItems(IngredientType.Bun.type, data);
+  const mains = sortItems(IngredientType.Main.type, data);
+  const sauces = sortItems(IngredientType.Sauce.type, data);
   return (
     <section className={`${styles.ingredients} pt-10`} aria-label={ariaLables.ingredients}>
       <h2 className='text text_type_main-large mb-5'>Соберите бургер</h2>
@@ -19,17 +19,17 @@ const BurgerIngredients = (props) => {
         <IngredientList
           items={buns}
           itemsType={IngredientType.Bun}
-          onIngredientClick={props.onIngredientClick}
+          onIngredientClick={onIngredientClick}
         />
         <IngredientList
           items={sauces}
           itemsType={IngredientType.Sauce}
-          onIngredientClick={props.onIngredientClick}
+          onIngredientClick={onIngredientClick}
         />
         <IngredientList
           items={mains}
           itemsType={IngredientType.Main}
-          onIngredientClick={props.onIngredientClick}
+          onIngredientClick={onIngredientClick}
         />
       </div>
     </section>
@@ -38,6 +38,7 @@ const BurgerIngredients = (props) => {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  onIngredientClick: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

@@ -52,9 +52,7 @@ function App() {
       .then((res) => parseResponse(res))
       .then((res) => setIngredientsData(res.data))
       .catch((err) => {
-        setIsloading(false);
         setHasError(true);
-        console.log(err);
       })
       .finally(() => {
         setIsloading(false);

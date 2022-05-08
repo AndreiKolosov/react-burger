@@ -35,9 +35,8 @@ const Modal = ({ closeModal, handleKeydown, heading, children }) => {
 };
 
 Modal.propTypes = {
-  handleCloseClick: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   handleKeydown: PropTypes.func.isRequired,
-  handleOverlayClick: PropTypes.func.isRequired,
   heading: PropTypes.string,
   children: PropTypes.element.isRequired,
 };
