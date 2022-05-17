@@ -8,4 +8,12 @@ const sortItems = (type, arr) => {
   }, []);
 };
 
-export { sortItems };
+const parseResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
+
+export { sortItems, parseResponse };

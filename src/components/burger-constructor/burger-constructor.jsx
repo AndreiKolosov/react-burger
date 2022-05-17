@@ -1,5 +1,5 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {
   ConstructorElement,
@@ -36,7 +36,7 @@ const BurgerConstructor = (props) => {
           <ul className={`${styles.fillingList} mt-4 mb-4`}>
             {filling.map((item) => {
               return (
-                <li key={item._id + 1} className={`${styles.fillingItem} mb-4 pr-2`}>
+                <li key={item._id} className={`${styles.fillingItem} mb-4 pr-2`}>
                   <div className={`mr-2`}>
                     <DragIcon />
                   </div>
@@ -64,7 +64,7 @@ const BurgerConstructor = (props) => {
         <span className='text text_type_digits-medium mr-10'>
           {price} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium'>
+        <Button type='primary' size='medium' onClick={props.onOrderConfirmClick}>
           Оформить заказ
         </Button>
       </div>
@@ -73,7 +73,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  order: propTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  order: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
 };
 
 export default BurgerConstructor;
