@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {
@@ -10,16 +10,15 @@ import {
 import { IngredientType, ariaLables } from '../../utils/variables';
 import { sortItems } from '../../utils/utils';
 import { ingridientPropType } from '../../utils/prop-types';
+import { ConstructorContext } from '../../services/constructorContext';
 
-const BurgerConstructor = (props) => {
-  const bun = sortItems(IngredientType.Bun.type, props.order)[0]; // Можно лучше?
-  const filling = [];
-  props.order.forEach((item) => {
-    if (item.type !== IngredientType.Bun.type) {
-      filling.push(item);
-    }
-  });
+const BurgerConstructor = ({ onOrderConfirmClick }) => {
+  const ingredients = useContext(ConstructorContext);
+  const bun = sortItems(IngredientType.Bun.type, ingredients)[0];
+  const filling = ingredients.filter((ingredient) => ingredient.type !== IngredientType.Bun.type);
+
   const price = filling.reduce((summ, item) => summ + item.price, bun.price * 2);
+
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
       <ul className={`${styles.ingredientList}`}>
@@ -60,11 +59,11 @@ const BurgerConstructor = (props) => {
           />
         </li>
       </ul>
-      <div className={`${styles.order} mt-10`}>
+      <div className={`${styles.ingredients} mt-10`}>
         <span className='text text_type_digits-medium mr-10'>
           {price} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium' onClick={props.onOrderConfirmClick}>
+        <Button type='primary' size='medium' onClick={onOrderConfirmClick}>
           Оформить заказ
         </Button>
       </div>
@@ -73,7 +72,7 @@ const BurgerConstructor = (props) => {
 };
 
 BurgerConstructor.propTypes = {
-  order: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
+  // ingredients: PropTypes.arrayOf(ingridientPropType.isRequired).isRequired,
 };
 
 export default BurgerConstructor;
