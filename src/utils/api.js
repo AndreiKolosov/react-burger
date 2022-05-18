@@ -14,7 +14,7 @@ const getIngredients = (setData, setLoading, setError) => {
     });
 };
 
-const postOrder = (order, setNum) => {
+const postOrder = (order, setNum, setLoading, setError) => {
   fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -24,7 +24,12 @@ const postOrder = (order, setNum) => {
   })
     .then((res) => parseResponse(res))
     .then((res) => setNum(res.order.number))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      setError(true);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
 };
 
 const parseResponse = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));

@@ -83,7 +83,7 @@ function App() {
 
   const handleOrderClick = () => {
     setIsOrderDetailsOpened(true);
-    postOrder(state.order, setOrderNumber); // post запрос на сервер
+    postOrder(state.order, setOrderNumber, setIsLoading, setHasError); // post запрос на сервер
   };
 
   useEffect(() => {
