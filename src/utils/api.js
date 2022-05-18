@@ -14,19 +14,19 @@ const getIngredients = (setData, setLoading, setError) => {
     });
 };
 
-const makeOrder = (idArr) => {
+const postOrder = (order, setNum) => {
   fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify({
-      ingredients: idArr,
+      ingredients: order,
     }),
   })
     .then((res) => parseResponse(res))
-    .then((res) => console.log(res))
+    .then((res) => setNum(res.order.number))
     .catch((err) => console.log(err));
 };
 
 const parseResponse = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
 
-export { getIngredients, makeOrder };
+export { getIngredients, postOrder };
