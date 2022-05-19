@@ -14,11 +14,11 @@ import { ConstructorContext } from '../../services/constructorContext';
 
 const BurgerConstructor = ({ onOrderConfirmClick }) => {
   const [constructorState, constructorStateDispathcer] = useContext(ConstructorContext);
-  console.log(constructorState);
+  // console.log(constructorState);
   // const bun = sortItems(IngredientType.Bun.type, constructorState.ingredients);
-  const filling = constructorState.ingredients.filter(
-    (ingredient) => ingredient.type !== IngredientType.Bun.type
-  );
+  // const filling = constructorState.ingredients.filter(
+  //   (ingredient) => ingredient.type !== IngredientType.Bun.type
+  // );
 
   // const price = filling.reduce((summ, item) => summ + item.price, bun.price * 2);
 
@@ -39,7 +39,7 @@ const BurgerConstructor = ({ onOrderConfirmClick }) => {
 
         <li className={`${styles.ingredienItem}`}>
           <ul className={`${styles.fillingList} mt-4 mb-4`}>
-            {filling.map((item) => {
+            {constructorState.ingredients.map((item) => {
               return (
                 <li key={item._id} className={`${styles.fillingItem} mb-4 pr-2`}>
                   <div className={`mr-2`}>

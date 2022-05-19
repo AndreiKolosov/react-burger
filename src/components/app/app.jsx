@@ -46,7 +46,7 @@ function constructroReducer(state, action) {
       return constructorInitialState;
 
     default:
-      throw new Error(`Wrong type of action: ${action.type}`);
+      return state;
   }
 }
 
@@ -82,6 +82,7 @@ function App() {
   };
 
   const handleOrderClick = () => {
+    setOrderNumber(null);
     setIsOrderDetailsOpened(true);
     postOrder(state.order, setOrderNumber, setIsLoading, setHasError); // post запрос на сервер
   };
@@ -93,15 +94,15 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <main className={`${styles.app__content}`}>
-        {!isLoading && !hasError && (
+      {!isLoading && !hasError && (
+        <main className={`${styles.app__content}`}>
+          <BurgerIngredients data={ingredientsData} onIngredientClick={handleIngredientClick} />
           <ConstructorContext.Provider value={constructorState}>
-            <BurgerIngredients data={ingredientsData} onIngredientClick={handleIngredientClick} />
             <BurgerConstructor onOrderConfirmClick={handleOrderClick} />
           </ConstructorContext.Provider>
-        )}
-        {isLoading && !hasError && <p className='text text_type_main-large pt-10'>Загрузка...</p>}
-      </main>
+          {isLoading && !hasError && <p className='text text_type_main-large pt-10'>Загрузка...</p>}
+        </main>
+      )}
 
       {!isLoading && hasError && (
         <Modal
