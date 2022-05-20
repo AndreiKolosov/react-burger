@@ -1,11 +1,14 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import doneIcon from './images/orderDetails_done_icon.svg';
+import PropTypese from 'prop-types';
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNum }) => {
   return (
     <div className={`${styles.OrderDetails} mt-30 mb-30`}>
-      <h3 className={`${styles.OrderDetails__number} text text_type_digits-large mb-8`}>034536</h3>
+      <h3 className={`${styles.OrderDetails__number} text text_type_digits-large mb-8`}>
+        {orderNum}
+      </h3>
       <span className='text text_type_main-medium mb-15'>идентификатор заказа</span>
       <img className={`${styles.OrderDetails__icon} mb-15`} src={doneIcon} />
       <p className='text text_type_main-default mb-2'>Ваш заказ начали готовить</p>
@@ -14,6 +17,10 @@ const OrderDetails = () => {
       </span>
     </div>
   );
+};
+
+OrderDetails.propTypese = {
+  orderNum: PropTypese.number.isRequired,
 };
 
 export default OrderDetails;
