@@ -24,13 +24,13 @@
 .fillingList {
   composes: list;
   overflow-y: auto;
-  max-height: 456px;
+  height: 456px;
 }
 
 .fillingItem {
   display: flex;
   max-width: 568px;
-  width: 100%;
+  width: 100vw;
   box-sizing: border-box;
   align-items: center;
 }

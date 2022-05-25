@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
+import { getIngredientsRequest } from '../../services/actions/ingredients';
 import AppHeader from '../app-header/app-header';
-import { getIngredients, postOrder } from '../../utils/api';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import Loader from '../loader/loader';
 
 function App() {
-  const [ingredientsData, setIngredientsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false);
   const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = useState(false);
   const [ingredient, setIngredient] = useState({});
   const [orderNumber, setOrderNumber] = useState(null);
   const dispatch = useDispatch();
 
+  const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredientsReducer);
+
   const closeAllModals = () => {
     setIsIngredientDetailsOpened(false);
     setIsOrderDetailsOpened(false);
-    setHasError(false);
+    // setHasError(false);
   };
 
   const handleEscKeydown = (e) => {
@@ -46,21 +46,21 @@ function App() {
   };
 
   useEffect(() => {
-    getIngredients(setIngredientsData, setIsLoading, setHasError);
+    // getIngredients(setIngredientsData, setIsLoading, setHasError);
+    dispatch(getIngredientsRequest());
   }, []);
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      {!isLoading && !hasError && (
+      {!ingredientsFaild && !ingredientsRequest && (
         <main className={`${styles.app__content}`}>
-          <BurgerIngredients data={ingredientsData} onIngredientClick={handleIngredientClick} />
+          <BurgerIngredients onIngredientClick={handleIngredientClick} />
           <BurgerConstructor onOrderConfirmClick={handleOrderClick} />
-          {isLoading && !hasError && <p className='text text_type_main-large pt-10'>Загрузка...</p>}
         </main>
       )}
-
-      {!isLoading && hasError && (
+      {ingredientsRequest && !ingredientsFaild && <Loader />}
+      {ingredientsFaild && (
         <Modal
           heading={'Что-то пошло не так... =('}
           handleKeydown={handleEscKeydown}

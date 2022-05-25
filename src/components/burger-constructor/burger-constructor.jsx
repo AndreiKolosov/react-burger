@@ -11,10 +11,10 @@ import {
 import { ariaLables } from '../../utils/variables';
 
 const BurgerConstructor = ({ onOrderConfirmClick }) => {
-  const { bun, ingredients, totalPrice } = useSelector((store) => store.constructorReducer);
+  const { bun, filling, totalPrice } = useSelector((store) => store.constructorReducer);
   const dispatch = useDispatch();
 
-  console.log(bun, ingredients, totalPrice);
+  console.log(bun, filling, totalPrice);
 
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
@@ -30,10 +30,10 @@ const BurgerConstructor = ({ onOrderConfirmClick }) => {
             />
           </li>
         )}
-        {ingredients && (
+        {filling && (
           <li className={`${styles.ingredienItem}`}>
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
-              {ingredients.map((item) => {
+              {filling.map((item) => {
                 return (
                   <li key={item._id} className={`${styles.fillingItem} mb-4 pr-2`}>
                     <div className={`mr-2`}>

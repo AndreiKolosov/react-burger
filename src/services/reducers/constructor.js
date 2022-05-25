@@ -2,7 +2,7 @@ import { ADD, DELETE, RESET } from '../actions/constructor';
 
 const initialState = {
   bun: null,
-  ingredients: [],
+  filling: [],
   order: [],
   totalPrice: 0,
 };
@@ -20,7 +20,7 @@ export const constructorReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        ingredients: [...state.ingredients, action.payload],
+        filling: [...state.filling, action.payload],
         order: [...state.order, action.payload._id],
         totalPrice: state.totalPrice + action.payload.price,
       };
@@ -28,7 +28,7 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE:
       return {
         ...state,
-        ingredients: state.ingredients.filter((item) => item._id !== action.payload._id),
+        filling: state.filling.filter((item) => item._id !== action.payload._id),
         order: state.order.filter((id) => id !== action.payload._id),
         totalPrice: state.totalPrice - action.payload.price,
       };
