@@ -11,10 +11,9 @@ import {
 import { ariaLables } from '../../utils/variables';
 
 const BurgerConstructor = ({ onOrderConfirmClick }) => {
-  const { bun, filling, totalPrice } = useSelector((store) => store.constructorReducer);
-  const dispatch = useDispatch();
+  const { bun, filling, totalPrice } = useSelector((store) => store.burgerConstructor);
 
-  console.log(bun, filling, totalPrice);
+  const dispatch = useDispatch();
 
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>

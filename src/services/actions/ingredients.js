@@ -9,7 +9,6 @@ export function getIngredientsRequest() {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
     getIngredients()
       .then((res) => {
-        console.log(res);
         dispatch({ type: GET_INGREDIENTS_SUCCESS, ingredients: res.data });
       })
       .catch((err) => dispatch({ type: GET_INGREDIENTS_FAILED }));

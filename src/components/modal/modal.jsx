@@ -38,7 +38,7 @@ Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   handleKeydown: PropTypes.func.isRequired,
   heading: PropTypes.string,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Modal;

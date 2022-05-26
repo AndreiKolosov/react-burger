@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
 
 const BurgerIngredients = ({ onIngredientClick }) => {
-  const { ingredients } = useSelector((store) => store.ingredientsReducer);
+  const { ingredients } = useSelector((store) => store.ingredients);
   const buns = sortItems(IngredientType.Bun.type, ingredients);
   const mains = sortItems(IngredientType.Main.type, ingredients);
   const sauces = sortItems(IngredientType.Sauce.type, ingredients);

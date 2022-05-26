@@ -8,7 +8,6 @@ const initialState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFaild: false,
-  isLoading: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -17,7 +16,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsRequest: true,
-        isLoading: true,
       };
     }
     case GET_INGREDIENTS_SUCCESS: {
@@ -25,7 +23,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsFaild: false,
         ingredientsRequest: false,
-        isLoading: false,
         ingredients: action.ingredients,
       };
     }
@@ -33,7 +30,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsFaild: true,
-        isLoading: false,
+        ingredientsRequest: false,
       };
     }
 

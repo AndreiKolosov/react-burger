@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
 import { getIngredientsRequest } from '../../services/actions/ingredients';
+import { openDetails } from '../../services/actions/ingredient';
+import { postOrderRequest } from '../../services/actions/order';
+import { SET_INGREDIENT_DETAILS_CLOSED } from '../../services/actions/ingredient';
+import { SET_ORDER_DETAILS_CLOSED } from '../../services/actions/order';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -11,18 +15,15 @@ import Modal from '../modal/modal';
 import Loader from '../loader/loader';
 
 function App() {
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false);
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = useState(false);
-  const [ingredient, setIngredient] = useState({});
-  const [orderNumber, setOrderNumber] = useState(null);
+  const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredients);
+  const { order } = useSelector((store) => store.burgerConstructor);
+  const { ingredient, isIngredientDetailsOpened } = useSelector((store) => store.ingredient);
+  const { orderRequest, orderFaild, isOrderDetailsOpened } = useSelector((store) => store.order);
   const dispatch = useDispatch();
 
-  const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredientsReducer);
-
   const closeAllModals = () => {
-    setIsIngredientDetailsOpened(false);
-    setIsOrderDetailsOpened(false);
-    // setHasError(false);
+    dispatch({ type: SET_INGREDIENT_DETAILS_CLOSED });
+    dispatch({ type: SET_ORDER_DETAILS_CLOSED });
   };
 
   const handleEscKeydown = (e) => {
@@ -34,19 +35,15 @@ function App() {
   };
 
   const handleIngredientClick = (item) => {
-    setIngredient(item);
     dispatch({ type: 'ADD', payload: item }); // проверяю добавление ингредиентов в конструктор
-    setIsIngredientDetailsOpened(true);
+    dispatch(openDetails(item));
   };
 
   const handleOrderClick = () => {
-    setOrderNumber(null);
-    setIsOrderDetailsOpened(true);
-    // postOrder(state.order, setOrderNumber, setIsLoading, setHasError); // post запрос на сервер
+    dispatch(postOrderRequest(order));
   };
 
   useEffect(() => {
-    // getIngredients(setIngredientsData, setIsLoading, setHasError);
     dispatch(getIngredientsRequest());
   }, []);
 
@@ -60,7 +57,7 @@ function App() {
         </main>
       )}
       {ingredientsRequest && !ingredientsFaild && <Loader />}
-      {ingredientsFaild && (
+      {ingredientsFaild && orderFaild && (
         <Modal
           heading={'Что-то пошло не так... =('}
           handleKeydown={handleEscKeydown}
@@ -69,7 +66,8 @@ function App() {
       )}
       {isOrderDetailsOpened && (
         <Modal handleKeydown={handleEscKeydown} closeModal={handleCloseClick}>
-          <OrderDetails orderNum={orderNumber} />
+          {orderRequest && !orderFaild && <Loader />}
+          {!orderRequest && !orderFaild && <OrderDetails />}
         </Modal>
       )}
       {isIngredientDetailsOpened && (

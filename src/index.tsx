@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 import thunk from 'redux-thunk';
 import { rootReducer } from './services/reducers';
-
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+import { composeEnhancers } from './utils/redux-devtools';
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
