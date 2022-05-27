@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
-import { getIngredientsRequest } from '../../services/actions/ingredients';
+import {
+  getIngredientsRequest,
+  RESET_INGREDIENTS_ERROR_STATUS,
+} from '../../services/actions/ingredients';
 import { openDetails } from '../../services/actions/ingredient';
-import { postOrderRequest } from '../../services/actions/order';
+import { postOrderRequest, RESET_ORDER_ERROR_STATUS } from '../../services/actions/order';
 import { SET_INGREDIENT_DETAILS_CLOSED } from '../../services/actions/ingredient';
 import { SET_ORDER_DETAILS_CLOSED } from '../../services/actions/order';
 import AppHeader from '../app-header/app-header';
@@ -22,8 +25,14 @@ function App() {
   const dispatch = useDispatch();
 
   const closeAllModals = () => {
+    resetALLErorrs();
     dispatch({ type: SET_INGREDIENT_DETAILS_CLOSED });
     dispatch({ type: SET_ORDER_DETAILS_CLOSED });
+  };
+
+  const resetALLErorrs = () => {
+    dispatch({ type: RESET_INGREDIENTS_ERROR_STATUS });
+    dispatch({ type: RESET_ORDER_ERROR_STATUS });
   };
 
   const handleEscKeydown = (e) => {
@@ -35,8 +44,9 @@ function App() {
   };
 
   const handleIngredientClick = (item) => {
-    dispatch({ type: 'ADD', payload: item }); // проверяю добавление ингредиентов в конструктор
+    dispatch({ type: 'ADD', item: item }); // проверяю добавление ингредиентов в конструктор
     dispatch(openDetails(item));
+    console.log(order);
   };
 
   const handleOrderClick = () => {

@@ -2,6 +2,7 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_REQUEST,
+  RESET_INGREDIENTS_ERROR_STATUS,
 } from '../actions/ingredients';
 
 const initialState = {
@@ -33,7 +34,12 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsRequest: false,
       };
     }
-
+    case RESET_INGREDIENTS_ERROR_STATUS: {
+      return {
+        ...state,
+        ingredientsFaild: false,
+      };
+    }
     default: {
       return state;
     }

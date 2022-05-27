@@ -4,6 +4,7 @@ import {
   POST_ORDER_REQUEST,
   SET_ORDER_DETAILS_OPENED,
   SET_ORDER_DETAILS_CLOSED,
+  RESET_ORDER_ERROR_STATUS,
 } from '../actions/order';
 
 const initialState = {
@@ -48,6 +49,12 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         isOrderDetailsOpened: false,
         orderNumber: null,
+      };
+    }
+    case RESET_ORDER_ERROR_STATUS: {
+      return {
+        ...state,
+        orderFaild: false,
       };
     }
     default: {

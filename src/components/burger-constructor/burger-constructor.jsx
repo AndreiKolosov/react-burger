@@ -43,7 +43,7 @@ const BurgerConstructor = ({ onOrderConfirmClick }) => {
                       price={item.price}
                       thumbnail={item.image_mobile}
                       handleClose={() => {
-                        dispatch({ type: 'DELETE', payload: item });
+                        dispatch({ type: 'DELETE', item: item });
                       }}
                     />
                   </li>
