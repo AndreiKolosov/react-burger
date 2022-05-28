@@ -6,7 +6,9 @@ import IngredientCard from '../ingredient-card/ingredient-card';
 const IngredientList = ({ items, itemsType, onIngredientClick }) => {
   return (
     <div className={`${styles.ingredientList__container} mb-10`}>
-      <h2 className='text text_type_main-medium'>{itemsType.name}</h2>
+      <h2 className='text text_type_main-medium' id={itemsType.type}>
+        {itemsType.name}
+      </h2>
       <ul className={`${styles.ingredientList__list} pr-2 pl-4`}>
         {items.map((item) => (
           <li
