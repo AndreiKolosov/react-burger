@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
+import { postOrderRequest } from '../../services/actions/order';
 import {
   ConstructorElement,
   Button,
@@ -9,11 +9,20 @@ import {
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ariaLables } from '../../utils/variables';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import Loader from '../loader/loader';
+import { SET_ORDER_DETAILS_CLOSED } from '../../services/actions/order';
 
-const BurgerConstructor = ({ onOrderConfirmClick }) => {
-  const { bun, filling, totalPrice } = useSelector((store) => store.burgerConstructor);
+const BurgerConstructor = () => {
+  const { bun, filling, totalPrice, order } = useSelector((store) => store.burgerConstructor);
+  const { orderRequest, orderFaild, orderNumber } = useSelector((store) => store.order);
 
   const dispatch = useDispatch();
+
+  const closeOrderDetails = () => {
+    dispatch({ type: SET_ORDER_DETAILS_CLOSED });
+  };
 
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
@@ -68,16 +77,19 @@ const BurgerConstructor = ({ onOrderConfirmClick }) => {
         <span className='text text_type_digits-medium mr-10'>
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium' onClick={onOrderConfirmClick}>
+        <Button type='primary' size='medium' onClick={() => dispatch(postOrderRequest(order))}>
           Оформить заказ
         </Button>
       </div>
+
+      {orderNumber && (
+        <Modal closeModal={closeOrderDetails}>
+          {orderRequest && !orderFaild && <Loader />}
+          {!orderRequest && !orderFaild && <OrderDetails />}
+        </Modal>
+      )}
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  onOrderConfirmClick: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

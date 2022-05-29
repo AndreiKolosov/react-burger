@@ -7,14 +7,18 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 const rootModals = document.getElementById('modals');
 
-const Modal = ({ closeModal, handleKeydown, heading, children }) => {
+const Modal = ({ closeModal, heading, children }) => {
   useEffect(() => {
-    document.addEventListener('keydown', handleKeydown);
+    const closeModalByEsc = (e) => {
+      e.key === 'Escape' && closeModal();
+    };
+
+    document.addEventListener('keydown', closeModalByEsc);
 
     return () => {
-      document.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('keydown', closeModalByEsc);
     };
-  }, []);
+  }, [closeModal]);
 
   return ReactDOM.createPortal(
     <section className={styles.popup}>
@@ -36,7 +40,6 @@ const Modal = ({ closeModal, handleKeydown, heading, children }) => {
 
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  handleKeydown: PropTypes.func.isRequired,
   heading: PropTypes.string,
   children: PropTypes.node.isRequired,
 };

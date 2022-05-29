@@ -1,92 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
 import {
   getIngredientsRequest,
   RESET_INGREDIENTS_ERROR_STATUS,
 } from '../../services/actions/ingredients';
-import { openDetails } from '../../services/actions/ingredient';
-import { postOrderRequest, RESET_ORDER_ERROR_STATUS } from '../../services/actions/order';
-import { SET_INGREDIENT_DETAILS_CLOSED } from '../../services/actions/ingredient';
-import { SET_ORDER_DETAILS_CLOSED } from '../../services/actions/order';
+import { RESET_ORDER_ERROR_STATUS } from '../../services/actions/order';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import Loader from '../loader/loader';
 
 function App() {
   const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredients);
-  const { order } = useSelector((store) => store.burgerConstructor);
-  const { ingredient, isIngredientDetailsOpened } = useSelector((store) => store.ingredient);
-  const { orderRequest, orderFaild, isOrderDetailsOpened } = useSelector((store) => store.order);
+  const { orderFaild } = useSelector((store) => store.order);
+
   const dispatch = useDispatch();
 
-  const closeAllModals = () => {
-    resetALLErorrs();
-    dispatch({ type: SET_INGREDIENT_DETAILS_CLOSED });
-    dispatch({ type: SET_ORDER_DETAILS_CLOSED });
-  };
-
-  const resetALLErorrs = () => {
+  const resetErorrs = () => {
     dispatch({ type: RESET_INGREDIENTS_ERROR_STATUS });
     dispatch({ type: RESET_ORDER_ERROR_STATUS });
   };
 
-  const handleEscKeydown = (e) => {
-    e.key === 'Escape' && closeAllModals();
-  };
-
-  const handleCloseClick = (e) => {
-    e.target && closeAllModals();
-  };
-
-  const handleIngredientClick = (item) => {
-    dispatch({ type: 'ADD', item: item }); // проверяю добавление ингредиентов в конструктор
-    dispatch(openDetails(item));
-    console.log(order);
-  };
-
-  const handleOrderClick = () => {
-    dispatch(postOrderRequest(order));
-  };
-
   useEffect(() => {
     dispatch(getIngredientsRequest());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
       <AppHeader />
+
+      {ingredientsRequest && !ingredientsFaild && <Loader />}
+
       {!ingredientsFaild && !ingredientsRequest && (
         <main className={`${styles.app__content}`}>
-          <BurgerIngredients onIngredientClick={handleIngredientClick} />
-          <BurgerConstructor onOrderConfirmClick={handleOrderClick} />
+          <BurgerIngredients />
+          <BurgerConstructor />
         </main>
       )}
-      {ingredientsRequest && !ingredientsFaild && <Loader />}
+
       {ingredientsFaild && orderFaild && (
-        <Modal
-          heading={'Что-то пошло не так... =('}
-          handleKeydown={handleEscKeydown}
-          closeModal={handleCloseClick}
-        />
-      )}
-      {isOrderDetailsOpened && (
-        <Modal handleKeydown={handleEscKeydown} closeModal={handleCloseClick}>
-          {orderRequest && !orderFaild && <Loader />}
-          {!orderRequest && !orderFaild && <OrderDetails />}
-        </Modal>
-      )}
-      {isIngredientDetailsOpened && (
-        <Modal
-          heading={'Детали ингредиента'}
-          handleKeydown={handleEscKeydown}
-          closeModal={handleCloseClick}>
-          <IngredientDetails ingredient={ingredient} />
-        </Modal>
+        <Modal heading={'Что-то пошло не так... =('} closeModal={resetErorrs} />
       )}
     </div>
   );
