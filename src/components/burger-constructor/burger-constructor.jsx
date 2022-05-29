@@ -12,7 +12,7 @@ import { ariaLables } from '../../utils/variables';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
-import { SET_ORDER_DETAILS_CLOSED } from '../../services/actions/order';
+import { CLOSE_ORDER_DETAILS } from '../../services/actions/order';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, order } = useSelector((store) => store.burgerConstructor);
@@ -21,7 +21,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const closeOrderDetails = () => {
-    dispatch({ type: SET_ORDER_DETAILS_CLOSED });
+    dispatch({ type: CLOSE_ORDER_DETAILS });
   };
 
   return (

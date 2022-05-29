@@ -1,4 +1,4 @@
-import { SET_INGREDIENT, SET_INGREDIENT_DETAILS_CLOSED } from '../actions/ingredient';
+import { SET_INGREDIENT, CLOSE_INGREDIENT_DETAILS } from '../actions/ingredient';
 
 const initialState = {
   ingredient: null,
@@ -12,7 +12,7 @@ export const ingredientReducer = (state = initialState, action) => {
         ingredient: action.ingredient,
       };
     }
-    case SET_INGREDIENT_DETAILS_CLOSED: {
+    case CLOSE_INGREDIENT_DETAILS: {
       return {
         ...state,
         isIngredientDetailsOpened: false,

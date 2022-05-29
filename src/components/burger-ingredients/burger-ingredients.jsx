@@ -6,7 +6,7 @@ import { IngredientType, ariaLables } from '../../utils/variables';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { SET_INGREDIENT_DETAILS_CLOSED } from '../../services/actions/ingredient';
+import { CLOSE_INGREDIENT_DETAILS } from '../../services/actions/ingredient';
 
 const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
@@ -19,7 +19,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   const closeIngredientDetails = () => {
-    dispatch({ type: SET_INGREDIENT_DETAILS_CLOSED });
+    dispatch({ type: CLOSE_INGREDIENT_DETAILS });
   };
 
   return (

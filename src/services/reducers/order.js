@@ -2,8 +2,7 @@ import {
   POST_ORDER_FAILD,
   POST_ORDER_SUCCESS,
   POST_ORDER_REQUEST,
-  SET_ORDER_DETAILS_OPENED,
-  SET_ORDER_DETAILS_CLOSED,
+  CLOSE_ORDER_DETAILS,
   RESET_ORDER_ERROR_STATUS,
 } from '../actions/order';
 
@@ -11,7 +10,6 @@ const initialState = {
   orderNumber: null,
   orderRequest: false,
   orderFaild: false,
-  isOrderDetailsOpened: false,
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -38,13 +36,7 @@ export const orderReducer = (state = initialState, action) => {
         isOrderDetailsOpened: true,
       };
     }
-    case SET_ORDER_DETAILS_OPENED: {
-      return {
-        ...state,
-        isOrderDetailsOpened: true,
-      };
-    }
-    case SET_ORDER_DETAILS_CLOSED: {
+    case CLOSE_ORDER_DETAILS: {
       return {
         ...state,
         isOrderDetailsOpened: false,
