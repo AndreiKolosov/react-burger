@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { postOrderRequest } from '../../services/actions/order';
@@ -13,6 +13,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { CLOSE_ORDER_DETAILS } from '../../services/actions/order';
+import { RESET } from '../../services/actions/constructor';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, order } = useSelector((store) => store.burgerConstructor);
@@ -23,6 +24,16 @@ const BurgerConstructor = () => {
   const closeOrderDetails = () => {
     dispatch({ type: CLOSE_ORDER_DETAILS });
   };
+
+  const postOrder = (orderData) => {
+    dispatch(postOrderRequest(orderData));
+    dispatch({ type: RESET });
+  };
+
+  // Аналог того, что происходит в reducer
+  // const price = useMemo(() => {
+  //   return (bun ? bun.price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
+  // }, [order]);
 
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
@@ -77,7 +88,7 @@ const BurgerConstructor = () => {
         <span className='text text_type_digits-medium mr-10'>
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium' onClick={() => dispatch(postOrderRequest(order))}>
+        <Button type='primary' size='medium' onClick={() => postOrder(order)}>
           Оформить заказ
         </Button>
       </div>

@@ -11,7 +11,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import Loader from '../loader/loader';
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 function App() {
   const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredients);
   const { orderFaild } = useSelector((store) => store.order);
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredientsRequest());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className={styles.app}>
@@ -35,8 +36,10 @@ function App() {
 
       {!ingredientsFaild && !ingredientsRequest && (
         <main className={`${styles.app__content}`}>
-          <BurgerIngredients />
-          <BurgerConstructor />
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </DndProvider>
         </main>
       )}
 

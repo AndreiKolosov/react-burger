@@ -2,24 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { SET_INGREDIENT } from '../../../../services/actions/ingredient';
+import { ADD } from '../../../../services/actions/constructor';
+import { useDispatch } from 'react-redux';
 
-const IngredientCard = (props) => {
+const IngredientCard = ({ item }) => {
+  const dispatch = useDispatch();
+
   return (
-    <div className={`${styles.card} pl-4 pr-4`}>
+    <div
+      className={`${styles.card} pl-4 pr-4`}
+      onClick={() => {
+        dispatch({ type: SET_INGREDIENT, ingredient: item });
+        dispatch({ type: ADD, item: item });
+      }}>
       <Counter count={1} size='default' />
-      <img className='' src={props.image} alt={props.name} />
+      <img className='' src={item.image} alt={item.name} />
       <p className={`text text_type_digits-default mt-1 mb-1`}>
-        {props.price} <CurrencyIcon />
+        {item.price} <CurrencyIcon />
       </p>
-      <h3 className={`text text_type_main-default`}>{props.name}</h3>
+      <h3 className={`text text_type_main-default`}>{item.name}</h3>
     </div>
   );
 };
 
 IngredientCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
 };
 
 export default IngredientCard;

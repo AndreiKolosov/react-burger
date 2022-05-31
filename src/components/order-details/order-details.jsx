@@ -13,7 +13,11 @@ const OrderDetails = () => {
         {orderNumber}
       </h3>
       <span className='text text_type_main-medium mb-15'>идентификатор заказа</span>
-      <img className={`${styles.OrderDetails__icon} mb-15`} src={doneIcon} />
+      <img
+        className={`${styles.OrderDetails__icon} mb-15`}
+        src={doneIcon}
+        alt={'Индикатор заказа'}
+      />
       <p className='text text_type_main-default mb-2'>Ваш заказ начали готовить</p>
       <span className='text text_type_main-default text_color_inactive'>
         Дождитесь готовности на орбитальной станции
