@@ -14,6 +14,7 @@ import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { CLOSE_ORDER_DETAILS } from '../../services/actions/order';
 import { RESET } from '../../services/actions/constructor';
+import { removeItem, resetConstructor } from '../../services/actions/constructor';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, order } = useSelector((store) => store.burgerConstructor);
@@ -27,8 +28,11 @@ const BurgerConstructor = () => {
 
   const postOrder = (orderData) => {
     dispatch(postOrderRequest(orderData));
-    dispatch({ type: RESET });
+    dispatch(resetConstructor());
+    // Нужно очищать заказ только если нет ошибки
   };
+
+  console.log(filling, 'constructor');
 
   // Аналог того, что происходит в reducer
   // const price = useMemo(() => {
@@ -54,7 +58,7 @@ const BurgerConstructor = () => {
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
               {filling.map((item) => {
                 return (
-                  <li key={item._id} className={`${styles.fillingItem} mb-4 pr-2`}>
+                  <li key={item.uId} className={`${styles.fillingItem} mb-4 pr-2`}>
                     <div className={`mr-2`}>
                       <DragIcon />
                     </div>
@@ -63,7 +67,7 @@ const BurgerConstructor = () => {
                       price={item.price}
                       thumbnail={item.image_mobile}
                       handleClose={() => {
-                        dispatch({ type: 'DELETE', item: item });
+                        dispatch(removeItem(item));
                       }}
                     />
                   </li>

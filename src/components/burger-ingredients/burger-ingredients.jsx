@@ -6,7 +6,7 @@ import { IngredientType, ariaLables } from '../../utils/variables';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { CLOSE_INGREDIENT_DETAILS } from '../../services/actions/ingredient';
+import { closeIngredientModal } from '../../services/actions/ingredient';
 import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
@@ -25,7 +25,7 @@ const BurgerIngredients = () => {
   const sauces = ingredients.filter((ingredient) => ingredient.type === IngredientType.Sauce.type);
 
   const closeIngredientDetails = () => {
-    dispatch({ type: CLOSE_INGREDIENT_DETAILS });
+    dispatch(closeIngredientModal());
   };
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { ADD, DELETE, RESET } from '../actions/constructor';
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   bun: null,
@@ -29,7 +30,7 @@ export const constructorReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        filling: [...state.filling, action.item],
+        filling: [...state.filling, { ...action.item, uId: uuidv4() }],
         order: [...state.order, action.item._id],
         totalPrice: state.totalPrice + action.item.price,
       };
@@ -37,7 +38,7 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE:
       return {
         ...state,
-        filling: [...state.filling].filter((item) => item._id !== action.item._id),
+        filling: [...state.filling].filter((item) => item.uId !== action.item.uId),
         order: [...state.order].filter((id) => id !== action.item._id),
         totalPrice: state.totalPrice - action.item.price,
       };

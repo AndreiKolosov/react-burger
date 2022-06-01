@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { SET_INGREDIENT } from '../../../../services/actions/ingredient';
-import { ADD } from '../../../../services/actions/constructor';
+import { setCurrentIngredient } from '../../../../services/actions/ingredient';
+import { addItem } from '../../../../services/actions/constructor';
 import { useDispatch } from 'react-redux';
 
 const IngredientCard = ({ item }) => {
@@ -13,8 +13,8 @@ const IngredientCard = ({ item }) => {
     <div
       className={`${styles.card} pl-4 pr-4`}
       onClick={() => {
-        dispatch({ type: SET_INGREDIENT, ingredient: item });
-        dispatch({ type: ADD, item: item });
+        dispatch(setCurrentIngredient(item));
+        dispatch(addItem(item));
       }}>
       <Counter count={1} size='default' />
       <img className='' src={item.image} alt={item.name} />
