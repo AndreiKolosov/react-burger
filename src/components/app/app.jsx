@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
-import {
-  getIngredientsRequest,
-  RESET_INGREDIENTS_ERROR_STATUS,
-} from '../../services/actions/ingredients';
-import { RESET_ORDER_ERROR_STATUS } from '../../services/actions/order';
+import { getIngredients, resetIngredientsError } from '../../services/actions/ingredients';
+import { resetOrderError } from '../../services/actions/order';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -20,12 +17,12 @@ function App() {
   const dispatch = useDispatch();
 
   const resetErorrs = () => {
-    dispatch({ type: RESET_INGREDIENTS_ERROR_STATUS });
-    dispatch({ type: RESET_ORDER_ERROR_STATUS });
+    dispatch(resetIngredientsError());
+    dispatch(resetOrderError());
   };
 
   useEffect(() => {
-    dispatch(getIngredientsRequest());
+    dispatch(getIngredients());
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { postOrderRequest } from '../../services/actions/order';
@@ -12,8 +12,7 @@ import { ariaLables } from '../../utils/variables';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
-import { CLOSE_ORDER_DETAILS } from '../../services/actions/order';
-import { RESET } from '../../services/actions/constructor';
+import { closeOrderModal } from '../../services/actions/order';
 import { removeItem, resetConstructor } from '../../services/actions/constructor';
 
 const BurgerConstructor = () => {
@@ -23,7 +22,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const closeOrderDetails = () => {
-    dispatch({ type: CLOSE_ORDER_DETAILS });
+    dispatch(closeOrderModal());
   };
 
   const postOrder = (orderData) => {

@@ -2,7 +2,7 @@ import { apiConfig } from './variables';
 
 const parseResponse = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
 
-const getIngredients = () => {
+const ingredientsRequest = () => {
   return fetch(`${apiConfig.baseUrl}/ingredients`, {
     headers: apiConfig.headers,
   }).then((res) => parseResponse(res));
@@ -18,4 +18,4 @@ const postOrder = (order) => {
   }).then((res) => parseResponse(res));
 };
 
-export { getIngredients, postOrder };
+export { ingredientsRequest, postOrder };
