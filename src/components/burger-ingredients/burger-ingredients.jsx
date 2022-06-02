@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import IngredientsNav from './components/ingredients-nav/ingredients-nav';
 import IngredientList from './components/ingredient-list/ingredient-list';
@@ -11,7 +11,7 @@ import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
-  const { ingredient } = useSelector((store) => store.ingredient);
+  const { viewedIngredient } = useSelector((store) => store.ingredient);
   const dispatch = useDispatch();
 
   const [currentTab, setCurrentTab] = useState('bun');
@@ -20,13 +20,19 @@ const BurgerIngredients = () => {
   const [saucesRef, inViewSauces] = useInView({ threshold: 0.1 });
   const [mainsRef, inViewMains] = useInView({ threshold: 0.1 });
 
-  const buns = ingredients.filter((ingredient) => ingredient.type === IngredientType.Bun.type);
-  const mains = ingredients.filter((ingredient) => ingredient.type === IngredientType.Main.type);
-  const sauces = ingredients.filter((ingredient) => ingredient.type === IngredientType.Sauce.type);
+  const buns = useMemo(() =>
+    ingredients.filter((ingredient) => ingredient.type === IngredientType.Bun.type)
+  );
+  const mains = useMemo(() =>
+    ingredients.filter((ingredient) => ingredient.type === IngredientType.Main.type)
+  );
+  const sauces = useMemo(() =>
+    ingredients.filter((ingredient) => ingredient.type === IngredientType.Sauce.type)
+  );
 
-  const closeIngredientDetails = () => {
+  const closeIngredientDetails = useCallback(() => {
     dispatch(closeIngredientModal());
-  };
+  }, [dispatch, closeIngredientModal]);
 
   useEffect(() => {
     if (inViewBuns) {
@@ -38,10 +44,10 @@ const BurgerIngredients = () => {
     }
   }, [inViewBuns, inViewMains, inViewSauces]);
 
-  function handleTabClick(type) {
+  const handleTabClick = useCallback((type) => {
     setCurrentTab(type);
     document.getElementById(type).scrollIntoView({ behavior: 'smooth' });
-  }
+  });
 
   return (
     <section className={`${styles.ingredients} pt-10`} aria-label={ariaLables.ingredients}>
@@ -57,9 +63,9 @@ const BurgerIngredients = () => {
         <IngredientList items={mains} itemsType={IngredientType.Main} ref={mainsRef} />
       </div>
 
-      {ingredient && (
+      {viewedIngredient && (
         <Modal heading={'Детали ингредиента'} closeModal={closeIngredientDetails}>
-          <IngredientDetails ingredient={ingredient} />
+          <IngredientDetails ingredient={viewedIngredient} />
         </Modal>
       )}
     </section>

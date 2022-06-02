@@ -25,9 +25,9 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
-  const closeOrderDetails = () => {
+  const closeOrderDetails = useCallback(() => {
     dispatch(closeOrderModal());
-  };
+  }, [dispatch, closeOrderModal]);
 
   const postOrder = (orderData) => {
     dispatch(postOrderRequest(orderData));
