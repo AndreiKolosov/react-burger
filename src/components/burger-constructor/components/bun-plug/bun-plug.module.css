@@ -1,0 +1,35 @@
+.plug {
+  width: 100%;
+  height: 120px;
+  background-repeat: no-repeat;
+  background-size: 110%;
+  margin: 10px 0;
+  position: relative;
+}
+
+.plugTop {
+  composes: plug;
+  background-image: url(../../../../images/constructor-plugs/bun-plug-top.svg);
+  background-position: top;
+}
+
+.plugBottom {
+  composes: plug;
+  background-image: url(../../../../images/constructor-plugs/bun-plug-bottom.svg);
+  background-position: bottom;
+}
+
+.plugTop:hover::after {
+  position: absolute;
+  content: 'Добавьте булочку \2193';
+  opacity: 0.6;
+  left: 20px;
+}
+
+.plugTop:hover {
+  transform: scale(1.06);
+}
+
+.plugBottom:hover {
+  transform: scale(1.06);
+}

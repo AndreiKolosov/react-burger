@@ -18,13 +18,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   flex: 1;
 }
 
 .fillingList {
   composes: list;
   overflow-y: auto;
-  height: 456px;
+  max-height: 456px;
 }
 
 .fillingItem {

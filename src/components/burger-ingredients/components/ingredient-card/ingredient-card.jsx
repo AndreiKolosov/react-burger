@@ -5,17 +5,26 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { setCurrentIngredient } from '../../../../services/actions/ingredient';
 import { addItem } from '../../../../services/actions/constructor';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
 const IngredientCard = ({ item }) => {
   const dispatch = useDispatch();
+  const [{ isDrag }, dragRef] = useDrag({
+    type: 'ingredient',
+    item: { item },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   return (
     <div
       className={`${styles.card} pl-4 pr-4`}
       onClick={() => {
         dispatch(setCurrentIngredient(item));
-        dispatch(addItem(item));
-      }}>
+      }}
+      ref={dragRef}
+      draggable>
       <Counter count={1} size='default' />
       <img className='' src={item.image} alt={item.name} />
       <p className={`text text_type_digits-default mt-1 mb-1`}>

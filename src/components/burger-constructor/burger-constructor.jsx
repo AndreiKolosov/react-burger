@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { postOrderRequest } from '../../services/actions/order';
@@ -13,10 +13,14 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { closeOrderModal } from '../../services/actions/order';
-import { removeItem, resetConstructor } from '../../services/actions/constructor';
+import { dropItem, removeItem, resetConstructor } from '../../services/actions/constructor';
+import { useDrop } from 'react-dnd';
+import BurgerPulg from './components/burger-plug/burger-plug';
+import FillingPlug from './components/filling-plug/filling-plug';
+import BunPlug from './components/bun-plug/bun-plug';
 
 const BurgerConstructor = () => {
-  const { bun, filling, totalPrice, order } = useSelector((store) => store.burgerConstructor);
+  const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
   const { orderRequest, orderFaild, orderNumber } = useSelector((store) => store.order);
 
   const dispatch = useDispatch();
@@ -27,11 +31,24 @@ const BurgerConstructor = () => {
 
   const postOrder = (orderData) => {
     dispatch(postOrderRequest(orderData));
-    dispatch(resetConstructor());
+
+    // if (!orderRequest && !orderFaild) dispatch(resetConstructor());
     // Нужно очищать заказ только если нет ошибки
   };
 
-  console.log(filling, 'constructor');
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop({ item }) {
+      dispatch(dropItem(item));
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
+  const handleDelete = (item) => {
+    dispatch(removeItem(item));
+  };
 
   // Аналог того, что происходит в reducer
   // const price = useMemo(() => {
@@ -40,7 +57,9 @@ const BurgerConstructor = () => {
 
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
-      <ul className={`${styles.ingredientList}`}>
+      <ul className={`${styles.ingredientList}`} ref={dropTarget}>
+        {!bun && filling.length === 0 && <BurgerPulg />}
+        {!bun && filling.length > 0 && <BunPlug position='top' />}
         {bun && (
           <li className={`${styles.ingredienItem} ml-4`}>
             <ConstructorElement
@@ -52,12 +71,13 @@ const BurgerConstructor = () => {
             />
           </li>
         )}
-        {filling && (
+        {filling.length === 0 && bun && <FillingPlug />}
+        {filling.length > 0 && (
           <li className={`${styles.ingredienItem}`}>
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
-              {filling.map((item) => {
+              {filling.map((item, index) => {
                 return (
-                  <li key={item.uId} className={`${styles.fillingItem} mb-4 pr-2`}>
+                  <li key={item.uId} className={`${styles.fillingItem} mb-4 pr-2`} index={index}>
                     <div className={`mr-2`}>
                       <DragIcon />
                     </div>
@@ -65,9 +85,7 @@ const BurgerConstructor = () => {
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image_mobile}
-                      handleClose={() => {
-                        dispatch(removeItem(item));
-                      }}
+                      handleClose={() => handleDelete(item)}
                     />
                   </li>
                 );
@@ -75,6 +93,7 @@ const BurgerConstructor = () => {
             </ul>
           </li>
         )}
+        {!bun && filling.length > 0 && <BunPlug position='bottom' />}
         {bun && (
           <li className={`${styles.ingredienItem} ml-4`}>
             <ConstructorElement
@@ -91,7 +110,7 @@ const BurgerConstructor = () => {
         <span className='text text_type_digits-medium mr-10'>
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium' onClick={() => postOrder(order)}>
+        <Button type='primary' size='medium' onClick={() => postOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>

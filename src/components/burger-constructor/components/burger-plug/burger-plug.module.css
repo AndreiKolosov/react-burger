@@ -1,0 +1,23 @@
+.plug {
+  width: 100%;
+  max-height: 500px;
+  height: 100%;
+  background-image: url(../../../../images/constructor-plugs/burger-plug.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.6;
+  position: relative;
+}
+
+.plug:hover {
+  border: dashed 2px #c9c1ec;
+  border-radius: 50px;
+}
+
+.plug:hover::after {
+  content: 'Соберите свой бургер!';
+  position: absolute;
+  top: -45px;
+  left: 20px;
+}

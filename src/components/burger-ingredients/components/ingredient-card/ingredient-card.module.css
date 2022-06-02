@@ -7,4 +7,9 @@
   max-width: 272px;
   width: 100%;
   box-sizing: border-box;
+  cursor: grab;
+}
+
+.card:hover {
+  transform: scale(1.03);
 }

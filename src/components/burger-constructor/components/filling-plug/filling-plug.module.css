@@ -1,0 +1,16 @@
+.plug {
+  height: 160px;
+  width: 90%;
+  border: dashed 2px #c9c1ec;
+  border-radius: 40px;
+  margin: 20px 0 20px 15px;
+  position: relative;
+}
+
+.plug::after {
+  content: 'Добавьте начинку';
+  position: absolute;
+  opacity: 0.6;
+  top: 30%;
+  left: 17%;
+}

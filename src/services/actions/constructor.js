@@ -15,7 +15,7 @@ export function resetConstructor() {
   };
 }
 
-export function addItem(item) {
+export function dropItem(item) {
   return {
     type: ADD,
     item,
