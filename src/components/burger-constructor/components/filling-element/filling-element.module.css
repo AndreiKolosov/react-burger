@@ -1,0 +1,7 @@
+.fillingElement {
+  display: flex;
+  max-width: 568px;
+  width: 100vw;
+  box-sizing: border-box;
+  align-items: center;
+}

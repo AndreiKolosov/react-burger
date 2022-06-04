@@ -18,11 +18,11 @@ import { useDrop } from 'react-dnd';
 import BurgerPulg from './components/burger-plug/burger-plug';
 import FillingPlug from './components/filling-plug/filling-plug';
 import BunPlug from './components/bun-plug/bun-plug';
+import FillingElement from './components/filling-element/filling-element';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
   const { orderRequest, orderFaild, orderNumber } = useSelector((store) => store.order);
-
   const dispatch = useDispatch();
 
   const closeOrderDetails = useCallback(() => {
@@ -50,7 +50,7 @@ const BurgerConstructor = () => {
     dispatch(removeItem(item));
   };
 
-  // Аналог того, что происходит в reducer
+  // Аналог того, что происходит с totalPrice в reducer
   // const price = useMemo(() => {
   //   return (bun ? bun.price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
   // }, [order]);
@@ -58,7 +58,7 @@ const BurgerConstructor = () => {
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
       <ul className={`${styles.ingredientList}`} ref={dropTarget}>
-        {!bun && filling.length === 0 && <BurgerPulg />}
+        {!bun && filling.length === 0 && <BurgerPulg hover={isHover} />}
         {!bun && filling.length > 0 && <BunPlug position='top' />}
         {bun && (
           <li className={`${styles.ingredienItem} ml-4`}>
@@ -71,25 +71,18 @@ const BurgerConstructor = () => {
             />
           </li>
         )}
-        {filling.length === 0 && bun && <FillingPlug />}
+        {filling.length === 0 && bun && <FillingPlug hover={isHover} />}
         {filling.length > 0 && (
           <li className={`${styles.ingredienItem}`}>
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
-              {filling.map((item, index) => {
-                return (
-                  <li key={item.uId} className={`${styles.fillingItem} mb-4 pr-2`} index={index}>
-                    <div className={`mr-2`}>
-                      <DragIcon />
-                    </div>
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image_mobile}
-                      handleClose={() => handleDelete(item)}
-                    />
-                  </li>
-                );
-              })}
+              {filling.map((item, index) => (
+                <FillingElement
+                  item={item}
+                  deleteHandler={handleDelete}
+                  index={index}
+                  key={item.uId}
+                />
+              ))}
             </ul>
           </li>
         )}

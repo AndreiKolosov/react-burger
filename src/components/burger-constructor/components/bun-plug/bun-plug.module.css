@@ -1,35 +1,34 @@
-.plug {
-  width: 100%;
-  height: 120px;
+.plugContainer {
+  width: 80%;
+  height: 110px;
   background-repeat: no-repeat;
   background-size: 110%;
   margin: 10px 0;
   position: relative;
+  opacity: 0.6;
+  border: 2px dashed #c9c1ec;
 }
 
-.plugTop {
-  composes: plug;
-  background-image: url(../../../../images/constructor-plugs/bun-plug-top.svg);
-  background-position: top;
+.plugContainer:hover {
+  transform: scale(1.06);
+  box-shadow: 0px 0px 16px 8px rgba(51, 51, 255, 0.25), 0px 0px 8px 8px rgba(51, 51, 255, 0.25);
+  filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));
 }
 
-.plugBottom {
-  composes: plug;
-  background-image: url(../../../../images/constructor-plugs/bun-plug-bottom.svg);
-  background-position: bottom;
+.plugTopContainer {
+  composes: plugContainer;
+  border-radius: var(--top-constructor-item-border-radius);
 }
 
-.plugTop:hover::after {
+.plugBottomContainer {
+  composes: plugContainer;
+  border-radius: var(--bottom-constructor-item-border-radius);
+}
+
+.plugTopContainer::after {
   position: absolute;
   content: 'Добавьте булочку \2193';
   opacity: 0.6;
   left: 20px;
-}
-
-.plugTop:hover {
-  transform: scale(1.06);
-}
-
-.plugBottom:hover {
-  transform: scale(1.06);
+  top: -50px;
 }

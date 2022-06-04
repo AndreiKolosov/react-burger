@@ -6,10 +6,10 @@ const BunPlug = ({ position }) => {
     <div
       className={
         position === 'top'
-          ? `${styles.plugTop} text text_type_main-medium`
+          ? `${styles.plugTopContainer} text_type_main-medium`
           : position === 'bottom'
-          ? `${styles.plugBottom}`
-          : `${styles.plug} `
+          ? `${styles.plugBottomContainer} text_type_main-medium`
+          : `${styles.plugContainer} text_type_main-medium`
       }></div>
   );
 };

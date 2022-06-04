@@ -1,5 +1,6 @@
-import { ADD, DELETE, RESET } from '../actions/constructor';
+import { ADD, DELETE, RESET, REORDER_INGREDIENT } from '../actions/constructor';
 import { v4 as uuidv4 } from 'uuid';
+import update from 'immutability-helper';
 
 const initialState = {
   bun: null,
@@ -44,6 +45,22 @@ export const constructorReducer = (state = initialState, action) => {
         orderIds: [...state.orderIds].filter((id) => id !== action.item._id),
         totalPrice: state.totalPrice - action.item.price,
       };
+
+    case REORDER_INGREDIENT: {
+      return {
+        ...state,
+        // update - Immutability Helper
+        //  $splice - работает следующим образом
+        // filling.splice(dragIndex, 1); // удаляем то что перетаскиваем
+        // filling.splice(hoverIndex, 0, dragFilling); // вставляем в позицию на которую навели.
+        filling: update(state.filling, {
+          $splice: [
+            [action.dragIndex, 1],
+            [action.hoverIndex, 0, state.filling[action.dragIndex]],
+          ],
+        }),
+      };
+    }
 
     case RESET:
       return initialState;

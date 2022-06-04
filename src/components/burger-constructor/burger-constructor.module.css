@@ -28,14 +28,6 @@
   max-height: 456px;
 }
 
-.fillingItem {
-  display: flex;
-  max-width: 568px;
-  width: 100vw;
-  box-sizing: border-box;
-  align-items: center;
-}
-
 .fillingItem:last-of-type {
   margin: 0;
 }
