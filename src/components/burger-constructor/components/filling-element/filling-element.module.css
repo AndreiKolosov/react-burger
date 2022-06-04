@@ -5,3 +5,7 @@
   box-sizing: border-box;
   align-items: center;
 }
+
+.fillingElement:last-of-type {
+  margin: 0;
+}
