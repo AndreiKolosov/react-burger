@@ -29,7 +29,6 @@ const IngredientCard = ({ item }) => {
     },
     [bun, filling]
   );
-  console.log(counter);
   return (
     <div
       className={`${styles.card} pl-4 pr-4`}
