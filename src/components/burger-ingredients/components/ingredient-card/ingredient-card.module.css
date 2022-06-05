@@ -7,4 +7,13 @@
   max-width: 272px;
   width: 100%;
   box-sizing: border-box;
+  cursor: grab;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.cardIsDragging {
+  background: radial-gradient(circle, rgba(166, 81, 195, 1) 0%, rgba(19, 19, 22, 0) 45%);
 }

@@ -1,0 +1,26 @@
+.plugContainer {
+  height: 160px;
+  width: 90%;
+  border: dashed 2px #c9c1ec;
+  border-radius: 40px;
+  margin: 20px 0 20px 15px;
+  position: relative;
+}
+
+.plugContainer::after {
+  content: 'Добавьте начинку';
+  position: absolute;
+  opacity: 0.6;
+  top: 35%;
+  left: 18%;
+}
+
+.plugContainerOnHover {
+  composes: plugContainer;
+  box-shadow: 0 0 16px 8px rgba(51, 51, 255, 0.25), 0 0 8px 8px rgba(51, 51, 255, 0.25);
+  filter: drop-shadow(0 4px 32px rgba(51, 51, 255, 0.5));
+}
+
+.plugContainerOnHover::after {
+  content: ' ';
+}

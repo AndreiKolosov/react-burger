@@ -1,37 +1,21 @@
 import { apiConfig } from './variables';
 
-const getIngredients = (setData, setLoading, setError) => {
-  fetch(`${apiConfig.baseUrl}/ingredients`, {
+const parseResponse = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
+
+const ingredientsRequest = () => {
+  return fetch(`${apiConfig.baseUrl}/ingredients`, {
     headers: apiConfig.headers,
-  })
-    .then((res) => parseResponse(res))
-    .then((res) => setData(res.data))
-    .catch((err) => {
-      setError(true);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+  }).then((res) => parseResponse(res));
 };
 
-const postOrder = (order, setNum, setLoading, setError) => {
-  fetch(`${apiConfig.baseUrl}/orders`, {
+const postOrder = (order) => {
+  return fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify({
       ingredients: order,
     }),
-  })
-    .then((res) => parseResponse(res))
-    .then((res) => setNum(res.order.number))
-    .catch((err) => {
-      setError(true);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+  }).then((res) => parseResponse(res));
 };
 
-const parseResponse = (res) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-
-export { getIngredients, postOrder };
+export { ingredientsRequest, postOrder };

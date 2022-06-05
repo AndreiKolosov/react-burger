@@ -13,7 +13,3 @@
   width: 100%;
   box-sizing: border-box;
 }
-
-.ingredientList__item {
-  cursor: pointer;
-}

@@ -13,7 +13,7 @@ const IngredientType = {
   },
 };
 
-const ariaLables = {
+const ariaLabels = {
   ingredients: 'Соберите свой бургер',
   constructor: 'Коструктор бургеров',
 };
@@ -25,4 +25,4 @@ const apiConfig = {
   },
 };
 
-export { IngredientType, ariaLables, apiConfig };
+export { IngredientType, ariaLabels, apiConfig };
