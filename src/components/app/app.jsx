@@ -11,8 +11,8 @@ import Loader from '../loader/loader';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 function App() {
-  const { ingredientsRequest, ingredientsFaild } = useSelector((store) => store.ingredients);
-  const { orderFaild } = useSelector((store) => store.order);
+  const { ingredientsRequest, ingredientsFailed } = useSelector((store) => store.ingredients);
+  const { orderFailed } = useSelector((store) => store.order);
 
   const dispatch = useDispatch();
 
@@ -29,9 +29,9 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
 
-      {ingredientsRequest && !ingredientsFaild && <Loader />}
+      {ingredientsRequest && !ingredientsFailed && <Loader />}
 
-      {!ingredientsFaild && !ingredientsRequest && (
+      {!ingredientsFailed && !ingredientsRequest && (
         <main className={`${styles.app__content}`}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
@@ -40,7 +40,7 @@ function App() {
         </main>
       )}
 
-      {ingredientsFaild && orderFaild && (
+      {ingredientsFailed && orderFailed && (
         <Modal heading={'Что-то пошло не так... =('} closeModal={resetErorrs} />
       )}
     </div>

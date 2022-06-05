@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setCurrentIngredient } from '../../../../services/actions/ingredient';
-import { addItem } from '../../../../services/actions/constructor';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
@@ -17,7 +16,7 @@ const IngredientCard = ({ item }) => {
       return bun && item._id === bun._id ? 1 : null;
     }
     return filling && filling.filter((fillingItem) => fillingItem._id === item._id).length;
-  });
+  }, [bun, filling, item._id, item.type]);
 
   const [{ isDrag }, dragRef] = useDrag(
     {
@@ -38,7 +37,11 @@ const IngredientCard = ({ item }) => {
       ref={dragRef}
       draggable>
       {counter > 0 && <Counter count={counter} size='default' />}
-      <img className='' src={item.image} alt={item.name} />
+      <img
+        className={isDrag ? `${styles.cardIsDragging}` : null}
+        src={item.image}
+        alt={item.name}
+      />
       <p className={`text text_type_digits-default mt-1 mb-1`}>
         {item.price} <CurrencyIcon />
       </p>

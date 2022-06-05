@@ -1,5 +1,5 @@
 import {
-  POST_ORDER_FAILD,
+  POST_ORDER_FAILED,
   POST_ORDER_SUCCESS,
   POST_ORDER_REQUEST,
   CLOSE_ORDER_DETAILS,
@@ -9,7 +9,7 @@ import {
 const initialState = {
   orderNumber: null,
   orderRequest: false,
-  orderFaild: false,
+  orderFailed: false,
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -20,18 +20,18 @@ export const orderReducer = (state = initialState, action) => {
         orderRequest: true,
       };
     }
-    case POST_ORDER_FAILD: {
+    case POST_ORDER_FAILED: {
       return {
         ...state,
         orderRequest: false,
-        orderFaild: true,
+        orderFailed: true,
       };
     }
     case POST_ORDER_SUCCESS: {
       return {
         ...state,
         orderRequest: false,
-        orderFaild: false,
+        orderFailed: false,
         orderNumber: action.orderNumber,
         isOrderDetailsOpened: true,
       };
@@ -46,7 +46,7 @@ export const orderReducer = (state = initialState, action) => {
     case RESET_ORDER_ERROR_STATUS: {
       return {
         ...state,
-        orderFaild: false,
+        orderFailed: false,
       };
     }
     default: {

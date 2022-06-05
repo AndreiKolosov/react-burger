@@ -6,34 +6,31 @@ import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ariaLables } from '../../utils/variables';
+import { ariaLabels } from '../../utils/variables';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import Loader from '../loader/loader';
 import { closeOrderModal } from '../../services/actions/order';
 import { dropItem, removeItem, resetConstructor } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
-import BurgerPulg from './components/burger-plug/burger-plug';
+import BurgerPlug from './components/burger-plug/burger-plug';
 import FillingPlug from './components/filling-plug/filling-plug';
 import BunPlug from './components/bun-plug/bun-plug';
 import FillingElement from './components/filling-element/filling-element';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
-  const { orderRequest, orderFaild, orderNumber } = useSelector((store) => store.order);
+  const { orderRequest, orderFailed, orderNumber } = useSelector((store) => store.order);
   const dispatch = useDispatch();
 
   const closeOrderDetails = useCallback(() => {
     dispatch(closeOrderModal());
-  }, [dispatch, closeOrderModal]);
+    dispatch(resetConstructor());
+  }, [dispatch]);
 
   const postOrder = (orderData) => {
     dispatch(postOrderRequest(orderData));
-
-    // if (!orderRequest && !orderFaild) dispatch(resetConstructor());
-    // Нужно очищать заказ только если нет ошибки
   };
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -56,12 +53,12 @@ const BurgerConstructor = () => {
   // }, [order]);
 
   return (
-    <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLables.constructor}>
+    <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLabels.constructor}>
       <ul className={`${styles.ingredientList}`} ref={dropTarget}>
-        {!bun && filling.length === 0 && <BurgerPulg hover={isHover} />}
+        {!bun && filling.length === 0 && <BurgerPlug hover={isHover} />}
         {!bun && filling.length > 0 && <BunPlug position='top' />}
         {bun && (
-          <li className={`${styles.ingredienItem} ml-4`}>
+          <li className={`ml-4`}>
             <ConstructorElement
               type='top'
               isLocked={true}
@@ -73,7 +70,7 @@ const BurgerConstructor = () => {
         )}
         {filling.length === 0 && bun && <FillingPlug hover={isHover} />}
         {filling.length > 0 && (
-          <li className={`${styles.ingredienItem}`}>
+          <li>
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
               {filling.map((item, index) => (
                 <FillingElement
@@ -88,7 +85,7 @@ const BurgerConstructor = () => {
         )}
         {!bun && filling.length > 0 && <BunPlug position='bottom' />}
         {bun && (
-          <li className={`${styles.ingredienItem} ml-4`}>
+          <li className={`ml-4`}>
             <ConstructorElement
               type='bottom'
               isLocked={true}
@@ -110,8 +107,8 @@ const BurgerConstructor = () => {
 
       {orderNumber && (
         <Modal closeModal={closeOrderDetails}>
-          {orderRequest && !orderFaild && <Loader />}
-          {!orderRequest && !orderFaild && <OrderDetails />}
+          {orderRequest && !orderFailed && <Loader />}
+          {!orderRequest && !orderFailed && <OrderDetails />}
         </Modal>
       )}
     </section>

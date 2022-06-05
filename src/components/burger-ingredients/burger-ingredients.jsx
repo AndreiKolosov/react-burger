@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import IngredientsNav from './components/ingredients-nav/ingredients-nav';
 import IngredientList from './components/ingredient-list/ingredient-list';
-import { IngredientType, ariaLables } from '../../utils/variables';
+import { IngredientType, ariaLabels } from '../../utils/variables';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -20,19 +20,13 @@ const BurgerIngredients = () => {
   const [saucesRef, inViewSauces] = useInView({ threshold: 0.1 });
   const [mainsRef, inViewMains] = useInView({ threshold: 0.1 });
 
-  const buns = useMemo(() =>
-    ingredients.filter((ingredient) => ingredient.type === IngredientType.Bun.type)
-  );
-  const mains = useMemo(() =>
-    ingredients.filter((ingredient) => ingredient.type === IngredientType.Main.type)
-  );
-  const sauces = useMemo(() =>
-    ingredients.filter((ingredient) => ingredient.type === IngredientType.Sauce.type)
-  );
+  const buns = ingredients.filter((ingredient) => ingredient.type === IngredientType.Bun.type);
+  const mains = ingredients.filter((ingredient) => ingredient.type === IngredientType.Main.type);
+  const sauces = ingredients.filter((ingredient) => ingredient.type === IngredientType.Sauce.type);
 
   const closeIngredientDetails = useCallback(() => {
     dispatch(closeIngredientModal());
-  }, [dispatch, closeIngredientModal]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (inViewBuns) {
@@ -44,13 +38,16 @@ const BurgerIngredients = () => {
     }
   }, [inViewBuns, inViewMains, inViewSauces]);
 
-  const handleTabClick = useCallback((type) => {
-    setCurrentTab(type);
-    document.getElementById(type).scrollIntoView({ behavior: 'smooth' });
-  });
+  const handleTabClick = useCallback(
+    (type) => {
+      setCurrentTab(type);
+      document.getElementById(type).scrollIntoView({ behavior: 'smooth' });
+    },
+    [setCurrentTab]
+  );
 
   return (
-    <section className={`${styles.ingredients} pt-10`} aria-label={ariaLables.ingredients}>
+    <section className={`${styles.ingredients} pt-10`} aria-label={ariaLabels.ingredients}>
       <h2 className='text text_type_main-large mb-5'>Соберите бургер</h2>
       <IngredientsNav
         tabs={[IngredientType.Bun, IngredientType.Sauce, IngredientType.Main]}

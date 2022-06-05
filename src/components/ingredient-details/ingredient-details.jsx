@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { ingridientPropType } from '../../utils/prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 import NutritionValue from './components/nutrition-value';
 
 const IngredientDetails = ({ ingredient }) => {
@@ -22,7 +21,7 @@ const IngredientDetails = ({ ingredient }) => {
 };
 
 IngredientDetails.propTypes = {
-  ingredient: ingridientPropType.isRequired,
+  ingredient: ingredientPropType.isRequired,
 };
 
 export default IngredientDetails;

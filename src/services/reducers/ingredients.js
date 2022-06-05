@@ -8,7 +8,7 @@ import {
 const initialState = {
   ingredients: [],
   ingredientsRequest: false,
-  ingredientsFaild: false,
+  ingredientsFailed: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -22,7 +22,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredientsFaild: false,
+        ingredientsFailed: false,
         ingredientsRequest: false,
         ingredients: action.ingredients,
       };
@@ -30,14 +30,14 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
-        ingredientsFaild: true,
+        ingredientsFailed: true,
         ingredientsRequest: false,
       };
     }
     case RESET_INGREDIENTS_ERROR_STATUS: {
       return {
         ...state,
-        ingredientsFaild: false,
+        ingredientsFailed: false,
       };
     }
     default: {
