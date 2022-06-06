@@ -23,6 +23,7 @@
 - CSS
 - JS
 - React
+- Redux
 - Babel
 - Webpack
 - Методология БЭМ
@@ -45,6 +46,8 @@
 ---
 
 ## <a id="references" />Ссылки
+
+Проект на [GH-Pages](https://andreikolosov.github.io/react-burger/)
 
 [Наверх](#top)
 
