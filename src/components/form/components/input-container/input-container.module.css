@@ -1,0 +1,11 @@
+.container {
+  margin-bottom: 24px;
+}
+
+.container > div {
+  width: 100%;
+}
+
+.container > div > div {
+  width: 100%;
+}
