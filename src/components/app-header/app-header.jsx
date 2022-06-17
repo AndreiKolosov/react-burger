@@ -6,6 +6,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
+import { Link } from 'react-router-dom';
 
 const AppHeader = () => {
   return (
@@ -26,9 +27,11 @@ const AppHeader = () => {
               </a>
             </li>
           </menu>
-          <div className='pt-2 pb-2'>
-            <Logo />
-          </div>
+          <Link to='/'>
+            <div className='pt-2 pb-2'>
+              <Logo />
+            </div>
+          </Link>
         </div>
         <a href='/#' className={`${styles.link} text text_type_main-default`}>
           <ProfileIcon type='secondary' />
