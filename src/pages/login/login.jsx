@@ -52,7 +52,11 @@ const LoginPage = () => {
           linkCaption='Зарегистрироваться'
           gap='mb-4'
         />
-        <FormPrompt prompt='Забыли пароль?' linkCaption='Восстановить пароль' />
+        <FormPrompt
+          link='/forgot-password'
+          prompt='Забыли пароль?'
+          linkCaption='Восстановить пароль'
+        />
       </Form>
     </main>
   );
