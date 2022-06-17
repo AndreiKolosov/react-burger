@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import styles from './login.module.css';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
+import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -11,8 +13,8 @@ const LoginPage = () => {
 
   return (
     <main className={styles.content}>
-      <Form title='Вход'>
-        <InputContainer>
+      <Form title='Вход' name='registration'>
+        <InputContainer gap='mb-6'>
           <Input
             name='email'
             value={email}
@@ -25,7 +27,7 @@ const LoginPage = () => {
             }}
           />
         </InputContainer>
-        <InputContainer>
+        <InputContainer gap='mb-6'>
           <Input
             name='password'
             type={showPass ? 'text' : 'password'}
@@ -40,13 +42,14 @@ const LoginPage = () => {
             }}
           />
         </InputContainer>
-        <Button
-          htmlType='submit'
-          type='primary'
-          size='medium'
-          disabled={email || password ? false : true}>
-          Войти
-        </Button>
+        <SubmitButton
+          title='Войти'
+          disabled={email && password ? false : true}
+          name='registration'
+          gap='mb-20'
+        />
+        <FormPrompt prompt='Вы — новый пользователь?' linkCaption='Зарегистрироваться' gap='mb-4' />
+        <FormPrompt prompt='Забыли пароль?' linkCaption='Восстановить пароль' />
       </Form>
     </main>
   );
