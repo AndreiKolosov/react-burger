@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
-import styles from './login.module.css';
+import styles from './registration.module.css';
 import Form from '../../components/form/form';
+import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import InputContainer from '../../components/form/components/input-container/input-container';
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
-import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const LoginPage = () => {
+const RegistrationPage = () => {
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
 
   return (
     <main className={styles.content}>
-      <Form title='Вход' name='login'>
+      <Form title='Регистрация' name='registration'>
+        <InputContainer gap='mb-6'>
+          <Input
+            name='userName'
+            value={userName}
+            type='text'
+            size='default'
+            placeholder='Имя'
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+        </InputContainer>
         <InputContainer gap='mb-6'>
           <Input
             name='email'
@@ -41,21 +54,15 @@ const LoginPage = () => {
           />
         </InputContainer>
         <SubmitButton
-          title='Войти'
-          disabled={email && password ? false : true}
+          title='Зарегистрироваться'
           name='login'
           gap='mb-20'
+          disabled={userName && email && password ? false : true}
         />
-        <FormPrompt
-          link='/register'
-          prompt='Вы — новый пользователь?'
-          linkCaption='Зарегистрироваться'
-          gap='mb-4'
-        />
-        <FormPrompt prompt='Забыли пароль?' linkCaption='Восстановить пароль' />
+        <FormPrompt link='/login' prompt='Уже зарегистрированы?' linkCaption='Войти' />
       </Form>
     </main>
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;
