@@ -1,20 +1,41 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import styles from './registration.module.css';
 import Form from '../../components/form/form';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import InputContainer from '../../components/form/components/input-container/input-container';
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewUser } from '../../services/actions/user';
 
 const RegistrationPage = () => {
+  const { user, isAuth } = useSelector((store) => store.user);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const dispatch = useDispatch();
+  console.log(user, 'user');
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createNewUser(userName, email, password));
+  };
+
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.content}>
-      <Form title='Регистрация' name='registration'>
+      <Form title='Регистрация' name='registration' onSubmit={submitHandler}>
         <InputContainer gap='mb-6'>
           <Input
             name='userName'

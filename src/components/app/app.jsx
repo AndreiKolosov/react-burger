@@ -7,6 +7,8 @@ import {
   RegistrationPage,
   ForgotPasswordPage,
   ResetPasswordPage,
+  ProfilePage,
+  NotFound404,
 } from '../../pages';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path='/register' exact children={<RegistrationPage />} />
           <Route path='/forgot-password' exact children={<ForgotPasswordPage />} />
           <Route path='/reset-password' exact children={<ResetPasswordPage />} />
+          <Route path='/profile' exact children={<ProfilePage />} />
+          <Route children={<NotFound404 />} />
         </Switch>
       </Router>
     </>

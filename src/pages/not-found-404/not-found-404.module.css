@@ -1,0 +1,267 @@
+.content {
+  display: flex;
+  padding: 12% 0 0 20%;
+  position: relative;
+}
+
+.error {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorMessage {
+  font-family: 'Jet Brains Mono';
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  padding: 0;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.errorCode {
+  margin: 0 0 50px 0;
+  padding: 0;
+  font-family: 'Iceland';
+  font-weight: 400;
+  font-size: 156px;
+  line-height: 1.1;
+}
+
+.scene {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  width: 1500px;
+  height: 900px;
+  z-index: -1;
+}
+
+.ground {
+  position: absolute;
+  bottom: 25%;
+  right: 20%;
+  width: 400px;
+  height: 400px;
+}
+
+.meadow {
+  position: absolute;
+  top: 50%;
+  width: 400px;
+  height: 100px;
+  background-color: rgb(5, 100, 5);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.cow {
+  background-image: url(../../images/cow.png);
+  width: 150px;
+  height: 150px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  bottom: 42%;
+  left: 24%;
+  z-index: 1;
+  animation: cowMove 1.3s linear 2.5s forwards;
+}
+
+.buble {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  background-color: rgb(221, 217, 217);
+  border-radius: 50%;
+  top: 30px;
+  right: 50px;
+  opacity: 0;
+  animation: think 1.5s linear 2.2s;
+}
+
+.buble::after {
+  position: absolute;
+  content: '!?!';
+  color: rgb(26, 24, 24);
+  font-family: 'Jet Brains Mono';
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 700;
+  top: 15px;
+  left: 10px;
+}
+
+.buble::before {
+  position: absolute;
+  content: '';
+  width: 30px;
+  height: 30px;
+  background-color: rgb(221, 217, 217);
+  border-radius: 50%;
+  bottom: -30px;
+  left: -10px;
+}
+
+.ufo {
+  position: relative;
+  width: 200px;
+  height: 500px;
+  z-index: 1;
+  animation: ufoMove 6s linear;
+  opacity: 0;
+}
+
+.ufo__head {
+  width: 100px;
+  height: 40px;
+  background-color: #d1d1da;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  z-index: 2;
+}
+
+.ufo__plate {
+  width: 200px;
+  height: 50px;
+  background-color: #d1d1da;
+  border-radius: 50%;
+  border: 1px solid #0f0e0e;
+  position: absolute;
+  top: 75px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.ufo__rings {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  overflow: hidden;
+}
+
+.ufo__ring {
+  width: 20px;
+  height: 20px;
+  background-color: #0f0e0e;
+  border-radius: 50%;
+}
+
+.ufo__lightColumn {
+  width: 0;
+  height: 0;
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 400px solid rgba(0, 255, 242, 0.11);
+  position: absolute;
+  top: 78px;
+  left: 0;
+  z-index: 0;
+  opacity: 0;
+  transform: scale(0, 1);
+  animation: blink 2s linear 2.2s;
+}
+
+.mistakeText {
+  font-family: 'Jet Brains Mono';
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  opacity: 0;
+  transform: rotate(-10deg) translateY(25px);
+  animation: appearance 2s linear 4s forwards;
+}
+
+.petal {
+  position: relative;
+  width: 5em;
+  height: 5em;
+  margin: 4em 9em;
+  background: crimson;
+  border-radius: 100% 0;
+  box-shadow: -6em 6em crimson;
+}
+
+@keyframes appearance {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.2;
+    transform: scale(1, 1);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0, 1);
+  }
+}
+
+@keyframes ufoMove {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  40% {
+    transform: translateX(860px);
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(865px);
+  }
+  50% {
+    transform: translateX(870px);
+  }
+  55% {
+    transform: translateX(865px);
+  }
+  60% {
+    transform: translateX(860px);
+  }
+  65% {
+    transform: translateX(865px);
+  }
+  100% {
+    transform: translateY(-2000px);
+  }
+}
+
+@keyframes think {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes cowMove {
+  0% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  100% {
+    transform: translateY(-300px) rotate(2turn) scale(0);
+  }
+}

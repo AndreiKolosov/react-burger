@@ -18,4 +18,48 @@ const postOrder = (order) => {
   }).then((res) => parseResponse(res));
 };
 
-export { ingredientsRequest, postOrder };
+const createUser = (name, email, password) => {
+  return fetch(`${apiConfig.baseUrl}/auth/register`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+    }),
+  }).then((res) => parseResponse(res));
+};
+
+const signIn = (email, password) => {
+  return fetch(`${apiConfig.baseUrl}/auth/login`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  }).then((res) => parseResponse(res));
+};
+
+const forgotPassword = (email) => {
+  return fetch(`${apiConfig.baseUrl}/password-reset`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      email,
+    }),
+  }).then((res) => parseResponse(res));
+};
+
+const resetPassword = (password, token) => {
+  return fetch(`${apiConfig.baseUrl}/password-reset`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      password,
+      token,
+    }),
+  }).then((res) => parseResponse(res));
+};
+
+export { ingredientsRequest, postOrder, createUser, forgotPassword, resetPassword, signIn };

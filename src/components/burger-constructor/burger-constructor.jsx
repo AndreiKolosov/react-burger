@@ -56,7 +56,7 @@ const BurgerConstructor = () => {
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLabels.constructor}>
       <ul className={`${styles.ingredientList}`} ref={dropTarget}>
         {!bun && filling.length === 0 && <BurgerPlug hover={isHover} />}
-        {!bun && filling.length > 0 && <BunPlug position='top' />}
+        {!bun && filling.length > 0 && <BunPlug position='top' hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
             <ConstructorElement
@@ -83,7 +83,7 @@ const BurgerConstructor = () => {
             </ul>
           </li>
         )}
-        {!bun && filling.length > 0 && <BunPlug position='bottom' />}
+        {!bun && filling.length > 0 && <BunPlug position='bottom' hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
             <ConstructorElement

@@ -1,0 +1,40 @@
+.nav {
+  max-width: 320px;
+}
+
+.nav__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 80px 0;
+}
+
+.nav__link {
+  display: block;
+  color: #8585ad;
+  text-decoration: none;
+  transition: color 0.4s linear;
+}
+
+.nav__link_active {
+  color: #f2f2f3;
+}
+
+.nav__btn {
+  border: none;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.4s linear;
+}
+
+.nav__link:hover {
+  color: #f2f2f3;
+}
+
+.nav__btn:hover {
+  color: #f2f2f3;
+}
+
+.nav__hint {
+  opacity: 0.4;
+}
