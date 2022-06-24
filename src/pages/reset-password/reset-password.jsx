@@ -5,15 +5,23 @@ import InputContainer from '../../components/form/components/input-container/inp
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from '../../services/actions/user';
 
 const ResetPasswordPage = () => {
-  const [code, setCode] = useState('');
+  const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(resetPassword(password, token));
+  };
 
   return (
     <main className={styles.content}>
-      <Form title='Восстановление пароля' name='reset-password'>
+      <Form title='Восстановление пароля' name='reset-password' onSubmit={submitHandler}>
         <InputContainer gap='mb-6'>
           <Input
             name='password'
@@ -30,19 +38,19 @@ const ResetPasswordPage = () => {
         </InputContainer>
         <InputContainer gap='mb-6'>
           <Input
-            name='code'
-            value={code}
+            name='token'
+            value={token}
             type='text'
             size='default'
             placeholder='Введите код из письма'
             onChange={(e) => {
-              setCode(e.target.value);
+              setToken(e.target.value);
             }}
           />
         </InputContainer>
         <SubmitButton
           title='Восстановить'
-          disabled={password && code ? false : true}
+          disabled={password && token ? false : true}
           name='reset-password'
           gap='mb-20'
         />

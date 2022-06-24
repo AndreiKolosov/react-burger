@@ -10,17 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createNewUser } from '../../services/actions/user';
 
 const RegistrationPage = () => {
-  const { user, isAuth } = useSelector((store) => store.user);
+  const { isAuth } = useSelector((store) => store.user.user);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();
-  console.log(user, 'user');
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createNewUser(userName, email, password));
+    console.log(isAuth);
   };
 
   if (isAuth) {
@@ -76,7 +76,7 @@ const RegistrationPage = () => {
         </InputContainer>
         <SubmitButton
           title='Зарегистрироваться'
-          name='login'
+          name='registration'
           gap='mb-20'
           disabled={userName && email && password ? false : true}
         />

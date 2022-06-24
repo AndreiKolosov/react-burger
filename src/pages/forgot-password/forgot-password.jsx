@@ -5,13 +5,33 @@ import InputContainer from '../../components/form/components/input-container/inp
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { recoverPassword } from '../../services/actions/user';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
+  const { canResetPassword } = useSelector((store) => store.user.user);
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(recoverPassword(email));
+  };
+
+  if (canResetPassword) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/reset-password',
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.content}>
-      <Form title='Восстановление пароля' name='forgot-password'>
+      <Form title='Восстановление пароля' name='forgot-password' onSubmit={submitHandler}>
         <InputContainer gap='mb-6'>
           <Input
             name='email'

@@ -5,15 +5,35 @@ import InputContainer from '../../components/form/components/input-container/inp
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../../services/actions/user';
+import { Redirect } from 'react-router-dom';
 
 const LoginPage = () => {
+  const { isAuth } = useSelector((store) => store.user.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(logIn(email, password));
+  };
+
+  if (isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
 
   return (
     <main className={styles.content}>
-      <Form title='Вход' name='login'>
+      <Form title='Вход' name='login' onSubmit={submitHandler}>
         <InputContainer gap='mb-6'>
           <Input
             name='email'

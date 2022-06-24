@@ -1,71 +1,179 @@
+import { getCookie } from '../../utils/utils';
 import {
-  CREATE_USER_FAILED,
-  CREATE_USER_REQUEST,
-  CREATE_USER_SUCCESS,
+  REGISTR_USER_FAILED,
+  REGISTR_USER_REQUEST,
+  REGISTR_USER_SUCCESS,
+  PWD_RECOVER_FAILED,
+  PWD_RECOVER_REQUEST,
+  PWD_RECOVER_SUCCESS,
+  LOG_IN_FAILED,
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
   PWD_RESET_FAILED,
   PWD_RESET_REQUEST,
   PWD_RESET_SUCCESS,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILED,
 } from '../actions/user';
 
 const initialState = {
-  userCreateRequest: false,
-  userCreateFAiled: false,
-  pwdResetRequest: false,
-  pwdResetFailed: false,
-  pwdResetStatus: false,
-  isAuth: false,
   user: {
     name: '',
     email: '',
+    canResetPassword: false,
+    isAuth: !!getCookie('accessToken'),
   },
+  errMessage: '',
+  registerUserRequest: false,
+  registerUserErr: false,
+  logInUserRequest: false,
+  logInUserErr: false,
+  passwordRecoverRequest: false,
+  passwordRecoverErr: false,
+  passwordResetRequest: false,
+  passwordResetErr: false,
+  logOutRequest: false,
+  logOutErr: false,
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case CREATE_USER_REQUEST: {
+    case REGISTR_USER_REQUEST: {
       return {
         ...state,
-        userCreateRequest: true,
-        userCreateFAiled: false,
+        registerUserRequest: true,
+        registerUserErr: false,
+        errMessage: '',
       };
     }
-    case CREATE_USER_SUCCESS: {
+    case REGISTR_USER_SUCCESS: {
       return {
         ...state,
-        userCreateRequest: false,
-        userCreateFAiled: false,
-        user: action.user,
-        isAuth: true,
+        registerUserRequest: false,
+        registerUserErr: false,
+        user: {
+          ...state.user,
+          name: action.user,
+        },
       };
     }
-    case CREATE_USER_FAILED: {
+    case REGISTR_USER_FAILED: {
       return {
         ...state,
-        userCreateFAiled: true,
-        userCreateRequest: false,
+        registerUserRequest: false,
+        registerUserErr: true,
+        errMessage: action.err,
+      };
+    }
+    case PWD_RECOVER_REQUEST: {
+      return {
+        ...state,
+        passwordRecoverRequest: true,
+        passwordRecoverErr: false,
+        errMessage: '',
+      };
+    }
+    case PWD_RECOVER_SUCCESS: {
+      return {
+        ...state,
+        passwordRecoverRequest: false,
+        passwordRecoverErr: false,
+        user: {
+          ...state.user,
+          canResetPassword: true,
+        },
+      };
+    }
+    case PWD_RECOVER_FAILED: {
+      return {
+        ...state,
+        passwordRecoverRequest: false,
+        passwordRecoverErr: true,
+        errMessage: action.err,
+        user: {
+          ...state.user,
+          canResetPassword: false,
+        },
+      };
+    }
+    case LOG_IN_REQUEST: {
+      return {
+        ...state,
+        logInUserRequest: true,
+        logInUserErr: false,
+        errMessage: '',
+      };
+    }
+    case LOG_IN_SUCCESS: {
+      return {
+        ...state,
+        logInUserRequest: false,
+        logInUserErr: false,
+        user: {
+          ...state.user,
+          name: action.user,
+          isAuth: true,
+        },
+      };
+    }
+    case LOG_IN_FAILED: {
+      return {
+        ...state,
+        logInUserRequest: false,
+        logInUserErr: true,
+        errMessage: action.err,
       };
     }
     case PWD_RESET_REQUEST: {
       return {
         ...state,
-        pwdResetRequest: true,
-        pwdResetFailed: false,
+        passwordResetRequest: true,
+        passwordResetErr: false,
+        errMessage: '',
       };
     }
     case PWD_RESET_SUCCESS: {
       return {
         ...state,
-        pwdResetRequest: false,
-        pwdResetFailed: false,
-        pwdResetStatus: true,
+        passwordResetRequest: false,
+        passwordResetErr: false,
       };
     }
     case PWD_RESET_FAILED: {
       return {
         ...state,
-        pwdResetFailed: true,
-        pwdResetRequest: false,
-        pwdResetStatus: false,
+        passwordResetRequest: false,
+        passwordResetErr: true,
+        errMessage: action.err,
+      };
+    }
+    case LOG_OUT_REQUEST: {
+      return {
+        ...state,
+        logOutRequest: true,
+        logOutErr: false,
+        errMessage: '',
+      };
+    }
+    case LOG_OUT_SUCCESS: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutErr: false,
+        user: {
+          ...state.user,
+          name: '',
+          email: '',
+        },
+      };
+    }
+    case LOG_OUT_FAILED: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutErr: true,
+        errMessage: action.err,
       };
     }
     default: {

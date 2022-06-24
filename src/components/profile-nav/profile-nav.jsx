@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../services/actions/user';
 
 const ProfileNav = () => {
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <nav className={styles.nav}>
       <ul className={`${styles.nav__list}`}>
@@ -25,6 +32,7 @@ const ProfileNav = () => {
         </li>
         <li>
           <button
+            onClick={handleLogOut}
             className={`${styles.nav__btn} text text_type_main-medium text_color_inactive pt-4 pb-4`}>
             Выход
           </button>

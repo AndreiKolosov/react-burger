@@ -1,7 +1,7 @@
 import { SET_INGREDIENT, CLOSE_INGREDIENT_DETAILS } from '../actions/ingredient';
 
 const initialState = {
-  viewedIngredient: null,
+  selectedIngredient: null,
 };
 
 export const ingredientReducer = (state = initialState, action) => {
@@ -9,14 +9,13 @@ export const ingredientReducer = (state = initialState, action) => {
     case SET_INGREDIENT: {
       return {
         ...state,
-        viewedIngredient: action.ingredient,
+        selectedIngredient: action.ingredient,
       };
     }
     case CLOSE_INGREDIENT_DETAILS: {
       return {
         ...state,
-        isIngredientDetailsOpened: false,
-        viewedIngredient: null,
+        selectedIngredient: null,
       };
     }
     default: {

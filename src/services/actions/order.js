@@ -1,4 +1,4 @@
-import { postOrder } from '../../utils/api';
+import api from '../../utils/api';
 
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
@@ -21,7 +21,8 @@ export function resetOrderError() {
 export function postOrderRequest(order) {
   return function (dispatch) {
     dispatch({ type: POST_ORDER_REQUEST });
-    postOrder(order)
+    api
+      .postOrder(order)
       .then((res) => dispatch({ type: POST_ORDER_SUCCESS, orderNumber: res.order.number }))
       .catch((err) => dispatch({ type: POST_ORDER_FAILED }));
   };

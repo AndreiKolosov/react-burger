@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24b758fc-3443-45b6-b2de-00157dbb32fc" name="Changes" comment="" />
+    <list default="true" id="24b758fc-3443-45b6-b2de-00157dbb32fc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/app/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/app/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/burger-ingredients/burger-ingredients.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/burger-ingredients/burger-ingredients.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login/login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login/login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/registration/registration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/registration/registration.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/actions/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/actions/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/reducers/ingredient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/reducers/ingredient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/reducers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/reducers/user.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +46,7 @@
       <option name="presentableId" value="Default" />
       <updated>1653579704882</updated>
       <workItem from="1653579707112" duration="37000" />
+      <workItem from="1656010937274" duration="1000" />
     </task>
     <servers />
   </component>
