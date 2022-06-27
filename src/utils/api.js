@@ -8,7 +8,7 @@ class Api {
   }
 
   _parseResponse(res) {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(`Ошибка: ${err}`));
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
   }
 
   ingredientsRequest() {
@@ -94,6 +94,16 @@ class Api {
       body: JSON.stringify({
         password,
         token,
+      }),
+    }).then((res) => this._parseResponse(res));
+  }
+
+  refreshToken() {
+    return fetch(`${this._baseUrl}/auth/token`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        token: getCookie('refreshToken'),
       }),
     }).then((res) => this._parseResponse(res));
   }

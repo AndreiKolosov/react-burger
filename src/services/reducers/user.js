@@ -41,6 +41,10 @@ const initialState = {
   passwordResetErr: false,
   logOutRequest: false,
   logOutErr: false,
+  getUserRequest: false,
+  getUserFailed: false,
+  patchUserRequest: false,
+  patchUserFailed: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -175,6 +179,60 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logOutRequest: false,
         logOutErr: true,
+        errMessage: action.err,
+      };
+    }
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        getUserRequest: true,
+        getUserFailed: false,
+      };
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserFailed: false,
+        user: {
+          ...state.user,
+          name: action.user.name,
+          email: action.user.email,
+        },
+      };
+    }
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserFailed: true,
+        errMessage: action.err,
+      };
+    }
+    case PATCH_USER_REQUEST: {
+      return {
+        ...state,
+        patchUserRequest: true,
+        patchUserFailed: false,
+      };
+    }
+    case PATCH_USER_SUCCESS: {
+      return {
+        ...state,
+        patchUserRequest: false,
+        patchUserFailed: false,
+        user: {
+          ...state.user,
+          name: action.user.name,
+          email: action.user.email,
+        },
+      };
+    }
+    case PATCH_USER_FAILED: {
+      return {
+        ...state,
+        patchUserRequest: false,
+        patchUserFailed: true,
         errMessage: action.err,
       };
     }

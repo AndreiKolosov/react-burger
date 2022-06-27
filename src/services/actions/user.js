@@ -4,24 +4,34 @@ import { setCookie, deleteCookie } from '../../utils/utils';
 export const REGISTR_USER_REQUEST = 'REGISTR_USER_REQUEST';
 export const REGISTR_USER_SUCCESS = 'REGISTR_USER_SUCCESS';
 export const REGISTR_USER_FAILED = 'REGISTR_USER_FAILED';
+
 export const PWD_RECOVER_REQUEST = 'PWD_RECOVER_REQUEST';
 export const PWD_RECOVER_FAILED = 'PWD_RECOVER_FAILED';
 export const PWD_RECOVER_SUCCESS = 'PWD_RECOVER_SUCCESS';
+
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILED = 'LOG_IN_FAILED';
+
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILED = 'LOG_OUT_FAILED';
+
 export const PWD_RESET_REQUEST = 'PWD_RESET_REQUEST';
 export const PWD_RESET_SUCCESS = 'PWD_RESET_SUCCESS';
 export const PWD_RESET_FAILED = 'PWD_RESET_FAILED';
+
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_FAILED = 'GET_USER_FAILED';
+
 export const PATCH_USER_REQUEST = 'PATCH_USER_REQUEST';
 export const PATCH_USER_SUCCESS = 'PATCH_USER_SUCCESS';
 export const PATCH_USER_FAILED = 'PATCH_USER_FAILED';
+
+export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
+export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
+export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
 export const createNewUser = (name, email, password) => {
   return function (dispatch) {
@@ -69,7 +79,9 @@ export const logIn = (email, password) => {
         setCookie('refreshToken', res.refreshToken);
         dispatch({ type: LOG_IN_SUCCESS, user: res.user });
       })
-      .catch((err) => dispatch({ type: LOG_IN_FAILED, err: err.message }));
+      .catch((err) => {
+        dispatch({ type: LOG_IN_FAILED, err: err.message });
+      });
   };
 };
 
@@ -87,10 +99,46 @@ export const logOut = () => {
   };
 };
 
-export const getUser = () => {
-  return function (dispatch) {};
+export const refreshToken = () => {
+  return function (dispatch) {
+    dispatch({ type: REFRESH_TOKEN_REQUEST });
+    api
+      .refreshToken()
+      .then((res) => {
+        dispatch({ type: REFRESH_TOKEN_SUCCESS });
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+        setCookie('refreshToken', res.refreshToken);
+      })
+      .catch((err) => dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message }));
+  };
 };
 
-export const patchUser = () => {
-  return function (dispatch) {};
+export const getUser = () => {
+  return function (dispatch) {
+    dispatch({ type: GET_USER_REQUEST });
+    api
+      .getUser()
+      .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
+      .catch((err) => {
+        if (err.message === 'jwt expired' || 'jwt malformed') {
+          dispatch(refreshToken());
+        }
+        dispatch({ type: GET_USER_FAILED, err: err.message });
+      });
+  };
+};
+
+export const patchUser = (name, email) => {
+  return function (dispatch) {
+    dispatch({ type: PATCH_USER_REQUEST });
+    api
+      .patchUser(name, email)
+      .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
+      .catch((err) => {
+        if (err.message === 'jwt expired' || 'jwt malformed') {
+          dispatch(refreshToken());
+        }
+        dispatch({ type: PATCH_USER_FAILED, err: err.message });
+      });
+  };
 };
