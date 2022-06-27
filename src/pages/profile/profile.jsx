@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 
 const ProfilePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { user } = useSelector((store) => store.user);
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email);
+      setName(user.name);
+    }
+  }, [user]);
 
   return (
     <main className={styles.content}>

@@ -16,6 +16,12 @@ export const LOG_OUT_FAILED = 'LOG_OUT_FAILED';
 export const PWD_RESET_REQUEST = 'PWD_RESET_REQUEST';
 export const PWD_RESET_SUCCESS = 'PWD_RESET_SUCCESS';
 export const PWD_RESET_FAILED = 'PWD_RESET_FAILED';
+export const GET_USER_REQUEST = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
+export const PATCH_USER_REQUEST = 'PATCH_USER_REQUEST';
+export const PATCH_USER_SUCCESS = 'PATCH_USER_SUCCESS';
+export const PATCH_USER_FAILED = 'PATCH_USER_FAILED';
 
 export const createNewUser = (name, email, password) => {
   return function (dispatch) {
@@ -73,10 +79,18 @@ export const logOut = () => {
     api
       .logOut()
       .then((res) => {
+        dispatch({ type: LOG_OUT_SUCCESS });
         deleteCookie('accessToken');
         deleteCookie('refreshToken');
-        dispatch({ type: LOG_OUT_SUCCESS });
       })
       .catch((err) => dispatch({ type: LOG_OUT_FAILED, err: err.message }));
   };
+};
+
+export const getUser = () => {
+  return function (dispatch) {};
+};
+
+export const patchUser = () => {
+  return function (dispatch) {};
 };

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './profile-nav.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../services/actions/user';
 
 const ProfileNav = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const handleLogOut = () => {
+  const handleLogOut = useCallback(() => {
     dispatch(logOut());
-  };
+    history.replace({ pathname: '/login' });
+  }, [dispatch, logOut, history]);
+
   return (
     <nav className={styles.nav}>
       <ul className={`${styles.nav__list}`}>

@@ -14,13 +14,11 @@ const RegistrationPage = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createNewUser(userName, email, password));
-    console.log(isAuth);
   };
 
   if (isAuth) {
@@ -61,14 +59,10 @@ const RegistrationPage = () => {
           />
         </InputContainer>
         <InputContainer gap='mb-6'>
-          <Input
+          <PasswordInput
             name='password'
-            type={showPass ? 'text' : 'password'}
             value={password}
             size='default'
-            placeholder='Пароль'
-            icon={!showPass ? 'HideIcon' : 'ShowIcon'}
-            onIconClick={() => setShowPass(!showPass)}
             onChange={(e) => {
               setPassword(e.target.value);
             }}

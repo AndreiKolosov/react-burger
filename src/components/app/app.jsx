@@ -16,7 +16,7 @@ import {
 function App() {
   return (
     <>
-      <Router>
+      <Router basename='/react-burger'>
         <AppHeader />
         <Switch>
           <Route path='/' exact children={<HomePage />} />

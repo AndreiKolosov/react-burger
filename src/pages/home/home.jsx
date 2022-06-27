@@ -10,6 +10,7 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import AppHeader from '../../components/app-header/app-header';
 import { resetOrderError } from '../../services/actions/order';
 import { getIngredients, resetIngredientsError } from '../../services/actions/ingredients';
+import Notification from '../../components/notification/notification';
 
 const HomePage = () => {
   const { ingredientsRequest, ingredientsFailed } = useSelector((store) => store.ingredients);
@@ -40,7 +41,7 @@ const HomePage = () => {
       )}
 
       {ingredientsFailed && orderFailed && (
-        <Modal heading={'Что-то пошло не так... =('} closeModal={resetErrors} />
+        <Notification message='Сервер не дал вам ингредиенты. Возможно вы ему просто не нравитесь...' />
       )}
     </div>
   );

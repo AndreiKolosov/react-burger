@@ -7,9 +7,12 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
   const { pathname } = useLocation();
+  const { isAuth, user } = useSelector((store) => store.user);
+  console.log(user);
 
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
@@ -47,7 +50,7 @@ const AppHeader = () => {
           className={`${styles.link} text text_type_main-default`}
           activeClassName={styles.link_active}>
           <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
-          <span className='ml-2'>Личный кабинет</span>
+          <span className='ml-2'>{isAuth ? `${user?.name}` : 'Личный кабинет'}</span>
         </NavLink>
       </nav>
     </header>

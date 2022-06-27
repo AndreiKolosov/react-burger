@@ -15,15 +15,21 @@ import {
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   LOG_OUT_FAILED,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILED,
+  PATCH_USER_REQUEST,
+  PATCH_USER_SUCCESS,
+  PATCH_USER_FAILED,
 } from '../actions/user';
 
 const initialState = {
   user: {
     name: '',
     email: '',
-    canResetPassword: false,
-    isAuth: !!getCookie('accessToken'),
   },
+  canResetPassword: false,
+  isAuth: !!getCookie('accessToken'),
   errMessage: '',
   registerUserRequest: false,
   registerUserErr: false,
@@ -79,10 +85,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordRecoverRequest: false,
         passwordRecoverErr: false,
-        user: {
-          ...state.user,
-          canResetPassword: true,
-        },
+        canResetPassword: true,
       };
     }
     case PWD_RECOVER_FAILED: {
@@ -91,10 +94,7 @@ export const userReducer = (state = initialState, action) => {
         passwordRecoverRequest: false,
         passwordRecoverErr: true,
         errMessage: action.err,
-        user: {
-          ...state.user,
-          canResetPassword: false,
-        },
+        canResetPassword: false,
       };
     }
     case LOG_IN_REQUEST: {
@@ -110,10 +110,11 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logInUserRequest: false,
         logInUserErr: false,
+        isAuth: true,
         user: {
           ...state.user,
-          name: action.user,
-          isAuth: true,
+          name: action.user.name,
+          email: action.user.email,
         },
       };
     }
@@ -161,6 +162,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logOutRequest: false,
         logOutErr: false,
+        isAuth: false,
         user: {
           ...state.user,
           name: '',

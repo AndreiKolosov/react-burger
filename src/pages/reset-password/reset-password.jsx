@@ -4,14 +4,13 @@ import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../services/actions/user';
 
 const ResetPasswordPage = () => {
   const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
-  const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
@@ -23,14 +22,10 @@ const ResetPasswordPage = () => {
     <main className={styles.content}>
       <Form title='Восстановление пароля' name='reset-password' onSubmit={submitHandler}>
         <InputContainer gap='mb-6'>
-          <Input
+          <PasswordInput
             name='password'
-            type={showPass ? 'text' : 'password'}
             value={password}
             size='default'
-            placeholder='Введите новый пароль'
-            icon={!showPass ? 'HideIcon' : 'ShowIcon'}
-            onIconClick={() => setShowPass(!showPass)}
             onChange={(e) => {
               setPassword(e.target.value);
             }}

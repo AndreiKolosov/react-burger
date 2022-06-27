@@ -11,7 +11,7 @@ import { recoverPassword } from '../../services/actions/user';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
-  const { canResetPassword } = useSelector((store) => store.user.user);
+  const { canResetPassword } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
