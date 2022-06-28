@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Logo,
   BurgerIcon,
@@ -7,12 +7,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../services/actions/user';
 
 const AppHeader = () => {
   const { pathname } = useLocation();
   const { isAuth, user } = useSelector((store) => store.user);
-  console.log(user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    isAuth && dispatch(getUser());
+  }, [dispatch, isAuth]);
 
   return (
     <header className={`${styles.header} pt-4 pb-4`}>

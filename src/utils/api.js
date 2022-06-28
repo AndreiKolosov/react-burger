@@ -1,4 +1,3 @@
-import { getCookie } from './utils';
 import { apiConfig } from './variables';
 
 class Api {
@@ -55,7 +54,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        token: getCookie('refreshToken'),
+        token: localStorage.getItem('refreshToken'),
       }),
     }).then((res) => this._parseResponse(res));
   }
@@ -68,13 +67,17 @@ class Api {
 
   patchUser(name, email, password) {
     return fetch(`${this._baseUrl}/auth/user`, {
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
         name: name,
         password: password,
       }),
-    }).then((res) => this._parseResponse(res));
+    }).then((res) => {
+      console.log('here');
+      this._parseResponse(res);
+    });
   }
 
   forgotPassword(email) {
@@ -103,7 +106,7 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        token: getCookie('refreshToken'),
+        token: localStorage.getItem('refreshToken'),
       }),
     }).then((res) => this._parseResponse(res));
   }

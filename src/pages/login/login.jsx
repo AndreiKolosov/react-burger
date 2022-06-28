@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './login.module.css';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
@@ -15,10 +15,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(logIn(email, password));
-  };
+  const submitHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(logIn(email, password));
+    },
+    [dispatch, email, password]
+  );
 
   if (isAuth) {
     return (

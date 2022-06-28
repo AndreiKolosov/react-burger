@@ -1,5 +1,4 @@
 import api from '../../utils/api';
-import { setCookie, deleteCookie } from '../../utils/utils';
 
 export const REGISTR_USER_REQUEST = 'REGISTR_USER_REQUEST';
 export const REGISTR_USER_SUCCESS = 'REGISTR_USER_SUCCESS';
@@ -39,8 +38,8 @@ export const createNewUser = (name, email, password) => {
     api
       .createUser(name, email, password)
       .then((res) => {
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-        setCookie('refreshToken', res.refreshToken);
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: REGISTR_USER_SUCCESS, user: res.user });
       })
       .catch((err) => {
@@ -75,8 +74,8 @@ export const logIn = (email, password) => {
     api
       .logIn(email, password)
       .then((res) => {
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-        setCookie('refreshToken', res.refreshToken);
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: LOG_IN_SUCCESS, user: res.user });
       })
       .catch((err) => {
@@ -92,8 +91,8 @@ export const logOut = () => {
       .logOut()
       .then((res) => {
         dispatch({ type: LOG_OUT_SUCCESS });
-        deleteCookie('accessToken');
-        deleteCookie('refreshToken');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
       })
       .catch((err) => dispatch({ type: LOG_OUT_FAILED, err: err.message }));
   };
@@ -106,8 +105,8 @@ export const refreshToken = () => {
       .refreshToken()
       .then((res) => {
         dispatch({ type: REFRESH_TOKEN_SUCCESS });
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
-        setCookie('refreshToken', res.refreshToken);
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
       })
       .catch((err) => dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message }));
   };
@@ -120,7 +119,7 @@ export const getUser = () => {
       .getUser()
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
-        if (err.message === 'jwt expired' || 'jwt malformed') {
+        if (err.message === 'jwt expired') {
           dispatch(refreshToken());
         }
         dispatch({ type: GET_USER_FAILED, err: err.message });
@@ -128,14 +127,17 @@ export const getUser = () => {
   };
 };
 
-export const patchUser = (name, email) => {
+export const patchUser = (name, email, password) => {
   return function (dispatch) {
     dispatch({ type: PATCH_USER_REQUEST });
     api
-      .patchUser(name, email)
-      .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
+      .patchUser(name, email, password)
+      .then((res) => {
+        console.log('action');
+        dispatch({ type: PATCH_USER_SUCCESS, user: res.user });
+      })
       .catch((err) => {
-        if (err.message === 'jwt expired' || 'jwt malformed') {
+        if (err.message === 'jwt expired') {
           dispatch(refreshToken());
         }
         dispatch({ type: PATCH_USER_FAILED, err: err.message });

@@ -1,4 +1,3 @@
-import { getCookie } from '../../utils/utils';
 import {
   REGISTR_USER_FAILED,
   REGISTR_USER_REQUEST,
@@ -29,7 +28,7 @@ const initialState = {
     email: '',
   },
   canResetPassword: false,
-  isAuth: !!getCookie('accessToken'),
+  isAuth: !!localStorage.getItem('accessToken'),
   errMessage: '',
   registerUserRequest: false,
   registerUserErr: false,

@@ -1,6 +1,6 @@
 # <a id="top" />Stellar Burger
 
-![Картинка](./images/logo.png)
+![Картинка](./src/images/logo.png)
 
 ---
 

@@ -10,7 +10,8 @@ const ProfileNav = () => {
 
   const handleLogOut = useCallback(() => {
     dispatch(logOut());
-    history.replace({ pathname: '/login' });
+
+    history.replace({ path: '/login' });
   }, [dispatch, logOut, history]);
 
   return (

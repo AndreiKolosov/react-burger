@@ -1,23 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './profile.module.css';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import FormControls from '../../components/form/components/form-controls/form-controls';
+import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
+import { patchUser } from '../../services/actions/user';
 
 const ProfilePage = () => {
+  const [isBtnsVisible, setIsBtnsVisible] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user } = useSelector((store) => store.user);
-
+  const { user, patchUserRequest } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (user) {
+    setEmail(user.email);
+    setName(user.name);
+  }, [user]);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(patchUserRequest);
+      dispatch(patchUser(name, email, password));
+    },
+    [dispatch, name, email, password]
+  );
+
+  const handleCancel = useCallback(
+    (e) => {
+      e.preventDefault();
       setEmail(user.email);
       setName(user.name);
-    }
-  }, [user]);
+      setPassword('');
+    },
+    [user]
+  );
 
   return (
     <main className={styles.content}>
@@ -25,7 +46,7 @@ const ProfilePage = () => {
         <ProfileNav />
       </aside>
       <section className={styles.profile}>
-        <Form name='profile'>
+        <Form name='profile' onSubmit={handleSubmit}>
           <InputContainer gap='mb-6'>
             <Input
               name='name'
@@ -52,7 +73,7 @@ const ProfilePage = () => {
               }}
             />
           </InputContainer>
-          <InputContainer>
+          <InputContainer gap='mb-6'>
             <Input
               name='password'
               value={password}
@@ -65,6 +86,12 @@ const ProfilePage = () => {
               }}
             />
           </InputContainer>
+          <FormControls>
+            <Button onClick={handleCancel} type='secondary' size='medium'>
+              Отмена
+            </Button>
+            <SubmitButton title='Сохранить' name='profile' />
+          </FormControls>
         </Form>
       </section>
     </main>
