@@ -7,14 +7,13 @@ import Loader from '../../components/loader/loader';
 import Modal from '../../components/modal/modal';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
-import AppHeader from '../../components/app-header/app-header';
 import { resetOrderError } from '../../services/actions/order';
-import { getIngredients, resetIngredientsError } from '../../services/actions/ingredients';
+import { resetIngredientsError } from '../../services/actions/ingredients';
 import Notification from '../../components/notification/notification';
-import { checkAuth } from '../../services/actions/user';
 
 const HomePage = () => {
   const { ingredientsRequest, ingredientsFailed } = useSelector((store) => store.ingredients);
+  const { registerSuccess, user } = useSelector((store) => store.user);
   const { orderFailed } = useSelector((store) => store.order);
 
   const dispatch = useDispatch();
@@ -23,11 +22,6 @@ const HomePage = () => {
     dispatch(resetIngredientsError());
     dispatch(resetOrderError());
   };
-
-  useEffect(() => {
-    dispatch(getIngredients());
-    dispatch(checkAuth());
-  }, []);
 
   return (
     <div className={styles.home}>
@@ -43,7 +37,13 @@ const HomePage = () => {
       )}
 
       {ingredientsFailed && orderFailed && (
-        <Notification message='Сервер не дал вам ингредиенты. Возможно вы ему просто не нравитесь...' />
+        <Notification message='Сервер не ответил на запрос и не дал вам ингредиенты. Возможно вы ему не нравитесь...' />
+      )}
+      {registerSuccess && (
+        <Notification
+          heading='Поздравляем!'
+          message={`${user.name}, Вы успешно зарегестрированы!`}
+        />
       )}
     </div>
   );

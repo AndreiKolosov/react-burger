@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
+import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn, resetLogInErr } from '../../services/actions/user';
+import { emailRegExp } from '../../utils/validate';
 import styles from './login.module.css';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
-import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { logIn, resetLogInErr } from '../../services/actions/user';
-import { Redirect, useLocation } from 'react-router-dom';
-import { emailRegExp } from '../../utils/validate';
 import Loader from '../../components/loader/loader';
 import Notification from '../../components/notification/notification';
 
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const submitHandler = useCallback(
+  const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
       dispatch(logIn(email, password));
@@ -46,9 +46,9 @@ const LoginPage = () => {
 
   return (
     <main className={styles.content}>
-      {logInRequest && logInErr && <Loader />}
+      {logInRequest && !logInErr && <Loader />}
       {!logInRequest && !logInErr && (
-        <Form title='Вход' name='login' onSubmit={submitHandler}>
+        <Form title='Вход' name='login' onSubmit={handleSubmit}>
           <InputContainer gap='mb-6'>
             <Input
               name='email'
@@ -94,11 +94,12 @@ const LoginPage = () => {
           />
         </Form>
       )}
-      {logInErr && (
+      {!logInRequest && logInErr && (
         <Notification
           heading='Что-то пошло не так... :('
           message={errMessage}
           resetErrors={resetError}
+          canGoHome
         />
       )}
     </main>

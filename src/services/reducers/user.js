@@ -41,6 +41,7 @@ const initialState = {
 
   registerUserRequest: false,
   registerUserErr: false,
+  registerSuccess: false,
 
   logInRequest: false,
   logInErr: false,
@@ -74,6 +75,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         registerUserRequest: true,
         registerUserErr: false,
+        registerSuccess: false,
         errMessage: '',
       };
     }
@@ -82,16 +84,15 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         registerUserRequest: false,
         registerUserErr: false,
-        user: {
-          ...state.user,
-          name: action.user,
-        },
+        registerSuccess: true,
+        user: action.user,
       };
     }
     case REGISTR_USER_FAILED: {
       return {
         ...state,
         registerUserRequest: false,
+        registerSuccess: false,
         registerUserErr: true,
         errMessage: action.err,
       };
@@ -134,7 +135,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logInRequest: false,
         logInErr: false,
-        isAuth: true,
         user: action.user,
       };
     }
@@ -182,7 +182,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logOutRequest: false,
         logOutErr: false,
-        isAuth: false,
         user: null,
       };
     }

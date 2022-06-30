@@ -171,7 +171,8 @@ export const checkAuth = () => {
   return function (dispatch) {
     dispatch({ type: CHECK_AUTH });
 
-    !!localStorage.getItem('accessToken') && getUser();
+    !!localStorage.getItem('accessToken') && dispatch(getUser());
+
     dispatch({ type: CHECK_AUTH_CHECKED });
   };
 };

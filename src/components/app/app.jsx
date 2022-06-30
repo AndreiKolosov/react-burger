@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import ProtectedRoute from '../protected-route/protected-route';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
+import { checkAuth } from '../../services/actions/user';
 import {
   HomePage,
   LoginPage,
@@ -14,6 +17,13 @@ import {
 } from '../../pages';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(checkAuth());
+  }, [dispatch]);
+
   return (
     <>
       <Router basename='/react-burger'>
