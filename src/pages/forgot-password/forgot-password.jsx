@@ -87,7 +87,7 @@ const ForgotPasswordPage = () => {
         <Notification
           heading='Кажется, произошла ошибка...'
           message={errMessage}
-          resetErrors={resetError}
+          onClose={resetError}
           canGoHome
         />
       )}

@@ -4,11 +4,11 @@ import { CloseIcon, Button } from '@ya.praktikum/react-developer-burger-ui-compo
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const Notification = ({ heading, message, repeatRequest, resetErrors, canGoHome }) => {
+const Notification = ({ heading, message, onRepeatRequest, onClose, canGoHome }) => {
   const containerRef = useRef(null);
 
   const closeNotification = () => {
-    resetErrors && resetErrors();
+    onClose && onClose();
     containerRef.current.classList.add(styles.notification_closed);
   };
 
@@ -17,12 +17,14 @@ const Notification = ({ heading, message, repeatRequest, resetErrors, canGoHome 
       <h2 className={`${styles.notification__title} text text_type_main-default mb-4`}>
         {heading}
       </h2>
-      <p className={`${styles.notification__errMessage} text text_type_main-default mb-10`}>
-        {message}
-      </p>
+      {message && (
+        <p className={`${styles.notification__errMessage} text text_type_main-default mb-10`}>
+          {message}
+        </p>
+      )}
       <div className={styles.notification__controls}>
-        {repeatRequest && (
-          <Button type='primary' size='small' onClick={() => repeatRequest()}>
+        {onRepeatRequest && (
+          <Button type='primary' size='small' onClick={() => onRepeatRequest()}>
             Повторить запрос
           </Button>
         )}
@@ -42,8 +44,8 @@ const Notification = ({ heading, message, repeatRequest, resetErrors, canGoHome 
 Notification.propTypes = {
   heading: PropTypes.string.isRequired,
   message: PropTypes.string,
-  repeatRequest: PropTypes.func,
-  resetErrors: PropTypes.func,
+  onRepeatRequest: PropTypes.func,
+  onClose: PropTypes.func,
   canGoHome: PropTypes.bool,
 };
 

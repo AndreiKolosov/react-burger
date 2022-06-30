@@ -34,7 +34,6 @@ import {
 
 const initialState = {
   user: null,
-  canResetPassword: null,
   isAuthChecked: false,
 
   errMessage: '',
@@ -48,9 +47,11 @@ const initialState = {
 
   passwordRecoverRequest: false,
   passwordRecoverErr: false,
+  canResetPassword: null,
 
   passwordResetRequest: false,
   passwordResetErr: false,
+  isPasswordReset: null,
 
   logOutRequest: false,
   logOutErr: false,
@@ -152,6 +153,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordResetRequest: true,
         passwordResetErr: false,
+        isPasswordReset: false,
         errMessage: '',
       };
     }
@@ -160,6 +162,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordResetRequest: false,
         passwordResetErr: false,
+        isPasswordReset: action.success,
       };
     }
     case PWD_RESET_FAILED: {
@@ -167,6 +170,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordResetRequest: false,
         passwordResetErr: true,
+        isPasswordReset: false,
         errMessage: action.err,
       };
     }

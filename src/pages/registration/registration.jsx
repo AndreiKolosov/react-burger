@@ -103,7 +103,7 @@ const RegistrationPage = () => {
         <Notification
           heading='Что-то пошло не так... :('
           message={errMessage}
-          resetErrors={resetError}
+          onClose={resetError}
           canGoHome
         />
       )}

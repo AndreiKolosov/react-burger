@@ -13,7 +13,9 @@ import Loader from '../../components/loader/loader';
 import Notification from '../../components/notification/notification';
 
 const LoginPage = () => {
-  const { user, logInRequest, logInErr, errMessage } = useSelector((store) => store.user);
+  const { user, logInRequest, logInErr, errMessage, isPasswordReset } = useSelector(
+    (store) => store.user
+  );
   const [email, setEmail] = useState('');
   const [hasEmailErr, setHasEmailErr] = useState(false);
   const [password, setPassword] = useState('');
@@ -98,7 +100,14 @@ const LoginPage = () => {
         <Notification
           heading='Что-то пошло не так... :('
           message={errMessage}
-          resetErrors={resetError}
+          onClose={resetError}
+          canGoHome
+        />
+      )}
+      {isPasswordReset && (
+        <Notification
+          heading='Пароль успешно изменен!'
+          message='Попробуйте выполнить вход или вернитесь на главную страницу.'
           canGoHome
         />
       )}

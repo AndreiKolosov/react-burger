@@ -85,7 +85,7 @@ export const resetPassword = (password, token) => {
     dispatch({ type: PWD_RESET_REQUEST });
     api
       .resetPassword(password, token)
-      .then((res) => dispatch({ type: PWD_RESET_SUCCESS }))
+      .then((res) => dispatch({ type: PWD_RESET_SUCCESS, success: res.success }))
       .catch((err) => dispatch({ type: PWD_RESET_FAILED, err: err.message }));
   };
 };
