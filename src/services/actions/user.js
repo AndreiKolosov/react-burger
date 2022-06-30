@@ -1,4 +1,5 @@
 import api from '../../utils/api';
+import { getCookie, setCookie, deleteCookie } from '../../utils/cookie';
 
 export const REGISTR_USER_REQUEST = 'REGISTR_USER_REQUEST';
 export const REGISTR_USER_SUCCESS = 'REGISTR_USER_SUCCESS';
@@ -60,7 +61,7 @@ export const createNewUser = (name, email, password) => {
     api
       .createUser(name, email, password)
       .then((res) => {
-        localStorage.setItem('accessToken', res.accessToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
         localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: REGISTR_USER_SUCCESS, user: res.user });
       })
@@ -96,7 +97,7 @@ export const logIn = (email, password) => {
     api
       .logIn(email, password)
       .then((res) => {
-        localStorage.setItem('accessToken', res.accessToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
         localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: LOG_IN_SUCCESS, user: res.user });
       })
@@ -113,7 +114,7 @@ export const logOut = () => {
       .logOut()
       .then((res) => {
         dispatch({ type: LOG_OUT_SUCCESS });
-        localStorage.removeItem('accessToken');
+        deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
       })
       .catch((err) => dispatch({ type: LOG_OUT_FAILED, err: err.message }));
@@ -127,7 +128,7 @@ export const refreshToken = () => {
       .refreshToken()
       .then((res) => {
         dispatch({ type: REFRESH_TOKEN_SUCCESS });
-        localStorage.setItem('accessToken', res.accessToken);
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
         localStorage.setItem('refreshToken', res.refreshToken);
       })
       .catch((err) => dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message }));
@@ -171,7 +172,7 @@ export const checkAuth = () => {
   return function (dispatch) {
     dispatch({ type: CHECK_AUTH });
 
-    !!localStorage.getItem('accessToken') && dispatch(getUser());
+    !!getCookie('accessToken') && dispatch(getUser());
 
     dispatch({ type: CHECK_AUTH_CHECKED });
   };

@@ -11,6 +11,7 @@ import SubmitButton from '../../components/form/components/submit-btn/submit-btn
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import Loader from '../../components/loader/loader';
 import Notification from '../../components/notification/notification';
+import { getCookie } from '../../utils/cookie';
 
 const LoginPage = () => {
   const { user, logInRequest, logInErr, errMessage, isPasswordReset } = useSelector(
@@ -21,7 +22,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const location = useLocation();
-
+  console.log(getCookie('accessToken'));
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();

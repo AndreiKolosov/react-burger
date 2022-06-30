@@ -1,3 +1,5 @@
+import { getCookie } from './cookie';
+
 const IngredientType = {
   Bun: {
     type: 'bun',
@@ -22,7 +24,7 @@ const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('accessToken') ? localStorage.getItem('accessToken') : '',
+    Authorization: getCookie('accessToken') ? `Bearer ${getCookie('accessToken')}` : '',
   },
 };
 
