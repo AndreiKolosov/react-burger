@@ -11,6 +11,7 @@ import AppHeader from '../../components/app-header/app-header';
 import { resetOrderError } from '../../services/actions/order';
 import { getIngredients, resetIngredientsError } from '../../services/actions/ingredients';
 import Notification from '../../components/notification/notification';
+import { checkAuth } from '../../services/actions/user';
 
 const HomePage = () => {
   const { ingredientsRequest, ingredientsFailed } = useSelector((store) => store.ingredients);
@@ -25,6 +26,7 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(checkAuth());
   }, []);
 
   return (

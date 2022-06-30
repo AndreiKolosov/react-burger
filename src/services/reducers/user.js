@@ -20,30 +20,51 @@ import {
   PATCH_USER_REQUEST,
   PATCH_USER_SUCCESS,
   PATCH_USER_FAILED,
+  CHECK_AUTH,
+  CHECK_AUTH_CHECKED,
+  RESET_GET_USER_ERR,
+  RESET_LOG_IN_ERR,
+  RESET_LOG_OUT_ERR,
+  RESET_PATCH_USER_ERR,
+  RESET_PWD_RECOVER_ERR,
+  RESET_PWD_RESET_ERR,
+  RESET_REFRESH_TOKEN_ERR,
+  RESET_REGISTER_ERR,
 } from '../actions/user';
 
 const initialState = {
-  user: {
-    name: '',
-    email: '',
-  },
+  user: null,
   canResetPassword: false,
-  isAuth: !!localStorage.getItem('accessToken'),
+  isAuthChecked: false,
+
   errMessage: '',
+
   registerUserRequest: false,
   registerUserErr: false,
-  logInUserRequest: false,
-  logInUserErr: false,
+
+  logInRequest: false,
+  logInErr: false,
+
   passwordRecoverRequest: false,
   passwordRecoverErr: false,
+
   passwordResetRequest: false,
   passwordResetErr: false,
+
   logOutRequest: false,
   logOutErr: false,
+
   getUserRequest: false,
   getUserFailed: false,
+
   patchUserRequest: false,
   patchUserFailed: false,
+
+  refreshTokenRequest: false,
+  refreshTokenFailed: false,
+
+  checkAuthRequest: false,
+  checkAuthFailed: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -103,29 +124,25 @@ export const userReducer = (state = initialState, action) => {
     case LOG_IN_REQUEST: {
       return {
         ...state,
-        logInUserRequest: true,
-        logInUserErr: false,
+        logInRequest: true,
+        logInErr: false,
         errMessage: '',
       };
     }
     case LOG_IN_SUCCESS: {
       return {
         ...state,
-        logInUserRequest: false,
-        logInUserErr: false,
+        logInRequest: false,
+        logInErr: false,
         isAuth: true,
-        user: {
-          ...state.user,
-          name: action.user.name,
-          email: action.user.email,
-        },
+        user: action.user,
       };
     }
     case LOG_IN_FAILED: {
       return {
         ...state,
-        logInUserRequest: false,
-        logInUserErr: true,
+        logInRequest: false,
+        logInErr: true,
         errMessage: action.err,
       };
     }
@@ -166,11 +183,7 @@ export const userReducer = (state = initialState, action) => {
         logOutRequest: false,
         logOutErr: false,
         isAuth: false,
-        user: {
-          ...state.user,
-          name: '',
-          email: '',
-        },
+        user: null,
       };
     }
     case LOG_OUT_FAILED: {
@@ -193,11 +206,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: false,
-        user: {
-          ...state.user,
-          name: action.user.name,
-          email: action.user.email,
-        },
+        user: action.user,
       };
     }
     case GET_USER_FAILED: {
@@ -220,11 +229,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         patchUserRequest: false,
         patchUserFailed: false,
-        user: {
-          ...state.user,
-          name: action.user.name,
-          email: action.user.email,
-        },
+        user: action.user,
       };
     }
     case PATCH_USER_FAILED: {
@@ -235,6 +240,79 @@ export const userReducer = (state = initialState, action) => {
         errMessage: action.err,
       };
     }
+    case CHECK_AUTH: {
+      return {
+        ...state,
+        checkAuthRequest: true,
+        checkAuthFailed: false,
+        isAuthChecked: false,
+      };
+    }
+    case CHECK_AUTH_CHECKED: {
+      return {
+        ...state,
+        checkAuthRequest: false,
+        checkAuthFailed: false,
+        isAuthChecked: true,
+      };
+    }
+    case RESET_GET_USER_ERR: {
+      return {
+        ...state,
+        getUserFailed: false,
+        errMessage: '',
+      };
+    }
+    case RESET_LOG_IN_ERR: {
+      return {
+        ...state,
+        logInErr: false,
+        errMessage: '',
+      };
+    }
+    case RESET_LOG_OUT_ERR: {
+      return {
+        ...state,
+        logOutErr: false,
+        errMessage: '',
+      };
+    }
+    case RESET_PATCH_USER_ERR: {
+      return {
+        ...state,
+        patchUserFailed: false,
+        errMessage: '',
+      };
+    }
+    case RESET_PWD_RECOVER_ERR: {
+      return {
+        ...state,
+        passwordRecoverErr: false,
+        errMessage: '',
+      };
+    }
+    case RESET_PWD_RESET_ERR: {
+      return {
+        ...state,
+        passwordResetErr: false,
+        errMessage: '',
+      };
+    }
+    case RESET_REFRESH_TOKEN_ERR: {
+      return {
+        ...state,
+        refreshTokenFailed: false,
+        errMessage: '',
+      };
+    }
+    case RESET_REGISTER_ERR: {
+      return {
+        ...state,
+        registerUserErr: false,
+        errMessage: '',
+      };
+    }
+
     default: {
       return state;
     }

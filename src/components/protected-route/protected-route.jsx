@@ -1,15 +1,15 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ children, ...rest }) => {
-  const { isAuth } = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuth ? (
+        user ? (
           children
         ) : (
           <Redirect
