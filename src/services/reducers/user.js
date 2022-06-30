@@ -34,7 +34,7 @@ import {
 
 const initialState = {
   user: null,
-  canResetPassword: false,
+  canResetPassword: null,
   isAuthChecked: false,
 
   errMessage: '',
@@ -102,6 +102,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordRecoverRequest: true,
         passwordRecoverErr: false,
+        canResetPassword: null,
         errMessage: '',
       };
     }
@@ -110,7 +111,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordRecoverRequest: false,
         passwordRecoverErr: false,
-        canResetPassword: true,
+        canResetPassword: action.success,
       };
     }
     case PWD_RECOVER_FAILED: {
@@ -118,8 +119,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         passwordRecoverRequest: false,
         passwordRecoverErr: true,
-        errMessage: action.err,
         canResetPassword: false,
+        errMessage: action.err,
       };
     }
     case LOG_IN_REQUEST: {

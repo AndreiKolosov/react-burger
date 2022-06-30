@@ -75,7 +75,7 @@ export const recoverPassword = (email) => {
     dispatch({ type: PWD_RECOVER_REQUEST });
     api
       .forgotPassword(email)
-      .then((res) => dispatch({ type: PWD_RECOVER_SUCCESS }))
+      .then((res) => dispatch({ type: PWD_RECOVER_SUCCESS, success: res.success }))
       .catch((err) => dispatch({ type: PWD_RECOVER_FAILED, err: err.message }));
   };
 };
