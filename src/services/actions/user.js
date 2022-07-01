@@ -113,30 +113,31 @@ export const logOut = () => {
     api
       .logOut()
       .then((res) => {
-        dispatch({ type: LOG_OUT_SUCCESS });
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
+        dispatch({ type: LOG_OUT_SUCCESS });
       })
       .catch((err) => dispatch({ type: LOG_OUT_FAILED, err: err.message }));
   };
 };
 
-export const updateRefreshToken = () => {
-  return function (dispatch) {
+export const fetchWithRefresh = (request, ...requestParams) => {
+  return async function (dispatch) {
+    if (!localStorage.getItem('refreshToken')) {
+      throw new Error('Token does not exist in storage');
+    }
     dispatch({ type: REFRESH_TOKEN_REQUEST });
-    api
-      .refreshToken()
-      .then((res) => {
-        dispatch({ type: REFRESH_TOKEN_SUCCESS });
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
-        localStorage.setItem('refreshToken', res.refreshToken);
-        dispatch(getUser());
-      })
-      .catch((err) => {
-        dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
-        dispatch(logOut());
-        return Promise.reject(err);
-      });
+    try {
+      const res = await api.refreshToken();
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
+      localStorage.setItem('refreshToken', res.refreshToken);
+      dispatch({ type: REFRESH_TOKEN_SUCCESS });
+      dispatch(request(...requestParams));
+    } catch (err) {
+      dispatch(logOut());
+      dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
+      return await Promise.reject(err);
+    }
   };
 };
 
@@ -148,7 +149,7 @@ export const getUser = () => {
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(updateRefreshToken());
+          dispatch(fetchWithRefresh(getUser));
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -163,12 +164,11 @@ export const patchUser = (name, email, password) => {
     api
       .patchUser(name, email, password)
       .then((res) => {
-        console.log('action');
         dispatch({ type: PATCH_USER_SUCCESS, user: res.user });
       })
       .catch((err) => {
-        if (err.message === 'jwt expired') {
-          dispatch(updateRefreshToken());
+        if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
+          dispatch(fetchWithRefresh(patchUser, name, email, password));
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);

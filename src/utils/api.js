@@ -75,7 +75,6 @@ class Api {
         password: password,
       }),
     }).then((res) => {
-      console.log('here');
       this._parseResponse(res);
     });
   }

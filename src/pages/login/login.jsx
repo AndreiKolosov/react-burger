@@ -30,6 +30,8 @@ const LoginPage = () => {
     [dispatch, email, password]
   );
 
+  console.log(localStorage.getItem('refreshToken'));
+
   const validateEmail = useCallback(() => {
     email && setHasEmailErr(!emailRegExp.test(email));
   }, [email]);

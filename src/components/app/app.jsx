@@ -28,7 +28,6 @@ function App() {
     dispatch(checkAuth());
     dispatch(getIngredients());
   }, [dispatch]);
-
   return (
     <>
       {!isAuthChecked && (
