@@ -121,7 +121,7 @@ export const logOut = () => {
   };
 };
 
-export const refreshToken = () => {
+export const updateRefreshToken = (request) => {
   return function (dispatch) {
     dispatch({ type: REFRESH_TOKEN_REQUEST });
     api
@@ -130,8 +130,13 @@ export const refreshToken = () => {
         dispatch({ type: REFRESH_TOKEN_SUCCESS });
         setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
         localStorage.setItem('refreshToken', res.refreshToken);
+        dispatch(request());
       })
-      .catch((err) => dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message }));
+      .catch((err) => {
+        dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
+        dispatch(logOut());
+        return Promise.reject(err);
+      });
   };
 };
 
@@ -143,9 +148,11 @@ export const getUser = () => {
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken());
+          dispatch(updateRefreshToken(getUser));
+        } else {
+          dispatch({ type: GET_USER_FAILED, err: err.message });
+          return Promise.reject(err);
         }
-        dispatch({ type: GET_USER_FAILED, err: err.message });
       });
   };
 };
@@ -161,18 +168,23 @@ export const patchUser = (name, email, password) => {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(refreshToken());
+          dispatch(updateRefreshToken(patchUser));
+        } else {
+          dispatch({ type: PATCH_USER_FAILED, err: err.message });
+          return Promise.reject(err);
         }
-        dispatch({ type: PATCH_USER_FAILED, err: err.message });
       });
   };
 };
 
 export const checkAuth = () => {
   return function (dispatch) {
-    dispatch({ type: CHECK_AUTH });
+    const accessToken = getCookie('accessToken');
 
-    !!getCookie('accessToken') && dispatch(getUser());
+    dispatch({ type: CHECK_AUTH });
+    if (!!accessToken) {
+      dispatch(getUser());
+    }
 
     dispatch({ type: CHECK_AUTH_CHECKED });
   };

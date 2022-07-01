@@ -7,7 +7,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from 'react-redux';
 import FormControls from '../../components/form/components/form-controls/form-controls';
 import SubmitButton from '../../components/form/components/submit-btn/submit-btn';
-import { patchUser } from '../../services/actions/user';
+import { getUser, patchUser } from '../../services/actions/user';
 
 const ProfilePage = () => {
   const [isBtnsVisible, setIsBtnsVisible] = useState(false);

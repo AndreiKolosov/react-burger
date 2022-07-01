@@ -22,6 +22,9 @@ import {
   PATCH_USER_FAILED,
   CHECK_AUTH,
   CHECK_AUTH_CHECKED,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILED,
   RESET_GET_USER_ERR,
   RESET_LOG_IN_ERR,
   RESET_LOG_OUT_ERR,
@@ -258,6 +261,28 @@ export const userReducer = (state = initialState, action) => {
         checkAuthRequest: false,
         checkAuthFailed: false,
         isAuthChecked: true,
+      };
+    }
+    case REFRESH_TOKEN_REQUEST: {
+      return {
+        ...state,
+        refreshTokenRequest: true,
+        refreshTokenFailed: false,
+      };
+    }
+    case REFRESH_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenFailed: false,
+      };
+    }
+    case REFRESH_TOKEN_FAILED: {
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenFailed: true,
+        errMessage: action.err,
       };
     }
     case RESET_GET_USER_ERR: {

@@ -22,7 +22,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log(getCookie('accessToken'));
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
