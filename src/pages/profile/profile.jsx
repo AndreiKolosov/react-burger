@@ -17,9 +17,10 @@ const ProfilePage = () => {
   const { user, patchUserRequest } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getUser());
     setEmail(user.email);
     setName(user.name);
-  }, [user]);
+  }, [dispatch]);
 
   const handleSubmit = useCallback(
     (e) => {

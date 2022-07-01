@@ -1,5 +1,4 @@
 import { apiConfig } from './variables';
-// import { setCookie } from './cookie';
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -111,24 +110,6 @@ class Api {
       }),
     }).then((res) => this._parseResponse(res));
   }
-
-  // fetchWithRefresh(fetch) {
-  //   return fetch().catch((err) => {
-  //     if (err.message !== 'jwt expired') {
-  //       return Promise.reject(err);
-  //     } else {
-  //       this.refreshToken()
-  //         .then((res) => {
-  //           setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
-  //           localStorage.setItem('refreshToken', res.refreshToken);
-  //           fetch();
-  //         })
-  //         .catch((err) => {
-  //           return Promise.reject(err);
-  //         });
-  //     }
-  //   });
-  // }
 }
 
 export default new Api(apiConfig);

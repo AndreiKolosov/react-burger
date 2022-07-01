@@ -121,7 +121,7 @@ export const logOut = () => {
   };
 };
 
-export const updateRefreshToken = (request) => {
+export const updateRefreshToken = () => {
   return function (dispatch) {
     dispatch({ type: REFRESH_TOKEN_REQUEST });
     api
@@ -130,7 +130,7 @@ export const updateRefreshToken = (request) => {
         dispatch({ type: REFRESH_TOKEN_SUCCESS });
         setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
         localStorage.setItem('refreshToken', res.refreshToken);
-        dispatch(request());
+        dispatch(getUser());
       })
       .catch((err) => {
         dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
@@ -148,7 +148,7 @@ export const getUser = () => {
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(updateRefreshToken(getUser));
+          dispatch(updateRefreshToken());
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -168,7 +168,7 @@ export const patchUser = (name, email, password) => {
       })
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(updateRefreshToken(patchUser));
+          dispatch(updateRefreshToken());
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);
