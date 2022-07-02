@@ -5,7 +5,7 @@ import ProtectedRoute from '../protected-route/protected-route';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
-import { checkAuth } from '../../services/actions/user';
+import { checkAuth, getUser } from '../../services/actions/user';
 import {
   HomePage,
   LoginPage,
@@ -16,26 +16,32 @@ import {
   NotFound404,
   IngredientPage,
 } from '../../pages';
+import { getCookie } from '../../utils/cookie';
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuthChecked } = useSelector((store) => store.user);
+  const { isAuth } = useSelector((store) => store.user);
+  const accessToken = getCookie('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
   const loaderWrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
   };
   useEffect(() => {
-    dispatch(checkAuth());
+    if (!!accessToken) {
+      dispatch(getUser(`Bearer ${accessToken}`, refreshToken));
+    }
+    // dispatch(checkAuth());
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, [dispatch, accessToken, refreshToken]);
   return (
     <>
-      {!isAuthChecked && (
+      {!isAuth && (
         <div style={loaderWrapperStyles}>
           <Loader />
         </div>
       )}
-      {isAuthChecked && (
+      {isAuth && (
         <Router basename='/react-burger'>
           <AppHeader />
           <Switch>

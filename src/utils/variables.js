@@ -22,10 +22,6 @@ const ariaLabels = {
 
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: getCookie('accessToken') ? `Bearer ${getCookie('accessToken')}` : '',
-  },
 };
 
 export { IngredientType, ariaLabels, apiConfig };

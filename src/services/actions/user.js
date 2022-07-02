@@ -41,8 +41,8 @@ export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 export const RESET_REFRESH_TOKEN_ERR = 'RESET_REFRESH_TOKEN_ERR';
 
-export const CHECK_AUTH = 'CHECK_AUTH';
-export const CHECK_AUTH_CHECKED = 'CHECK_AUTH_CHECKED';
+// export const CHECK_AUTH = 'CHECK_AUTH';
+// export const CHECK_AUTH_CHECKED = 'CHECK_AUTH_CHECKED';
 
 // Errors reset---------------------------------------------------------------
 export const resetRegisterError = () => ({ type: RESET_REGISTER_ERR });
@@ -61,7 +61,7 @@ export const createNewUser = (name, email, password) => {
     api
       .createUser(name, email, password)
       .then((res) => {
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
         localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: REGISTR_USER_SUCCESS, user: res.user });
       })
@@ -97,7 +97,7 @@ export const logIn = (email, password) => {
     api
       .logIn(email, password)
       .then((res) => {
-        setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
         localStorage.setItem('refreshToken', res.refreshToken);
         dispatch({ type: LOG_IN_SUCCESS, user: res.user });
       })
@@ -107,12 +107,15 @@ export const logIn = (email, password) => {
   };
 };
 
-export const logOut = () => {
+export const logOut = (refreshToken) => {
   return function (dispatch) {
+    console.log('log out');
+
     dispatch({ type: LOG_OUT_REQUEST });
     api
-      .logOut()
+      .logOut(refreshToken)
       .then((res) => {
+        console.log('log out delete cookie');
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
         dispatch({ type: LOG_OUT_SUCCESS });
@@ -121,35 +124,49 @@ export const logOut = () => {
   };
 };
 
-export const fetchWithRefresh = (request, ...requestParams) => {
-  return async function (dispatch) {
-    if (!localStorage.getItem('refreshToken')) {
+export const fetchWithRefresh = (refreshToken, request, ...requestParams) => {
+  return function (dispatch) {
+    const refreshToken = localStorage.getItem('refreshToken');
+    console.log('fetchWithRefresh');
+    if (!refreshToken) {
       throw new Error('Token does not exist in storage');
-    }
-    dispatch({ type: REFRESH_TOKEN_REQUEST });
-    try {
-      const res = await api.refreshToken();
-      setCookie('accessToken', res.accessToken.split('Bearer ')[1], 'path=/');
-      localStorage.setItem('refreshToken', res.refreshToken);
-      dispatch({ type: REFRESH_TOKEN_SUCCESS });
-      dispatch(request(...requestParams));
-    } catch (err) {
-      dispatch(logOut());
-      dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
-      return await Promise.reject(err);
+    } else {
+      dispatch({ type: REFRESH_TOKEN_REQUEST });
+      api
+        .refreshToken(refreshToken)
+        .then((res) => {
+          console.log('fetchWithRefresh - refresh');
+          setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+          localStorage.setItem('refreshToken', res.refreshToken);
+          dispatch({ type: REFRESH_TOKEN_SUCCESS });
+          return res;
+        })
+        .then((res) => {
+          console.log('fetchWithRefresh - repeat request');
+          console.log(res);
+          dispatch(request(...requestParams));
+        })
+        .catch((err) => {
+          console.log('fetchWithRefresh - in err');
+
+          dispatch(logOut());
+          dispatch({ type: REFRESH_TOKEN_FAILED, err: err.message });
+          return Promise.reject(err);
+        });
     }
   };
 };
-
-export const getUser = () => {
+export const getUser = (accessToken, refreshToken) => {
   return function (dispatch) {
+    console.log('getUser');
     dispatch({ type: GET_USER_REQUEST });
     api
-      .getUser()
+      .getUser(accessToken)
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired') {
-          dispatch(fetchWithRefresh(getUser));
+          console.log('getUser - jwt expired');
+          dispatch(fetchWithRefresh(refreshToken, getUser));
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -158,17 +175,15 @@ export const getUser = () => {
   };
 };
 
-export const patchUser = (name, email, password) => {
+export const patchUser = (accessToken, name, email, password, refreshToken) => {
   return function (dispatch) {
     dispatch({ type: PATCH_USER_REQUEST });
     api
-      .patchUser(name, email, password)
-      .then((res) => {
-        dispatch({ type: PATCH_USER_SUCCESS, user: res.user });
-      })
+      .patchUser(accessToken, name, email, password)
+      .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
-          dispatch(fetchWithRefresh(patchUser, name, email, password));
+          dispatch(fetchWithRefresh(refreshToken, patchUser, name, email, password));
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -177,15 +192,15 @@ export const patchUser = (name, email, password) => {
   };
 };
 
-export const checkAuth = () => {
-  return function (dispatch) {
-    const accessToken = getCookie('accessToken');
+// export const checkAuth = (accessToken, re) => {
+//   return function (dispatch) {
+//     const accessToken = getCookie('accessToken');
+//     console.log('checkAuth');
+//     dispatch({ type: CHECK_AUTH });
+//     if (!!accessToken) {
+//       dispatch(getUser());
+//     }
 
-    dispatch({ type: CHECK_AUTH });
-    if (!!accessToken) {
-      dispatch(getUser());
-    }
-
-    dispatch({ type: CHECK_AUTH_CHECKED });
-  };
-};
+//     dispatch({ type: CHECK_AUTH_CHECKED });
+//   };
+// };

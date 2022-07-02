@@ -1,9 +1,8 @@
 import { apiConfig } from './variables';
 
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
   }
 
   _parseResponse(res) {
@@ -12,14 +11,18 @@ class Api {
 
   ingredientsRequest() {
     return fetch(`${this._baseUrl}/ingredients`, {
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then((res) => this._parseResponse(res));
   }
 
   postOrder(order) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         ingredients: order,
       }),
@@ -29,7 +32,9 @@ class Api {
   createUser(name, email, password) {
     return fetch(`${this._baseUrl}/auth/register`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         name,
         email,
@@ -41,7 +46,9 @@ class Api {
   logIn(email, password) {
     return fetch(`${this._baseUrl}/auth/login`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         email,
         password,
@@ -49,40 +56,48 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  logOut() {
+  logOut(refreshToken) {
     return fetch(`${this._baseUrl}/auth/logout`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        token: localStorage.getItem('refreshToken'),
+        token: refreshToken,
       }),
     }).then((res) => this._parseResponse(res));
   }
 
-  getUser() {
+  getUser(accessToken) {
     return fetch(`${this._baseUrl}/auth/user`, {
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: accessToken,
+      },
     }).then((res) => this._parseResponse(res));
   }
 
-  patchUser(name, email, password) {
+  patchUser(accessToken, name, email, password) {
     return fetch(`${this._baseUrl}/auth/user`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: accessToken,
+      },
       body: JSON.stringify({
         email: email,
         name: name,
         password: password,
       }),
-    }).then((res) => {
-      this._parseResponse(res);
-    });
+    }).then((res) => this._parseResponse(res));
   }
 
   forgotPassword(email) {
     return fetch(`${this._baseUrl}/password-reset`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         email,
       }),
@@ -92,7 +107,9 @@ class Api {
   resetPassword(password, token) {
     return fetch(`${this._baseUrl}/password-reset`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         password,
         token,
@@ -100,12 +117,14 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  refreshToken() {
+  refreshToken(refreshToken) {
     return fetch(`${this._baseUrl}/auth/token`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        token: localStorage.getItem('refreshToken'),
+        token: refreshToken,
       }),
     }).then((res) => this._parseResponse(res));
   }

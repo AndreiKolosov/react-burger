@@ -7,12 +7,13 @@ import { logOut } from '../../services/actions/user';
 const ProfileNav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const refreshToken = localStorage.getItem('refreshToken');
 
   const handleLogOut = useCallback(() => {
-    dispatch(logOut());
+    dispatch(logOut(refreshToken));
 
     history.replace({ path: '/login' });
-  }, [dispatch, logOut, history]);
+  }, [dispatch, logOut, history, refreshToken]);
 
   return (
     <nav className={styles.nav}>
