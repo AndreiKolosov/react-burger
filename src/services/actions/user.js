@@ -41,8 +41,8 @@ export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 export const RESET_REFRESH_TOKEN_ERR = 'RESET_REFRESH_TOKEN_ERR';
 
-// export const CHECK_AUTH = 'CHECK_AUTH';
-// export const CHECK_AUTH_CHECKED = 'CHECK_AUTH_CHECKED';
+export const CHECK_AUTH = 'CHECK_AUTH';
+export const CHECK_AUTH_CHECKED = 'CHECK_AUTH_CHECKED';
 
 // Errors reset---------------------------------------------------------------
 export const resetRegisterError = () => ({ type: RESET_REGISTER_ERR });
@@ -192,15 +192,13 @@ export const patchUser = (accessToken, name, email, password, refreshToken) => {
   };
 };
 
-// export const checkAuth = (accessToken, re) => {
-//   return function (dispatch) {
-//     const accessToken = getCookie('accessToken');
-//     console.log('checkAuth');
-//     dispatch({ type: CHECK_AUTH });
-//     if (!!accessToken) {
-//       dispatch(getUser());
-//     }
+export const checkAuth = (accessToken, refreshToken) => {
+  return function (dispatch) {
+    dispatch({ type: CHECK_AUTH });
+    if (!!accessToken) {
+      dispatch(getUser(accessToken, refreshToken));
+    }
 
-//     dispatch({ type: CHECK_AUTH_CHECKED });
-//   };
-// };
+    dispatch({ type: CHECK_AUTH_CHECKED });
+  };
+};

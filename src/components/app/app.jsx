@@ -20,7 +20,7 @@ import { getCookie } from '../../utils/cookie';
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((store) => store.user);
+  const { isAuthChecked } = useSelector((store) => store.user);
   const accessToken = getCookie('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const loaderWrapperStyles = {
@@ -28,20 +28,17 @@ function App() {
     justifyContent: 'center',
   };
   useEffect(() => {
-    if (!!accessToken) {
-      dispatch(getUser(`Bearer ${accessToken}`, refreshToken));
-    }
-    // dispatch(checkAuth());
+    dispatch(checkAuth(`Bearer ${accessToken}`, refreshToken));
     dispatch(getIngredients());
   }, [dispatch, accessToken, refreshToken]);
   return (
     <>
-      {!isAuth && (
+      {!isAuthChecked && (
         <div style={loaderWrapperStyles}>
           <Loader />
         </div>
       )}
-      {isAuth && (
+      {isAuthChecked && (
         <Router basename='/react-burger'>
           <AppHeader />
           <Switch>

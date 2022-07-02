@@ -20,6 +20,8 @@ import {
   PATCH_USER_REQUEST,
   PATCH_USER_SUCCESS,
   PATCH_USER_FAILED,
+  CHECK_AUTH,
+  CHECK_AUTH_CHECKED,
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILED,
@@ -35,7 +37,8 @@ import {
 
 const initialState = {
   user: null,
-  isAuth: false,
+  isAuthChecked: false,
+
   errMessage: '',
 
   registerUserRequest: false,
@@ -65,6 +68,9 @@ const initialState = {
 
   refreshTokenRequest: false,
   refreshTokenFailed: false,
+
+  checkAuthRequest: false,
+  checkAuthFailed: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -201,7 +207,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: true,
         getUserFailed: false,
-        isAuth: false,
       };
     }
     case GET_USER_SUCCESS: {
@@ -209,7 +214,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: false,
-        isAuth: true,
         user: action.user,
       };
     }
@@ -218,7 +222,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserFailed: true,
-        isAuth: false,
         errMessage: action.err,
       };
     }
@@ -248,6 +251,22 @@ export const userReducer = (state = initialState, action) => {
         errMessage: action.err,
       };
     }
+    case CHECK_AUTH: {
+      return {
+        ...state,
+        checkAuthRequest: true,
+        checkAuthFailed: false,
+        isAuthChecked: false,
+      };
+    }
+    case CHECK_AUTH_CHECKED: {
+      return {
+        ...state,
+        checkAuthRequest: false,
+        checkAuthFailed: false,
+        isAuthChecked: true,
+      };
+    }
     case REFRESH_TOKEN_REQUEST: {
       return {
         ...state,
@@ -274,7 +293,6 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         getUserFailed: false,
-        isAuth: false,
         errMessage: '',
       };
     }
