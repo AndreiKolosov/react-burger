@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './not-found-404.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 
 const NotFound404 = () => {
   return (
@@ -22,7 +23,6 @@ const NotFound404 = () => {
           <div className={styles.buble}></div>
           <div className={styles.cow}></div>
           <div className={styles.meadow}></div>
-          <p className={styles.mistakeText}>Oops! Looks like we lost another cow ¯\_(ツ)_/</p>
         </div>
       </div>
 
@@ -31,9 +31,11 @@ const NotFound404 = () => {
           Похоже, страница, которую вы ищете, не существует...
         </h2>
         <p className={styles.errorCode}>404</p>
-        <Button type='primary' size='large'>
-          Вернуться домой
-        </Button>
+        <Link to='/'>
+          <Button type='primary' size='large'>
+            Вернуться домой
+          </Button>
+        </Link>
       </section>
     </main>
   );
