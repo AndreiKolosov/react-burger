@@ -5,9 +5,11 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { setCurrentIngredient } from '../../../../services/actions/ingredient';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 const IngredientCard = ({ item }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const { bun, filling } = useSelector((store) => store.burgerConstructor);
 
@@ -29,24 +31,31 @@ const IngredientCard = ({ item }) => {
     [bun, filling]
   );
   return (
-    <div
-      className={`${styles.card} pl-4 pr-4`}
-      onClick={() => {
-        dispatch(setCurrentIngredient(item));
-      }}
-      ref={dragRef}
-      draggable>
-      {counter > 0 && <Counter count={counter} size='default' />}
-      <img
-        className={isDrag ? `${styles.cardIsDragging}` : null}
-        src={item.image}
-        alt={item.name}
-      />
-      <p className={`text text_type_digits-default mt-1 mb-1`}>
-        {item.price} <CurrencyIcon />
-      </p>
-      <h3 className={`text text_type_main-default`}>{item.name}</h3>
-    </div>
+    <Link
+      className={styles.link}
+      to={{
+        pathname: `/ingredients/${item._id}`,
+        state: { background: location },
+      }}>
+      <div
+        className={`${styles.card} pl-4 pr-4`}
+        onClick={() => {
+          dispatch(setCurrentIngredient(item));
+        }}
+        ref={dragRef}
+        draggable>
+        {counter > 0 && <Counter count={counter} size='default' />}
+        <img
+          className={isDrag ? `${styles.cardIsDragging}` : null}
+          src={item.image}
+          alt={item.name}
+        />
+        <p className={`text text_type_digits-default mt-1 mb-1`}>
+          {item.price} <CurrencyIcon />
+        </p>
+        <h3 className={`text text_type_main-default`}>{item.name}</h3>
+      </div>
+    </Link>
   );
 };
 

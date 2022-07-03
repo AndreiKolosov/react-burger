@@ -60,11 +60,11 @@ const BurgerIngredients = () => {
         <IngredientList items={mains} itemsType={IngredientType.Main} ref={mainsRef} />
       </div>
 
-      {selectedIngredient && (
+      {/* {selectedIngredient && (
         <Modal heading={'Детали ингредиента'} closeModal={closeIngredientDetails}>
           <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
-      )}
+      )} */}
     </section>
   );
 };

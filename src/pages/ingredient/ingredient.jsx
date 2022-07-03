@@ -7,6 +7,9 @@ const IngredientPage = () => {
   return (
     <main className={styles.content}>
       <section className={styles.ingredient}>
+        <h2 className={`${styles.ingredientTitle} text text_type_main-large`}>
+          Детали ингредиента
+        </h2>
         <IngredientDetails />
       </section>
     </main>

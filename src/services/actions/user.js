@@ -126,8 +126,10 @@ export const logOut = (refreshToken) => {
 
 export const fetchWithRefresh = (refreshToken, request, ...requestParams) => {
   return function (dispatch) {
-    const refreshToken = localStorage.getItem('refreshToken');
-    console.log('fetchWithRefresh');
+    // const refreshToken = localStorage.getItem('refreshToken');
+    // const { refreshToken } = requestParams;
+
+    console.log('fetchWithRefresh', refreshToken);
     if (!refreshToken) {
       throw new Error('Token does not exist in storage');
     } else {
@@ -166,7 +168,7 @@ export const getUser = (accessToken, refreshToken) => {
       .catch((err) => {
         if (err.message === 'jwt expired') {
           console.log('getUser - jwt expired');
-          dispatch(fetchWithRefresh(refreshToken, getUser));
+          dispatch(fetchWithRefresh(refreshToken, getUser, accessToken));
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -183,7 +185,7 @@ export const patchUser = (accessToken, name, email, password, refreshToken) => {
       .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
-          dispatch(fetchWithRefresh(refreshToken, patchUser, name, email, password));
+          dispatch(fetchWithRefresh(refreshToken, patchUser, accessToken, name, email, password));
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);

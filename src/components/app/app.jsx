@@ -1,22 +1,12 @@
 import React, { useEffect } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
-import ProtectedRoute from '../protected-route/protected-route';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
-import { checkAuth, getUser } from '../../services/actions/user';
-import {
-  HomePage,
-  LoginPage,
-  RegistrationPage,
-  ForgotPasswordPage,
-  ResetPasswordPage,
-  ProfilePage,
-  NotFound404,
-  IngredientPage,
-} from '../../pages';
+import { checkAuth } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
+import ModalSwitch from '../modal-switch/modal-switch';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,10 +17,12 @@ function App() {
     display: 'flex',
     justifyContent: 'center',
   };
+
   useEffect(() => {
     dispatch(checkAuth(`Bearer ${accessToken}`, refreshToken));
     dispatch(getIngredients());
   }, [dispatch, accessToken, refreshToken]);
+
   return (
     <>
       {!isAuthChecked && (
@@ -41,16 +33,7 @@ function App() {
       {isAuthChecked && (
         <Router basename='/react-burger'>
           <AppHeader />
-          <Switch>
-            <Route path='/' exact children={<HomePage />} />
-            <Route path='/login' exact children={<LoginPage />} />
-            <Route path='/register' exact children={<RegistrationPage />} />
-            <Route path='/forgot-password' exact children={<ForgotPasswordPage />} />
-            <Route path='/reset-password' exact children={<ResetPasswordPage />} />
-            <Route path='/ingredients/:id' exact children={<IngredientPage />} />
-            <ProtectedRoute path='/profile' children={<ProfilePage />} />
-            <Route children={<NotFound404 />} />
-          </Switch>
+          <ModalSwitch />
         </Router>
       )}
     </>

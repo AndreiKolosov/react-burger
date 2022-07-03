@@ -12,6 +12,7 @@ import { emailRegExp } from '../../utils/validate';
 import Loader from '../../components/loader/loader';
 import Notification from '../../components/notification/notification';
 import { getCookie } from '../../utils/cookie';
+import { useLocation } from 'react-router-dom';
 
 const ProfilePage = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
@@ -28,6 +29,8 @@ const ProfilePage = () => {
   );
   const accessToken = getCookie('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
+  const location = useLocation();
+  console.log(location);
 
   const dispatch = useDispatch();
 

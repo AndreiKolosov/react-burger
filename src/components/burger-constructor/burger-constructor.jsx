@@ -18,11 +18,14 @@ import BurgerPlug from './components/burger-plug/burger-plug';
 import FillingPlug from './components/filling-plug/filling-plug';
 import BunPlug from './components/bun-plug/bun-plug';
 import FillingElement from './components/filling-element/filling-element';
+import { useHistory, Redirect } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
   const { orderRequest, orderFailed, orderNumber } = useSelector((store) => store.order);
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const closeOrderDetails = useCallback(() => {
     dispatch(closeOrderModal());
@@ -30,7 +33,16 @@ const BurgerConstructor = () => {
   }, [dispatch]);
 
   const postOrder = (orderData) => {
-    dispatch(postOrderRequest(orderData));
+    user && dispatch(postOrderRequest(orderData));
+    !user &&
+      history.replace({
+        pathname: '/login',
+        state: {
+          from: {
+            pathname: '/',
+          },
+        },
+      });
   };
 
   const [{ isHover }, dropTarget] = useDrop({
