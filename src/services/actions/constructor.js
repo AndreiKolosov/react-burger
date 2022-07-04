@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const ADD = 'ADD';
 export const DELETE = 'DELETE';
 export const RESET = 'RESET';
@@ -19,7 +21,7 @@ export function resetConstructor() {
 export function dropItem(item) {
   return {
     type: ADD,
-    item,
+    item: { ...item, uId: uuidv4() },
   };
 }
 
