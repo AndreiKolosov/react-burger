@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
+import ReactDOM from 'react-dom';
 import styles from './notification.module.css';
 import { CloseIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+const rootNotifications = document.getElementById('notifications');
 
 const Notification = ({ heading, message, onRepeatRequest, onClose, canGoHome }) => {
   const containerRef = useRef(null);
@@ -12,7 +15,7 @@ const Notification = ({ heading, message, onRepeatRequest, onClose, canGoHome })
     containerRef.current.classList.add(styles.notification_closed);
   };
 
-  return (
+  return ReactDOM.createPortal(
     <div className={styles.notification} ref={containerRef}>
       <h2 className={`${styles.notification__title} text text_type_main-default mb-4`}>
         {heading}
@@ -37,7 +40,8 @@ const Notification = ({ heading, message, onRepeatRequest, onClose, canGoHome })
       <button className={styles.notification__closeBtn} onClick={() => closeNotification()}>
         <CloseIcon type='secondary' />
       </button>
-    </div>
+    </div>,
+    rootNotifications
   );
 };
 

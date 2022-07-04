@@ -179,7 +179,9 @@ const ProfilePage = () => {
             canGoHome
           />
         )}
-        {isUserChanged && <Notification heading='Данные успешно изменены!' canGoHome />}
+        {isUserChanged && (
+          <Notification heading='Данные успешно изменены!' canGoHome onClose={resetError} />
+        )}
       </section>
     </main>
   );
