@@ -6,7 +6,7 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
@@ -39,9 +39,11 @@ const AppHeader = () => {
               </NavLink>
             </li>
           </menu>
-          <div className='pt-2 pb-2'>
-            <Logo />
-          </div>
+          <Link to='/'>
+            <div className='pt-2 pb-2'>
+              <Logo />
+            </div>
+          </Link>
         </div>
         <NavLink
           to='/profile'
