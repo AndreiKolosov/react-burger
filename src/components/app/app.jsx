@@ -1,49 +1,42 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './app.module.css';
-import { getIngredients, resetIngredientsError } from '../../services/actions/ingredients';
-import { resetOrderError } from '../../services/actions/order';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from '../modal/modal';
 import Loader from '../loader/loader';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import AppHeader from '../app-header/app-header';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
+import { checkAuth } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
+import ModalSwitch from '../modal-switch/modal-switch';
+
 function App() {
-  const { ingredientsRequest, ingredientsFailed } = useSelector((store) => store.ingredients);
-  const { orderFailed } = useSelector((store) => store.order);
-
   const dispatch = useDispatch();
-
-  const resetErorrs = () => {
-    dispatch(resetIngredientsError());
-    dispatch(resetOrderError());
+  const { isAuthChecked } = useSelector((store) => store.user);
+  const accessToken = getCookie('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const loaderWrapperStyles = {
+    display: 'flex',
+    justifyContent: 'center',
   };
 
   useEffect(() => {
+    dispatch(checkAuth(`Bearer ${accessToken}`, refreshToken));
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch, accessToken, refreshToken]);
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-
-      {ingredientsRequest && !ingredientsFailed && <Loader />}
-
-      {!ingredientsFailed && !ingredientsRequest && (
-        <main className={`${styles.app__content}`}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </DndProvider>
-        </main>
+    <>
+      {!isAuthChecked && (
+        <div style={loaderWrapperStyles}>
+          <Loader />
+        </div>
       )}
-
-      {ingredientsFailed && orderFailed && (
-        <Modal heading={'Что-то пошло не так... =('} closeModal={resetErorrs} />
+      {isAuthChecked && (
+        <Router basename='/react-burger'>
+          <AppHeader />
+          <ModalSwitch />
+        </Router>
       )}
-    </div>
+    </>
   );
 }
 

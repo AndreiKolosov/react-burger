@@ -11,7 +11,7 @@ import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
-  const { viewedIngredient } = useSelector((store) => store.ingredient);
+  const { selectedIngredient } = useSelector((store) => store.ingredient);
   const dispatch = useDispatch();
 
   const [currentTab, setCurrentTab] = useState('bun');
@@ -60,11 +60,11 @@ const BurgerIngredients = () => {
         <IngredientList items={mains} itemsType={IngredientType.Main} ref={mainsRef} />
       </div>
 
-      {viewedIngredient && (
+      {/* {selectedIngredient && (
         <Modal heading={'Детали ингредиента'} closeModal={closeIngredientDetails}>
-          <IngredientDetails ingredient={viewedIngredient} />
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
-      )}
+      )} */}
     </section>
   );
 };

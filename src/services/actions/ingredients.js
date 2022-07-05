@@ -1,4 +1,4 @@
-import { ingredientsRequest } from '../../utils/api';
+import api from '../../utils/api';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -14,7 +14,8 @@ export function resetIngredientsError() {
 export function getIngredients() {
   return function (dispatch) {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
-    ingredientsRequest()
+    api
+      .ingredientsRequest()
       .then((res) => {
         dispatch({ type: GET_INGREDIENTS_SUCCESS, ingredients: res.data });
       })

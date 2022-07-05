@@ -33,9 +33,14 @@
   justify-content: flex-start;
   color: #8585ad;
   text-decoration: none;
+  transition: color 0.4s linear;
+  cursor: pointer;
 }
 
-.linkActive {
-  composes: link;
+.link:hover {
+  color: #f2f2f3;
+}
+
+.link_active {
   color: #f2f2f3;
 }

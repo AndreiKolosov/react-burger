@@ -1,17 +1,19 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import doneIcon from './images/orderDetails_done_icon.svg';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-
+import Loader from '../loader/loader';
 const OrderDetails = () => {
   const { orderNumber } = useSelector((store) => store.order);
 
   return (
     <div className={`${styles.OrderDetails} mt-30 mb-30`}>
-      <h3 className={`${styles.OrderDetails__number} text text_type_digits-large mb-8`}>
-        {orderNumber}
-      </h3>
+      {!orderNumber && <Loader />}
+      {orderNumber && (
+        <h3 className={`${styles.OrderDetails__number} text text_type_digits-large mb-8`}>
+          {orderNumber}
+        </h3>
+      )}
       <span className='text text_type_main-medium mb-15'>идентификатор заказа</span>
       <img
         className={`${styles.OrderDetails__icon} mb-15`}
@@ -24,10 +26,6 @@ const OrderDetails = () => {
       </span>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  orderNum: PropTypes.number.isRequired,
 };
 
 export default OrderDetails;

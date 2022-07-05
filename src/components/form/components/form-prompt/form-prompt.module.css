@@ -1,0 +1,9 @@
+.prompt {
+  text-align: center;
+}
+
+.prompt__link {
+  color: #4c4cff;
+  text-decoration: none;
+  margin-left: 8px;
+}

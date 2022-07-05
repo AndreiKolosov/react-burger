@@ -1,0 +1,9 @@
+.form {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+}
+
+.form__title {
+  text-align: center;
+}

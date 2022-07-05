@@ -1,3 +1,5 @@
+import { getCookie } from './cookie';
+
 const IngredientType = {
   Bun: {
     type: 'bun',
@@ -20,9 +22,6 @@ const ariaLabels = {
 
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
 };
 
 export { IngredientType, ariaLabels, apiConfig };
