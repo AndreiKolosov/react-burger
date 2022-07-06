@@ -30,7 +30,6 @@ const ProfilePage = () => {
   const accessToken = getCookie('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const location = useLocation();
-  console.log(location);
 
   const dispatch = useDispatch();
 
