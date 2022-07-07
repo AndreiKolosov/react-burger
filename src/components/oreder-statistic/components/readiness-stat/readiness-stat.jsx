@@ -1,12 +1,13 @@
 import React from 'react';
-import styles from './readiness-stats.module.css';
+import styles from './readiness-stat.module.css';
 
-const ReadinessStats = ({ title, ready }) => {
+const ReadinessStats = ({ title, ready, children }) => {
   const color = ready
     ? {
         color: '#00cccc',
       }
     : {};
+
   return (
     <div className={styles.stats}>
       <p className={`${styles.stats__title} text text_type_main-medium mb-6`}>{title}</p>
