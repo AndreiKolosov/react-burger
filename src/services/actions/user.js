@@ -166,7 +166,7 @@ export const getUser = (accessToken, refreshToken) => {
       .getUser(accessToken)
       .then((res) => dispatch({ type: GET_USER_SUCCESS, user: res.user }))
       .catch((err) => {
-        if (err.message === 'jwt expired'|| err.message === 'You should be authorised') {
+        if (err.message === 'jwt expired' || err.message === 'jwt malformed') {
           console.log('getUser - jwt expired');
           dispatch(fetchWithRefresh(refreshToken, getUser, accessToken));
         } else {

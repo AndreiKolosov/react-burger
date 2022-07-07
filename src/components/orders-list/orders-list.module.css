@@ -1,4 +1,27 @@
 .ordersList {
   margin: 0;
+  padding: 0;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px 0;
+  max-height: calc(100vh - 202px);
+  max-width: 608px;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.ordersList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ordersList::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.ordersList::-webkit-scrollbar-track {
+  background-color: #2f2f37;
+  margin: 40px 0 52px 0;
 }

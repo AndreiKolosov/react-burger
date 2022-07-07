@@ -6,6 +6,15 @@ const OrdersList = () => {
   return (
     <ul className={styles.ordersList}>
       <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
     </ul>
   );
 };
