@@ -27,6 +27,13 @@
   justify-content: space-between;
 }
 
+.card__burgerName {
+  max-width: 530px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .card__ingredientsList {
   margin: 0;
   padding: 0;
@@ -35,16 +42,35 @@
   max-width: 314px;
 }
 
-.card__ingredientIcon {
-  box-sizing: border-box;
-  width: 64px;
-  height: 64px;
+.card__ingredientImg {
+  height: 56px;
+  width: 66px;
+  display: block;
+  object-fit: cover;
+  object-position: center 4px;
+}
+
+.card__ingredientItem::before {
+  position: absolute;
+  content: '';
+  top: 2px;
+  left: 2px;
+  width: 60px;
+  height: 60px;
   border-radius: 100px;
-  padding: 2px;
-  background: linear-gradient(80deg, #801ab2 0, #4c4cff 100%);
+  background-color: #1c1c21;
+
+  z-index: -1;
 }
 
 .card__ingredientItem {
+  width: 64px;
+  height: 64px;
+  z-index: 1;
+  position: relative;
+  border-radius: 100px;
+  background: linear-gradient(45deg, #801ab2 0, #4c4cff 100%);
+  /* transform: translateX(-16px); */
   margin-left: -16px;
 }
 .card__ingredientItem:first-of-type {
