@@ -3,23 +3,23 @@ import styles from './order-card.module.css';
 import { Link } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import { formatDate } from '../../../../utils/formatDate';
 
 const OrderCard = ({ number, time, name, ingredientsIds }) => {
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const orderIngredients = ingredientsIds.map((id) => {
+  const orderIngredients = [...new Set(ingredientsIds)].map((id) => {
     const data = ingredients.find((ing) => ing._id === id);
+
     return data; // получил массив всех ингредиентов бургера
   });
 
+  const bun = orderIngredients.filter((item) => item.type === 'bun');
+  const filling = orderIngredients.filter((item) => item.type !== 'bun');
+
   const price = useMemo(() => {
-    return orderIngredients.reduce((acc, item) => acc + item.price, 0);
+    return (bun ? bun[0].price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
   }, [orderIngredients]);
-
-  // console.log(ingredients, 'all ing');
-  // console.log(ingredientsIds, 'idss');
-  // console.log(orderIngredients, 'ORDER DATA');
-
   return (
     <li className={styles.card}>
       <Link className={styles.card__link}>
@@ -28,7 +28,7 @@ const OrderCard = ({ number, time, name, ingredientsIds }) => {
             className={`${styles.card__orderNumber} text text_type_digits-default`}>{`# ${number}`}</p>
           <span
             className={`${styles.card__orderTime} text text_type_main-default text_color_inactive`}>
-            {time}
+            {formatDate(time)}
           </span>
         </div>
         <h2 className={`${styles.card__burgerName} text text_type_main-medium`}>{name}</h2>
