@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReadinessStats from './components/readiness-stat/readiness-stat';
 import TotalStat from './components/tottal-stat/total-stat';
 import styles from './order-statistic.module.css';

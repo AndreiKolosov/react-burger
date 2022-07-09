@@ -5,10 +5,15 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
+      const { wsInit, onOpen, onClose, onError, onMessage, wsClose } = wsActions;
       if (type === wsInit) {
         socket = new WebSocket(wsUrl);
       }
+
+      if (type === wsClose) {
+        socket.close();
+      }
+
       if (socket) {
         socket.onopen = (event) => {
           dispatch({ type: onOpen, payload: event });

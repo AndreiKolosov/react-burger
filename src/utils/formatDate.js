@@ -13,8 +13,11 @@ const formatDate = (date) => {
   if (orderDate === dateNow) {
     formatedDate = `Сегодня, ${orderTime} i-GMT+3`;
   }
-  if (orderDate < dateNow) {
+  if (orderDate === dateNow - 1) {
     formatedDate = `Вчера, ${orderTime} i-GMT+3`;
+  }
+  if (orderDate < dateNow - 1) {
+    formatedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
   }
 
   return formatedDate;

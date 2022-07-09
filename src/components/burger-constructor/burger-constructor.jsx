@@ -31,6 +31,7 @@ const BurgerConstructor = () => {
     dispatch(closeOrderModal());
     dispatch(resetConstructor());
   }, [dispatch]);
+  console.log(orderIds);
 
   const postOrder = (orderData) => {
     user && dispatch(postOrderRequest(orderData));

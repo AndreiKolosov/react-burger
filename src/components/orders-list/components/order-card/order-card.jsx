@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styles from './order-card.module.css';
 import { Link } from 'react-router-dom';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { formatDate } from '../../../../utils/formatDate';
 
@@ -34,7 +34,7 @@ const OrderCard = ({ number, time, name, ingredientsIds }) => {
         <h2 className={`${styles.card__burgerName} text text_type_main-medium`}>{name}</h2>
         <div className={styles.card__burgerComposition}>
           <ul className={styles.card__ingredientsList}>
-            {orderIngredients.map((ingredient, i) => {
+            {orderIngredients.slice(0, 5).map((ingredient, i) => {
               return (
                 <li
                   key={i}
@@ -48,6 +48,20 @@ const OrderCard = ({ number, time, name, ingredientsIds }) => {
                 </li>
               );
             })}
+            {orderIngredients.length > 5 && (
+              <li
+                className={styles.card__ingredientExtraItem}
+                style={{ zIndex: `${orderIngredients.length - 6}` }}>
+                <div className={styles.card__extraCounter}>
+                  <p className='text text_type_main-default'>{`+${orderIngredients.length - 5}`}</p>
+                </div>
+                <img
+                  className={styles.card__ingredientImg}
+                  src={orderIngredients[5].image_mobile}
+                  alt={orderIngredients[5].name}
+                />
+              </li>
+            )}
           </ul>
           <div className={styles.card__price}>
             <span className={`${styles.card__totalPrice} text text_type_digits-default`}>
