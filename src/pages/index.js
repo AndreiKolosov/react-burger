@@ -7,6 +7,7 @@ import ProfilePage from './profile/profile';
 import NotFound404 from './not-found-404/not-found-404';
 import IngredientPage from './ingredient/ingredient';
 import OrderFeed from './order-feed/order-feed';
+import OrderInfo from './order-info/order-info';
 
 export {
   HomePage,
@@ -17,5 +18,6 @@ export {
   ProfilePage,
   NotFound404,
   IngredientPage,
-  OrderFeed
+  OrderFeed,
+  OrderInfo,
 };

@@ -9,7 +9,8 @@ import {
   ProfilePage,
   NotFound404,
   IngredientPage,
-  OrderFeed
+  OrderFeed,
+  OrderInfo,
 } from '../../pages';
 import ProtectedRoute from '../protected-route/protected-route';
 import Modal from '../modal/modal';
@@ -38,7 +39,8 @@ const ModalSwitch = () => {
         <Route path='/forgot-password' exact children={<ForgotPasswordPage />} />
         <Route path='/reset-password' exact children={<ResetPasswordPage />} />
         <Route path='/ingredients/:id' exact children={<IngredientPage />} />
-        <Route path='/feed' exact children={<OrderFeed/>}/>
+        <Route path='/feed' exact children={<OrderFeed />} />
+        <Route path='/orders/:id' exact children={<OrderInfo />} />
         <ProtectedRoute path='/profile' children={<ProfilePage />} />
         <Route children={<NotFound404 />} />
       </Switch>

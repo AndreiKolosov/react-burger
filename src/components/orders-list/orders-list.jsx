@@ -9,15 +9,7 @@ const OrdersList = () => {
   return (
     <ul className={styles.ordersList}>
       {orders.map((order) => {
-        return (
-          <OrderCard
-            key={order._id}
-            number={order.number}
-            time={order.createdAt}
-            name={order.name}
-            ingredientsIds={order.ingredients}
-          />
-        );
+        return <OrderCard key={order._id} order={order} />;
       })}
     </ul>
   );

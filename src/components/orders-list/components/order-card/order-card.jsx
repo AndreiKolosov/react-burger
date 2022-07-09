@@ -1,34 +1,42 @@
 import React, { useMemo } from 'react';
 import styles from './order-card.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
-import { formatDate } from '../../../../utils/formatDate';
+import { formatDate, getIngredientsByIds, getTotalPrice } from '../../../../utils/utils';
 
-const OrderCard = ({ number, time, name, ingredientsIds }) => {
+const OrderCard = ({ order }) => {
+  const location = useLocation();
+  const { number, _id, createdAt, name } = order;
   const { ingredients } = useSelector((store) => store.ingredients);
 
-  const orderIngredients = [...new Set(ingredientsIds)].map((id) => {
-    const data = ingredients.find((ing) => ing._id === id);
+  const orderIngredients = getIngredientsByIds(order.ingredients, ingredients);
+  const price = getTotalPrice(orderIngredients);
+  // const bun = orderIngredients.filter((item) => item.type === 'bun');
+  // const filling = orderIngredients.filter((item) => item.type !== 'bun');
 
-    return data; // получил массив всех ингредиентов бургера
-  });
+  // const price = useMemo(() => {
+  //   return (bun ? bun[0].price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
+  // }, [orderIngredients]);
 
-  const bun = orderIngredients.filter((item) => item.type === 'bun');
-  const filling = orderIngredients.filter((item) => item.type !== 'bun');
+  // const price = useMemo(() => {
+  //   getTotalPrice(orderIngredients);
+  // }, [orderIngredients]);
 
-  const price = useMemo(() => {
-    return (bun ? bun[0].price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
-  }, [orderIngredients]);
   return (
     <li className={styles.card}>
-      <Link className={styles.card__link}>
+      <Link
+        className={styles.card__link}
+        to={{
+          pathname: `/orders/${_id}`,
+          state: { background: location },
+        }}>
         <div className={styles.card__header}>
           <p
             className={`${styles.card__orderNumber} text text_type_digits-default`}>{`# ${number}`}</p>
           <span
             className={`${styles.card__orderTime} text text_type_main-default text_color_inactive`}>
-            {formatDate(time)}
+            {formatDate(createdAt)}
           </span>
         </div>
         <h2 className={`${styles.card__burgerName} text text_type_main-medium`}>{name}</h2>

@@ -17,11 +17,12 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  postOrder(order) {
+  postOrder(order, accessToken) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: accessToken,
       },
       body: JSON.stringify({
         ingredients: order,
