@@ -10,7 +10,7 @@ const initialState = {
   wsRequest: false,
   wsOpen: false,
   wsFailed: false,
-  orders: [],
+  orders: null,
   total: '',
   totalToday: '',
 };

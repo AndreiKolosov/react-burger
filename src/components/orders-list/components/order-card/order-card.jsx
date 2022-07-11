@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { formatDate, getIngredientsByIds, getTotalPrice } from '../../../../utils/utils';
+import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
 
 const OrderCard = ({ order }) => {
   const location = useLocation();
@@ -39,13 +40,9 @@ const OrderCard = ({ order }) => {
               return (
                 <li
                   key={uniqId}
-                  className={styles.card__ingredientItem}
+                  className={styles.ingredient__item}
                   style={{ zIndex: `${orderIngredients.length - i}` }}>
-                  <img
-                    className={styles.card__ingredientImg}
-                    src={ingredient.image_mobile}
-                    alt={ingredient.name}
-                  />
+                  <IngredientIcon img={ingredient.image_mobile} alt={ingredient.name} />
                 </li>
               );
             })}
@@ -56,9 +53,8 @@ const OrderCard = ({ order }) => {
                 <div className={styles.card__extraCounter}>
                   <p className='text text_type_main-default'>{`+${orderIngredients.length - 5}`}</p>
                 </div>
-                <img
-                  className={styles.card__ingredientImg}
-                  src={orderIngredients[5].image_mobile}
+                <IngredientIcon
+                  img={orderIngredients[5].image_mobile}
                   alt={orderIngredients[5].name}
                 />
               </li>

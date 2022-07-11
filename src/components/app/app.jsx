@@ -11,17 +11,15 @@ import ModalSwitch from '../modal-switch/modal-switch';
 function App() {
   const dispatch = useDispatch();
   const { isAuthChecked } = useSelector((store) => store.user);
-  const accessToken = getCookie('accessToken');
-  const refreshToken = localStorage.getItem('refreshToken');
   const loaderWrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
   };
 
   useEffect(() => {
-    dispatch(checkAuth(`Bearer ${accessToken}`, refreshToken));
+    dispatch(checkAuth());
     dispatch(getIngredients());
-  }, [dispatch, accessToken, refreshToken]);
+  }, [dispatch]);
 
   return (
     <>

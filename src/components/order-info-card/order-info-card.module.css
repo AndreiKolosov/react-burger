@@ -22,3 +22,12 @@
   align-items: center;
   justify-content: center;
 }
+
+.order__ingList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px 0;
+}

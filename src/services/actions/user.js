@@ -124,12 +124,12 @@ export const logOut = (refreshToken) => {
   };
 };
 
-export const fetchWithRefresh = (refreshToken, request, ...requestParams) => {
+export const fetchWithRefresh = (request, ...requestParams) => {
   return function (dispatch) {
-    // const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     // const { refreshToken } = requestParams;
 
-    console.log('fetchWithRefresh', refreshToken);
+    console.log('fetchWithRefresh');
     if (!refreshToken) {
       throw new Error('Token does not exist in storage');
     } else {
@@ -144,8 +144,9 @@ export const fetchWithRefresh = (refreshToken, request, ...requestParams) => {
           return res;
         })
         .then((res) => {
+          const accessToken = getCookie('accessToken');
           console.log('fetchWithRefresh - repeat request');
-          console.log(res);
+
           dispatch(request(...requestParams));
         })
         .catch((err) => {
@@ -158,7 +159,7 @@ export const fetchWithRefresh = (refreshToken, request, ...requestParams) => {
     }
   };
 };
-export const getUser = (accessToken, refreshToken) => {
+export const getUser = (accessToken) => {
   return function (dispatch) {
     console.log('getUser');
     dispatch({ type: GET_USER_REQUEST });
@@ -168,7 +169,7 @@ export const getUser = (accessToken, refreshToken) => {
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'jwt malformed') {
           console.log('getUser - jwt expired');
-          dispatch(fetchWithRefresh(refreshToken, getUser, accessToken));
+          dispatch(fetchWithRefresh(getUser, accessToken));
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -177,7 +178,7 @@ export const getUser = (accessToken, refreshToken) => {
   };
 };
 
-export const patchUser = (accessToken, name, email, password, refreshToken) => {
+export const patchUser = (accessToken, name, email, password) => {
   return function (dispatch) {
     dispatch({ type: PATCH_USER_REQUEST });
     api
@@ -185,7 +186,7 @@ export const patchUser = (accessToken, name, email, password, refreshToken) => {
       .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
-          dispatch(fetchWithRefresh(refreshToken, patchUser, accessToken, name, email, password));
+          dispatch(fetchWithRefresh(patchUser, accessToken, name, email, password));
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -194,11 +195,13 @@ export const patchUser = (accessToken, name, email, password, refreshToken) => {
   };
 };
 
-export const checkAuth = (accessToken, refreshToken) => {
+export const checkAuth = () => {
   return function (dispatch) {
+    const accessToken = getCookie('accessToken');
+
     dispatch({ type: CHECK_AUTH });
     if (!!accessToken) {
-      dispatch(getUser(accessToken, refreshToken));
+      dispatch(getUser(`Bearer ${accessToken}`));
     }
 
     dispatch({ type: CHECK_AUTH_CHECKED });
