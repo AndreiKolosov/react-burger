@@ -15,6 +15,7 @@ import {
 import ProtectedRoute from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfoCard from '../order-info-card/order-info-card';
 
 const ModalSwitch = () => {
   const location = useLocation();
@@ -25,7 +26,6 @@ const ModalSwitch = () => {
   const closeModal = useCallback(
     (path) => {
       history.push(path);
-      console.log(location);
     },
     [history]
   );
@@ -40,15 +40,23 @@ const ModalSwitch = () => {
         <Route path='/reset-password' exact children={<ResetPasswordPage />} />
         <Route path='/ingredients/:id' exact children={<IngredientPage />} />
         <Route path='/feed' exact children={<OrderFeed />} />
-        <Route path='/orders/:id' exact children={<OrderInfo />} />
+        <Route path='/feed/:id' exact children={<OrderInfo />} />
         <ProtectedRoute path='/profile' children={<ProfilePage />} />
         <Route children={<NotFound404 />} />
       </Switch>
 
       {background && (
-        <Route path='/ingredients/:id'>
+        <Route path='/ingredients/:id' exact>
           <Modal heading={'Детали ингредиента'} closeModal={() => closeModal('/')}>
             <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+
+      {background && (
+        <Route path='/feed/:id' exact>
+          <Modal closeModal={() => closeModal('/feed')}>
+            <OrderInfoCard />
           </Modal>
         </Route>
       )}

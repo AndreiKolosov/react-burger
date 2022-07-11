@@ -1,0 +1,24 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 40px 0;
+  max-width: 640px;
+  max-height: 620px;
+  width: 100%;
+}
+
+.order__num {
+  align-self: center;
+}
+
+.order__footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order__price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -117,15 +117,21 @@ const BurgerConstructor = () => {
         <Button
           type='primary'
           size='medium'
+          disabled={bun && filling.length > 0 ? false : true}
           onClick={() => postOrder(orderIds, `Bearer ${accessToken}`)}>
           Оформить заказ
         </Button>
       </div>
 
+      {orderRequest && (
+        <Modal closeModal={closeOrderDetails}>
+          <Loader />
+        </Modal>
+      )}
+
       {orderNumber && (
         <Modal closeModal={closeOrderDetails}>
-          {orderRequest && !orderFailed && <Loader />}
-          {!orderRequest && !orderFailed && <OrderDetails />}
+          <OrderDetails />
         </Modal>
       )}
     </section>

@@ -5,22 +5,26 @@ const formatDate = (date) => {
       .split('-')[2]
       .split('')
       .filter((i) => i !== '0')
+      .join('')
   );
   const orderTime = date.split('T')[1].split('.')[0].split(':', 2).join(':');
   const dateNow = new Date().getUTCDate();
-  let formatedDate = '';
+  let formattedDate = '';
 
   if (orderDate === dateNow) {
-    formatedDate = `Сегодня, ${orderTime} i-GMT+3`;
+    formattedDate = `Сегодня, ${orderTime} i-GMT+3`;
   }
   if (orderDate === dateNow - 1) {
-    formatedDate = `Вчера, ${orderTime} i-GMT+3`;
+    formattedDate = `Вчера, ${orderTime} i-GMT+3`;
   }
-  if (orderDate < dateNow - 1) {
-    formatedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
+  if (orderDate < dateNow - 4) {
+    formattedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
+  }
+  if (orderDate < dateNow - 5) {
+    formattedDate = `${dateNow - orderDate} дней назад, ${orderTime} i-GMT+3`;
   }
 
-  return formatedDate;
+  return formattedDate;
 };
 
 const getIngredientsByIds = (ids, allIng) => {
