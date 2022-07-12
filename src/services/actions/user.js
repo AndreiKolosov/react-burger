@@ -161,7 +161,7 @@ export const fetchWithRefresh = (request, ...requestParams) => {
     }
   };
 };
-export const getUser = (accessToken) => {
+export const getUser = ({ accessToken }) => {
   return function (dispatch) {
     console.log('getUser');
     dispatch({ type: GET_USER_REQUEST });
@@ -171,7 +171,7 @@ export const getUser = (accessToken) => {
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'jwt malformed') {
           console.log('getUser - jwt expired');
-          dispatch(fetchWithRefresh(getUser, accessToken));
+          dispatch(fetchWithRefresh(getUser, { accessToken }));
         } else {
           dispatch({ type: GET_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -180,7 +180,7 @@ export const getUser = (accessToken) => {
   };
 };
 
-export const patchUser = (accessToken, name, email, password) => {
+export const patchUser = ({ accessToken, name, email, password }) => {
   return function (dispatch) {
     dispatch({ type: PATCH_USER_REQUEST });
     api
@@ -188,7 +188,7 @@ export const patchUser = (accessToken, name, email, password) => {
       .then((res) => dispatch({ type: PATCH_USER_SUCCESS, user: res.user }))
       .catch((err) => {
         if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
-          dispatch(fetchWithRefresh(patchUser, accessToken, name, email, password));
+          dispatch(fetchWithRefresh(patchUser, { accessToken, name, email, password }));
         } else {
           dispatch({ type: PATCH_USER_FAILED, err: err.message });
           return Promise.reject(err);
@@ -203,7 +203,7 @@ export const checkAuth = () => {
 
     dispatch({ type: CHECK_AUTH });
     if (!!accessToken) {
-      dispatch(getUser(`Bearer ${accessToken}`));
+      dispatch(getUser({ accessToken: `Bearer ${accessToken}` }));
     }
 
     dispatch({ type: CHECK_AUTH_CHECKED });
