@@ -5,7 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
-import { formatDate, getIngredientsByIds, getTotalPrice } from '../../utils/utils';
+import {
+  formatDate,
+  getUniqIngredientsByIds,
+  getTotalPrice,
+  getIngredientsByIds,
+} from '../../utils/utils';
 import Ingredient from './components/ingredient';
 
 const OrderInfoCard = () => {
@@ -16,12 +21,10 @@ const OrderInfoCard = () => {
   if (!orders) {
     return;
   }
-  console.log(orders);
   const order = orders.find((order) => order._id === id);
-  console.log(order);
   const formattedDate = formatDate(order.createdAt);
-  const orderIngredients = getIngredientsByIds(order.ingredients, ingredients);
-  const price = getTotalPrice(orderIngredients);
+  const uniqIng = getUniqIngredientsByIds(order.ingredients, ingredients);
+  const price = uniqIng.reduce((acc, item) => acc + item?.price * item?.qty, 0);
 
   const status =
     order.status === 'created'
@@ -44,8 +47,8 @@ const OrderInfoCard = () => {
         {status}
       </span>
       <p className={`text text_type_main-medium mb-6`}>Состав:</p>
-      <ul className={`mb-10 ${styles.order__ingList}`}>
-        {orderIngredients.map((ing) => {
+      <ul className={styles.order__ingList}>
+        {uniqIng.map((ing) => {
           const uniqId = uuidv4();
           return (
             <li key={uniqId}>

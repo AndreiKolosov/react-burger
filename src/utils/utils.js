@@ -37,12 +37,41 @@ const getIngredientsByIds = (ids, allIng) => {
 
   return bun.concat(filling);
 };
+const getQuantity = (array, item) => {
+  let counter = 0;
+  array.forEach((element) => {
+    if (element._id === item._id) {
+      counter++;
+    }
+  });
+  return counter;
+};
+
+const getUniqIngredientsByIds = (ids, allIng) => {
+  const data = ids.map((id) => {
+    return allIng.find((ing) => ing._id === id);
+  });
+
+  data.map((el) => {
+    el.qty = getQuantity(data, el);
+    // В присланном заказе может оказаться как 2 булки, так и одна
+    // По этому делаем такую проверку и добаваляем в поле коллчества еще 1
+    if (el.type === 'bun' && el.qty !== 2) {
+      el.qty++;
+    }
+  });
+
+  const bun = [...new Set(data.filter((ing) => ing.type === 'bun'))]; // коллекция уникальных элементов через new Set
+  const filling = [...new Set(data.filter((ing) => ing.type !== 'bun'))];
+
+  return bun.concat(filling);
+};
 
 const getTotalPrice = (ingredients) => {
   const bun = ingredients.filter((item) => item.type === 'bun');
   const filling = ingredients.filter((item) => item.type !== 'bun');
-
-  return filling.reduce((acc, item) => acc + item.price, 0) + bun[0].price * 2;
+  const total = bun[0]?.price * 2 + filling.reduce((acc, item) => acc + item?.price, 0);
+  return total;
 };
 
-export { formatDate, getIngredientsByIds, getTotalPrice };
+export { formatDate, getIngredientsByIds, getUniqIngredientsByIds, getTotalPrice, getQuantity };

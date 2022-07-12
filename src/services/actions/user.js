@@ -127,7 +127,6 @@ export const logOut = (refreshToken) => {
 export const fetchWithRefresh = (request, ...requestParams) => {
   return function (dispatch) {
     const refreshToken = localStorage.getItem('refreshToken');
-    // const { refreshToken } = requestParams;
 
     console.log('fetchWithRefresh');
     if (!refreshToken) {
@@ -135,7 +134,7 @@ export const fetchWithRefresh = (request, ...requestParams) => {
     } else {
       dispatch({ type: REFRESH_TOKEN_REQUEST });
       api
-        .refreshToken(refreshToken)
+        .refreshToken(localStorage.getItem('refreshToken'))
         .then((res) => {
           console.log('fetchWithRefresh - refresh');
           setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
@@ -144,8 +143,10 @@ export const fetchWithRefresh = (request, ...requestParams) => {
           return res;
         })
         .then((res) => {
-          const accessToken = getCookie('accessToken');
           console.log('fetchWithRefresh - repeat request');
+          console.log(...requestParams, 'params');
+
+          requestParams = { ...requestParams, accessToken: res.accessToken };
 
           dispatch(request(...requestParams));
         })

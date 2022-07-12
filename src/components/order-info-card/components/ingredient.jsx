@@ -12,7 +12,7 @@ const Ingredient = ({ ingredient }) => {
           {ingredient.name}
         </p>
         <p className={`${styles.card__price} text text_type_digits-default`}>
-          &nbsp;
+          {`${ingredient.qty} x ${ingredient.price}`}&nbsp;
           <CurrencyIcon type='primary' />
         </p>
       </div>
