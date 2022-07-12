@@ -16,6 +16,8 @@ import ProtectedRoute from '../protected-route/protected-route';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfoCard from '../order-info-card/order-info-card';
+import Loader from '../loader/loader';
+import { useSelector } from 'react-redux';
 
 const ModalSwitch = () => {
   const location = useLocation();
@@ -23,6 +25,7 @@ const ModalSwitch = () => {
   const history = useHistory();
   // console.log(history);
 
+  const { wsOpen, orders, wsRequest } = useSelector((store) => store.ws);
   const closeModal = useCallback(
     (path) => {
       history.push(path);
@@ -56,7 +59,8 @@ const ModalSwitch = () => {
       {background && (
         <Route path='/feed/:id' exact>
           <Modal closeModal={() => closeModal('/feed')}>
-            <OrderInfoCard />
+            {!wsOpen && wsRequest && <Loader />}
+            {wsOpen && orders && <OrderInfoCard />}
           </Modal>
         </Route>
       )}

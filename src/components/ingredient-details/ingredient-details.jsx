@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
-import { ingredientPropType } from '../../utils/prop-types';
 import NutritionValue from './components/nutrition-value';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Loader from '../loader/loader';
 
 const IngredientDetails = () => {
@@ -32,9 +30,5 @@ const IngredientDetails = () => {
     </>
   );
 };
-
-// IngredientDetails.propTypes = {
-//   title: PropTypes.string,
-// };
 
 export default IngredientDetails;

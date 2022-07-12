@@ -5,7 +5,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkAuth } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
 import ModalSwitch from '../modal-switch/modal-switch';
 
 function App() {

@@ -133,8 +133,9 @@ export const fetchWithRefresh = (request, ...requestParams) => {
       throw new Error('Token does not exist in storage');
     } else {
       dispatch({ type: REFRESH_TOKEN_REQUEST });
+      console.log(refreshToken);
       api
-        .refreshToken(localStorage.getItem('refreshToken'))
+        .refreshToken(refreshToken)
         .then((res) => {
           console.log('fetchWithRefresh - refresh');
           setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
