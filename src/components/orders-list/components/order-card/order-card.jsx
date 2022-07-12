@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styles from './order-card.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { formatDate, getIngredientsByIds, getTotalPrice } from '../../../../utils/utils';
@@ -11,6 +11,7 @@ const OrderCard = ({ order }) => {
   const location = useLocation();
   const { number, _id, createdAt, name } = order;
   const { ingredients } = useSelector((store) => store.ingredients);
+  const { url } = useRouteMatch();
 
   const formattedDate = formatDate(createdAt);
   const orderIngredients = getIngredientsByIds(order.ingredients, ingredients);
@@ -21,7 +22,7 @@ const OrderCard = ({ order }) => {
       <Link
         className={styles.card__link}
         to={{
-          pathname: `/feed/${_id}`,
+          pathname: `${url}/${_id}`,
           state: { background: location },
         }}>
         <div className={styles.card__header}>

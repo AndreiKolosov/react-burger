@@ -8,7 +8,7 @@ const formatDate = (date) => {
       .join('')
   );
   const orderTime = date.split('T')[1].split('.')[0].split(':', 2).join(':');
-  const dateNow = new Date().getUTCDate();
+  const dateNow = new Date().getDate();
   let formattedDate = '';
 
   if (orderDate === dateNow) {
@@ -17,11 +17,11 @@ const formatDate = (date) => {
   if (orderDate === dateNow - 1) {
     formattedDate = `Вчера, ${orderTime} i-GMT+3`;
   }
-  if (orderDate < dateNow - 4) {
-    formattedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
-  }
   if (orderDate < dateNow - 5) {
     formattedDate = `${dateNow - orderDate} дней назад, ${orderTime} i-GMT+3`;
+  }
+  if (orderDate < dateNow - 1) {
+    formattedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
   }
 
   return formattedDate;

@@ -149,7 +149,7 @@ export const fetchWithRefresh = (request, ...requestParams) => {
 
           requestParams = { ...requestParams, accessToken: res.accessToken };
 
-          dispatch(request(...requestParams));
+          dispatch(request(requestParams));
         })
         .catch((err) => {
           console.log('fetchWithRefresh - in err');

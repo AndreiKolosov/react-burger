@@ -31,7 +31,8 @@ const ProfileNav = () => {
           <NavLink
             to='/profile/orders'
             exact
-            className={`${styles.nav__link} text text_type_main-medium pt-4 pb-4`}>
+            className={`${styles.nav__link} text text_type_main-medium pt-4 pb-4`}
+            activeClassName={styles.nav__link_active}>
             История заказов
           </NavLink>
         </li>

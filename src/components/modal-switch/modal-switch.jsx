@@ -11,6 +11,7 @@ import {
   IngredientPage,
   OrderFeed,
   OrderInfo,
+  OrderHistory,
 } from '../../pages';
 import ProtectedRoute from '../protected-route/protected-route';
 import Modal from '../modal/modal';
@@ -44,7 +45,8 @@ const ModalSwitch = () => {
         <Route path='/ingredients/:id' exact children={<IngredientPage />} />
         <Route path='/feed' exact children={<OrderFeed />} />
         <Route path='/feed/:id' exact children={<OrderInfo />} />
-        <ProtectedRoute path='/profile' children={<ProfilePage />} />
+        <ProtectedRoute path='/profile' exact children={<ProfilePage />} />
+        <ProtectedRoute path='/profile/orders' exact children={<OrderHistory />} />
         <Route children={<NotFound404 />} />
       </Switch>
 
@@ -59,6 +61,15 @@ const ModalSwitch = () => {
       {background && (
         <Route path='/feed/:id' exact>
           <Modal closeModal={() => closeModal('/feed')}>
+            {!wsOpen && wsRequest && <Loader />}
+            {wsOpen && orders && <OrderInfoCard />}
+          </Modal>
+        </Route>
+      )}
+
+      {background && (
+        <Route path='/profile/orders/:id' exact>
+          <Modal closeModal={() => closeModal('/profile/orders')}>
             {!wsOpen && wsRequest && <Loader />}
             {wsOpen && orders && <OrderInfoCard />}
           </Modal>

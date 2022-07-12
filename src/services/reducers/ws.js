@@ -3,6 +3,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_WITH_TOKEN,
   WS_GET_MESSAGE,
 } from '../actions/ws';
 
@@ -25,6 +26,14 @@ export const wsReducer = (state = initialState, action) => {
         wsFailed: false,
       };
     }
+    case WS_CONNECTION_WITH_TOKEN: {
+      return {
+        ...state,
+        wsRequest: true,
+        wsOpen: false,
+        wsFailed: false,
+      };
+    }
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,
@@ -39,6 +48,17 @@ export const wsReducer = (state = initialState, action) => {
         wsRequest: false,
         wsOpen: false,
         wsFailed: true,
+      };
+    }
+    case WS_CONNECTION_CLOSED: {
+      return {
+        ...state,
+        wsRequest: false,
+        wsOpen: false,
+        wsFailed: false,
+        orders: null,
+        total: '',
+        totalToday: '',
       };
     }
     case WS_GET_MESSAGE: {
