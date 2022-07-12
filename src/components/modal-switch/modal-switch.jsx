@@ -47,6 +47,7 @@ const ModalSwitch = () => {
         <Route path='/feed/:id' exact children={<OrderInfo />} />
         <ProtectedRoute path='/profile' exact children={<ProfilePage />} />
         <ProtectedRoute path='/profile/orders' exact children={<OrderHistory />} />
+        <ProtectedRoute path='/profile/orders/:id' exact children={<OrderInfo />} />
         <Route children={<NotFound404 />} />
       </Switch>
 
