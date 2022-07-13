@@ -25,6 +25,5 @@ const apiConfig = {
 };
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
-const wsUrlWithAuth = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;
 
-export { IngredientType, ariaLabels, apiConfig, wsUrl, wsUrlWithAuth };
+export { IngredientType, ariaLabels, apiConfig, wsUrl };

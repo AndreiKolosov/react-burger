@@ -1,23 +1,24 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { wsClose, wsInitWithToken, wsResetError } from '../../services/actions/ws';
-import { wsUrlWithAuth } from '../../utils/variables';
 import styles from './order-history.module.css';
 import Loader from '../../components/loader/loader';
 import OrdersList from '../../components/orders-list/orders-list';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Notification from '../../components/notification/notification';
+import { getCookie } from '../../utils/cookie';
 
 const OrderHistory = () => {
   const dispatch = useDispatch();
   const { orders, wsRequest, wsFailed } = useSelector((store) => store.ws);
+  const accessToken = getCookie('accessToken');
 
   const resetError = useCallback(() => {
     dispatch(wsResetError());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(wsInitWithToken(wsUrlWithAuth));
+    dispatch(wsInitWithToken(`wss://norma.nomoreparties.space/orders?token=${accessToken}`));
     return () => {
       dispatch(wsClose());
     };
