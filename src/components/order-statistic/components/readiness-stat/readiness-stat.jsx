@@ -12,7 +12,7 @@ const ReadinessStats = ({ title, ready, orders }) => {
     <div className={styles.stats}>
       <p className={`${styles.stats__title} text text_type_main-medium mb-6`}>{title}</p>
       <ul className={styles.stats__list}>
-        {orders.slice(0, 5).map((order) => {
+        {orders.map((order) => {
           return (
             <li key={order}>
               <p
