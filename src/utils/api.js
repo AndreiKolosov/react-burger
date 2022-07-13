@@ -17,7 +17,7 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  postOrder(order, accessToken) {
+  postOrder(accessToken, order) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
       headers: {

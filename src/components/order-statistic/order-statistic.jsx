@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import ReadinessStats from './components/readiness-stat/readiness-stat';
-import TotalStat from './components/tottal-stat/total-stat';
+import TotalStat from './components/total-stat/total-stat';
 import styles from './order-statistic.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const OrderStatistic = () => {
   const { orders, total, totalToday } = useSelector((store) => store.ws);

@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 const ModalSwitch = () => {
   const location = useLocation();
   const background = location.state?.background;
+  const from = location.state?.from;
   const history = useHistory();
   // console.log(history);
 
@@ -47,7 +48,7 @@ const ModalSwitch = () => {
         <Route path='/feed/:id' exact children={<OrderInfo />} />
         <ProtectedRoute path='/profile' exact children={<ProfilePage />} />
         <ProtectedRoute path='/profile/orders' exact children={<OrderHistory />} />
-        <ProtectedRoute path='/profile/orders/:id' exact children={<OrderInfo />} />
+        <ProtectedRoute path='/profile/orders/:id' exact children={<OrderInfo personal />} />
         <Route children={<NotFound404 />} />
       </Switch>
 
@@ -60,22 +61,22 @@ const ModalSwitch = () => {
       )}
 
       {background && (
-        <Route path='/feed/:id' exact>
-          <Modal closeModal={() => closeModal('/feed')}>
+        <Route path={`${from}/:id`} exact>
+          <Modal closeModal={() => closeModal(`${from}`)}>
             {!wsOpen && wsRequest && <Loader />}
             {wsOpen && orders && <OrderInfoCard />}
           </Modal>
         </Route>
       )}
 
-      {background && (
+      {/* {background && (
         <Route path='/profile/orders/:id' exact>
           <Modal closeModal={() => closeModal('/profile/orders')}>
             {!wsOpen && wsRequest && <Loader />}
             {wsOpen && orders && <OrderInfoCard />}
           </Modal>
         </Route>
-      )}
+      )} */}
     </>
   );
 };

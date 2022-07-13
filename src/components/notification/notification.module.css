@@ -11,6 +11,7 @@
   bottom: 10%;
   left: 60px;
   animation: appearance 0.3s linear;
+  z-index: 999;
 }
 
 .notification_closed {

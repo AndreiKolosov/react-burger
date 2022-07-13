@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
-import { postOrderRequest } from '../../services/actions/order';
+import { postOrderRequest, resetOrderError } from '../../services/actions/order';
 import {
   ConstructorElement,
   Button,
@@ -20,6 +20,7 @@ import BunPlug from './components/bun-plug/bun-plug';
 import FillingElement from './components/filling-element/filling-element';
 import { useHistory, Redirect } from 'react-router-dom';
 import { getCookie } from '../../utils/cookie';
+import Notification from '../notification/notification';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
@@ -34,8 +35,12 @@ const BurgerConstructor = () => {
     dispatch(resetConstructor());
   }, [dispatch]);
 
-  const postOrder = (orderData, token) => {
-    user && dispatch(postOrderRequest(orderData, token));
+  const resetError = useCallback(() => {
+    dispatch(resetOrderError());
+  }, [dispatch]);
+
+  const postOrder = (orderData) => {
+    user && dispatch(postOrderRequest({ accessToken: `Bearer ${accessToken}`, order: orderData }));
     !user &&
       history.replace({
         pathname: '/login',
@@ -118,7 +123,7 @@ const BurgerConstructor = () => {
           type='primary'
           size='medium'
           disabled={bun && filling.length > 0 ? false : true}
-          onClick={() => postOrder(orderIds, `Bearer ${accessToken}`)}>
+          onClick={() => postOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>
@@ -133,6 +138,14 @@ const BurgerConstructor = () => {
         <Modal closeModal={closeOrderDetails}>
           <OrderDetails />
         </Modal>
+      )}
+
+      {orderFailed && (
+        <Notification
+          heading='Что-то пошло не так =('
+          message='Ошибка при оформлении заказа.'
+          onClose={resetError}
+        />
       )}
     </section>
   );

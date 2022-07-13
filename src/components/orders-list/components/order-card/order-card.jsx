@@ -23,7 +23,7 @@ const OrderCard = ({ order }) => {
         className={styles.card__link}
         to={{
           pathname: `${url}/${_id}`,
-          state: { background: location },
+          state: { background: location, from: location.pathname },
         }}>
         <div className={styles.card__header}>
           <p

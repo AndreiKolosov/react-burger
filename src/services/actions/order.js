@@ -18,11 +18,11 @@ export function resetOrderError() {
   };
 }
 
-export function postOrderRequest(order, accessToken) {
+export function postOrderRequest({ accessToken, order }) {
   return function (dispatch) {
     dispatch({ type: POST_ORDER_REQUEST });
     api
-      .postOrder(order, accessToken)
+      .postOrder(accessToken, order)
       .then((res) => dispatch({ type: POST_ORDER_SUCCESS, orderNumber: res.order.number }))
       .catch((err) => dispatch({ type: POST_ORDER_FAILED }));
   };

@@ -5,6 +5,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_WITH_TOKEN,
   WS_GET_MESSAGE,
+  WS_RESET_ERROR_STATUS,
 } from '../actions/ws';
 
 const initialState = {
@@ -67,6 +68,17 @@ export const wsReducer = (state = initialState, action) => {
         orders: action.payload.orders,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
+      };
+    }
+    case WS_RESET_ERROR_STATUS: {
+      return {
+        ...state,
+        wsRequest: false,
+        wsOpen: false,
+        wsFailed: false,
+        orders: null,
+        total: '',
+        totalToday: '',
       };
     }
     default: {
