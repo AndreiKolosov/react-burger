@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import {
   HomePage,
@@ -22,10 +22,14 @@ import { useSelector } from 'react-redux';
 
 const ModalSwitch = () => {
   const location = useLocation();
+  const history = useHistory();
   const background = location.state?.background;
   const from = location.state?.from;
-  const history = useHistory();
-  // console.log(history);
+
+  // так при перезагрузке страницы будет открываться отдельная страничка, а не модалка
+  // const background = history.action === 'PUSH' && location.state?.background;
+
+  useEffect(() => {}, []);
 
   const { wsOpen, orders, wsRequest } = useSelector((store) => store.ws);
   const closeModal = useCallback(
@@ -68,15 +72,6 @@ const ModalSwitch = () => {
           </Modal>
         </Route>
       )}
-
-      {/* {background && (
-        <Route path='/profile/orders/:id' exact>
-          <Modal closeModal={() => closeModal('/profile/orders')}>
-            {!wsOpen && wsRequest && <Loader />}
-            {wsOpen && orders && <OrderInfoCard />}
-          </Modal>
-        </Route>
-      )} */}
     </>
   );
 };

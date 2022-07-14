@@ -22,7 +22,7 @@ const OrderHistory = () => {
     return () => {
       dispatch(wsClose());
     };
-  }, [dispatch]);
+  }, [dispatch, accessToken]);
 
   return (
     <main className={styles.content}>

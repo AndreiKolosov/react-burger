@@ -12,12 +12,11 @@ const OrderInfoCard = () => {
   const { id } = useParams();
   const { orders } = useSelector((store) => store.ws);
   const { ingredients } = useSelector((store) => store.ingredients);
-
   const order = orders.find((order) => order._id === id);
   const formattedDate = formatDate(order.createdAt);
   const uniqIng = getUniqIngredientsByIds(order.ingredients, ingredients);
   const price = uniqIng.reduce((acc, item) => acc + item?.price * item?.qty, 0);
-
+  console.log(order);
   const status =
     order.status === 'created'
       ? 'Создан'
