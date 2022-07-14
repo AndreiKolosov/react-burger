@@ -70,7 +70,10 @@ const getUniqIngredientsByIds = (ids, allIng) => {
 const getTotalPrice = (ingredients) => {
   const bun = ingredients.filter((item) => item.type === 'bun');
   const filling = ingredients.filter((item) => item.type !== 'bun');
-  const total = bun[0]?.price * 2 + filling.reduce((acc, item) => acc + item?.price, 0);
+  const total = bun[0]
+    ? bun[0]?.price * 2
+    : 0 + filling.reduce((acc, item) => acc + item?.price, 0);
+
   return total;
 };
 

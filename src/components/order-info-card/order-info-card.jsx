@@ -16,7 +16,6 @@ const OrderInfoCard = () => {
   const formattedDate = formatDate(order.createdAt);
   const uniqIng = getUniqIngredientsByIds(order.ingredients, ingredients);
   const price = uniqIng.reduce((acc, item) => acc + item?.price * item?.qty, 0);
-  console.log(order);
   const status =
     order.status === 'created'
       ? 'Создан'
