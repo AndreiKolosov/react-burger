@@ -17,11 +17,12 @@ const formatDate = (date) => {
   if (orderDate === dateNow - 1) {
     formattedDate = `Вчера, ${orderTime} i-GMT+3`;
   }
-  if (orderDate < dateNow - 5) {
-    formattedDate = `${dateNow - orderDate} дней назад, ${orderTime} i-GMT+3`;
-  }
-  if (orderDate < dateNow - 1) {
+  if (orderDate < dateNow - 1 && orderDate > dateNow - 5) {
     formattedDate = `${dateNow - orderDate} дня назад, ${orderTime} i-GMT+3`;
+  }
+
+  if (orderDate < dateNow - 4) {
+    formattedDate = `${dateNow - orderDate} дней назад, ${orderTime} i-GMT+3`;
   }
 
   return formattedDate;
@@ -68,11 +69,9 @@ const getUniqIngredientsByIds = (ids, allIng) => {
 };
 
 const getTotalPrice = (ingredients) => {
-  const bun = ingredients.filter((item) => item.type === 'bun');
+  const bun = ingredients.find((item) => item.type === 'bun');
   const filling = ingredients.filter((item) => item.type !== 'bun');
-  const total = bun[0]
-    ? bun[0]?.price * 2
-    : 0 + filling.reduce((acc, item) => acc + item?.price, 0);
+  const total = bun ? bun?.price * 2 : 0 + filling.reduce((acc, item) => acc + item?.price, 0);
 
   return total;
 };
