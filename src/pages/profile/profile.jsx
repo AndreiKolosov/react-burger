@@ -30,7 +30,6 @@ const ProfilePage = () => {
   const accessToken = getCookie('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const location = useLocation();
-  console.log(location);
 
   const dispatch = useDispatch();
 
@@ -80,9 +79,9 @@ const ProfilePage = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(patchUser(`Bearer ${accessToken}`, name, email, password, refreshToken));
+      dispatch(patchUser({ accessToken: `Bearer ${accessToken}`, name, email, password }));
     },
-    [dispatch, name, email, password, accessToken, refreshToken]
+    [dispatch, name, email, password, accessToken]
   );
 
   const handleCancel = useCallback(

@@ -1,0 +1,23 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+}
+
+.ingredient__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.ingredient__name {
+  max-width: 415px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__price {
+  display: flex;
+  align-items: center;
+}

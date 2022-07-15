@@ -17,11 +17,12 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  postOrder(order) {
+  postOrder(accessToken, order) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        authorization: accessToken,
       },
       body: JSON.stringify({
         ingredients: order,
@@ -128,6 +129,37 @@ class Api {
       }),
     }).then((res) => this._parseResponse(res));
   }
+
+  // fetchWithRefresh(url, options) {
+  //   return fetch(url, options)
+  //     .then((res) => this._parseResponse(res))
+  //     .catch((err) => {
+  //       if (err.message === 'jwt expired' || err.message === 'You should be authorised') {
+  //         const refreshToken = localStorage.getItem('refreshToken');
+
+  //         if (!refreshToken) {
+  //           return Promise.reject('Token does not exist in storage');
+  //         } else if (refreshToken) {
+  //           this.refreshToken(refreshToken)
+  //             .then((res) => {
+  //               setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+  //               localStorage.setItem('refreshToken', res.refreshToken);
+  //             })
+  //             .then((res) => {
+  //               fetch(url, {
+  //                 ...options,
+  //                 headers: {
+  //                   ...options.headers,
+  //                   authorization: res.accessToken,
+  //                 },
+  //               }).then((res) => this._parseResponse(res));
+  //             });
+  //         } else {
+  //           return Promise.reject(err);
+  //         }
+  //       }
+  //     });
+  // }
 }
 
 export default new Api(apiConfig);

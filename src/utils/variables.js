@@ -24,4 +24,6 @@ const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
 };
 
-export { IngredientType, ariaLabels, apiConfig };
+const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+
+export { IngredientType, ariaLabels, apiConfig, wsUrl };

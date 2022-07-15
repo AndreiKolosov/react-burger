@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
-import { postOrderRequest } from '../../services/actions/order';
+import { postOrderRequest, resetOrderError } from '../../services/actions/order';
 import {
   ConstructorElement,
   Button,
@@ -19,6 +19,8 @@ import FillingPlug from './components/filling-plug/filling-plug';
 import BunPlug from './components/bun-plug/bun-plug';
 import FillingElement from './components/filling-element/filling-element';
 import { useHistory, Redirect } from 'react-router-dom';
+import { getCookie } from '../../utils/cookie';
+import Notification from '../notification/notification';
 
 const BurgerConstructor = () => {
   const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
@@ -26,14 +28,19 @@ const BurgerConstructor = () => {
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const history = useHistory();
+  const accessToken = getCookie('accessToken');
 
   const closeOrderDetails = useCallback(() => {
     dispatch(closeOrderModal());
     dispatch(resetConstructor());
   }, [dispatch]);
 
+  const resetError = useCallback(() => {
+    dispatch(resetOrderError());
+  }, [dispatch]);
+
   const postOrder = (orderData) => {
-    user && dispatch(postOrderRequest(orderData));
+    user && dispatch(postOrderRequest({ accessToken: `Bearer ${accessToken}`, order: orderData }));
     !user &&
       history.replace({
         pathname: '/login',
@@ -112,16 +119,33 @@ const BurgerConstructor = () => {
         <span className='text text_type_digits-medium mr-10'>
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type='primary' size='medium' onClick={() => postOrder(orderIds)}>
+        <Button
+          type='primary'
+          size='medium'
+          disabled={bun && filling.length > 0 ? false : true}
+          onClick={() => postOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>
 
+      {orderRequest && (
+        <Modal closeModal={closeOrderDetails}>
+          <Loader />
+        </Modal>
+      )}
+
       {orderNumber && (
         <Modal closeModal={closeOrderDetails}>
-          {orderRequest && !orderFailed && <Loader />}
-          {!orderRequest && !orderFailed && <OrderDetails />}
+          <OrderDetails />
         </Modal>
+      )}
+
+      {orderFailed && (
+        <Notification
+          heading='Что-то пошло не так =('
+          message='Ошибка при оформлении заказа.'
+          onClose={resetError}
+        />
       )}
     </section>
   );

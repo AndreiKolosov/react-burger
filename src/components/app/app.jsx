@@ -5,23 +5,20 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkAuth } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
 import ModalSwitch from '../modal-switch/modal-switch';
 
 function App() {
   const dispatch = useDispatch();
   const { isAuthChecked } = useSelector((store) => store.user);
-  const accessToken = getCookie('accessToken');
-  const refreshToken = localStorage.getItem('refreshToken');
   const loaderWrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
   };
 
   useEffect(() => {
-    dispatch(checkAuth(`Bearer ${accessToken}`, refreshToken));
+    dispatch(checkAuth());
     dispatch(getIngredients());
-  }, [dispatch, accessToken, refreshToken]);
+  }, [dispatch]);
 
   return (
     <>

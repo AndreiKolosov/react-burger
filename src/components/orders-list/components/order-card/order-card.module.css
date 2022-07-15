@@ -1,0 +1,81 @@
+.card {
+  box-sizing: border-box;
+  max-width: 584px;
+  max-height: 214px;
+  width: 100%;
+  padding: 24px;
+  background: #1c1c21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.card__link {
+  color: inherit;
+  text-decoration: none;
+  display: grid;
+  gap: 24px 0;
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card__burgerComposition {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card__burgerName {
+  max-width: 530px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__ingredientsList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  max-width: 314px;
+}
+
+.ingredient__item {
+  margin-left: -16px;
+}
+.ingredient__item:first-of-type {
+  margin-left: 0;
+}
+
+.card__ingredientExtraItem {
+  width: 64px;
+  height: 64px;
+  z-index: 1;
+  position: relative;
+  border-radius: 100px;
+  margin-left: -16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__extraCounter {
+  position: absolute;
+  background-color: #131316;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.card__price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

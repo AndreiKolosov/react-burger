@@ -2,13 +2,11 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredient-card.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setCurrentIngredient } from '../../../../services/actions/ingredient';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 
 const IngredientCard = ({ item }) => {
-  const dispatch = useDispatch();
   const location = useLocation();
 
   const { bun, filling } = useSelector((store) => store.burgerConstructor);
@@ -37,13 +35,7 @@ const IngredientCard = ({ item }) => {
         pathname: `/ingredients/${item._id}`,
         state: { background: location },
       }}>
-      <div
-        className={`${styles.card} pl-4 pr-4`}
-        onClick={() => {
-          dispatch(setCurrentIngredient(item));
-        }}
-        ref={dragRef}
-        draggable>
+      <div className={`${styles.card} pl-4 pr-4`} ref={dragRef} draggable>
         {counter > 0 && <Counter count={counter} size='default' />}
         <img
           className={isDrag ? `${styles.cardIsDragging}` : null}

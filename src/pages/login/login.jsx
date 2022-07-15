@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ import Notification from '../../components/notification/notification';
 import { getCookie } from '../../utils/cookie';
 
 const LoginPage = () => {
-  const { user, logInRequest, logInErr, errMessage, isPasswordReset } = useSelector(
+  const { user, logInRequest, logInErr, errMessage, isPasswordReset, getUserRequest } = useSelector(
     (store) => store.user
   );
   const [email, setEmail] = useState('');
@@ -50,8 +50,8 @@ const LoginPage = () => {
 
   return (
     <main className={styles.content}>
-      {logInRequest && !logInErr && <Loader />}
-      {!logInRequest && !logInErr && (
+      {logInRequest && !logInErr && getUserRequest && <Loader />}
+      {!logInRequest && !logInErr && !getUserRequest && (
         <Form title='Вход' name='login' onSubmit={handleSubmit}>
           <InputContainer gap='mb-6'>
             <Input
