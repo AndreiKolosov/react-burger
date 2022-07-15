@@ -24,8 +24,10 @@
 - JS
 - React
 - Redux
+- React Router
 - Babel
 - Webpack
+- WebSocket
 - Методология БЭМ
 
 [Наверх](#top)
