@@ -6,47 +6,49 @@ export const DELETE: 'DELETE' = 'DELETE';
 export const RESET: 'RESET' = 'RESET';
 export const REORDER_INGREDIENT: 'REORDER_INGREDIENT' = 'REORDER_INGREDIENT';
 
-export interface IRemoveItem {
+export interface IRemoveItemAction {
   readonly type: typeof DELETE;
   readonly item: IIngredient;
 }
 
-export interface IResetConstructor {
+export interface IResetConstructorAction {
   readonly type: typeof RESET;
 }
 
-export interface IDropItem {
+export interface IDropItemAction {
   readonly type: typeof ADD;
   item: IIngredient;
 }
 
-export interface IReorderIngredient {
+export interface IReorderIngredientAction {
   readonly type: typeof REORDER_INGREDIENT;
   readonly dragIndex: number;
   readonly hoverIndex: number;
 }
 
-export function removeItem(item: IIngredient): IRemoveItem {
+export type TConstructorActions = IRemoveItemAction | IResetConstructorAction | IDropItemAction | IReorderIngredientAction;
+
+export function removeItem(item: IIngredient): IRemoveItemAction {
   return {
     type: DELETE,
     item,
   };
 }
 
-export function resetConstructor(): IResetConstructor {
+export function resetConstructor(): IResetConstructorAction {
   return {
     type: RESET,
   };
 }
 
-export function dropItem(item: IIngredient): IDropItem {
+export function dropItem(item: IIngredient): IDropItemAction {
   return {
     type: ADD,
     item: { ...item, uId: uuidv4() },
   };
 }
 
-export function reorderIngredient(dragIndex: number, hoverIndex: number): IReorderIngredient {
+export function reorderIngredient(dragIndex: number, hoverIndex: number): IReorderIngredientAction {
   return {
     type: REORDER_INGREDIENT,
     dragIndex,

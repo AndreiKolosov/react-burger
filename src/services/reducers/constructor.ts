@@ -1,14 +1,22 @@
-import { ADD, DELETE, RESET, REORDER_INGREDIENT } from '../actions/constructor';
+import { ADD, DELETE, RESET, REORDER_INGREDIENT, TConstructorActions } from '../actions/constructor';
 import update from 'immutability-helper';
+import { IIngredient } from '../../types/types';
 
-const initialState = {
+export interface IConstructorState {
+  bun: IIngredient | null;
+  filling: ReadonlyArray<IIngredient>;
+  orderIds: ReadonlyArray<string>;
+  totalPrice: number;
+}
+
+const initialState: IConstructorState = {
   bun: null,
   filling: [],
   orderIds: [],
   totalPrice: 0,
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: TConstructorActions): IConstructorState => {
   switch (action.type) {
     case ADD:
       if (action.item.type === 'bun') {
@@ -16,9 +24,7 @@ export const constructorReducer = (state = initialState, action) => {
           return {
             ...state,
             bun: action.item,
-            orderIds: [...state.orderIds]
-              .filter((id) => id !== state.bun._id)
-              .concat(action.item._id),
+            orderIds: [...state.orderIds].filter((id) => id !== state?.bun?._id).concat(action.item._id),
             totalPrice: state.totalPrice - state.bun.price * 2 + action.item.price * 2,
           };
         } else {
