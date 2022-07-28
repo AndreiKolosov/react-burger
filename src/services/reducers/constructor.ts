@@ -1,13 +1,6 @@
 import { ADD, DELETE, RESET, REORDER_INGREDIENT, TConstructorActions } from '../actions/constructor';
 import update from 'immutability-helper';
-import { IIngredient } from '../../types/types';
-
-export interface IConstructorState {
-  bun: IIngredient | null;
-  filling: ReadonlyArray<IIngredient>;
-  orderIds: ReadonlyArray<string>;
-  totalPrice: number;
-}
+import { IConstructorState } from '../../types/types';
 
 const initialState: IConstructorState = {
   bun: null,

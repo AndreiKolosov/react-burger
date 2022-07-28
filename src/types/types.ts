@@ -13,3 +13,10 @@ export interface IIngredient {
   __v: number;
   _id: string;
 }
+
+export interface IConstructorState {
+  bun: IIngredient | null;
+  filling: ReadonlyArray<IIngredient>;
+  orderIds: ReadonlyArray<string>;
+  totalPrice: number;
+}
