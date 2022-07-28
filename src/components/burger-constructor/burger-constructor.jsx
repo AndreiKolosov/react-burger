@@ -2,11 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { postOrderRequest, resetOrderError } from '../../services/actions/order';
-import {
-  ConstructorElement,
-  Button,
-  CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ariaLabels } from '../../utils/variables';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -63,7 +59,7 @@ const BurgerConstructor = () => {
   });
 
   const handleDelete = (item) => {
-    dispatch(removeItem(item));
+    dispatch(removeItem({ item }));
   };
 
   // Аналог того, что происходит с totalPrice в reducer
@@ -75,16 +71,10 @@ const BurgerConstructor = () => {
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLabels.constructor}>
       <ul className={`${styles.ingredientList}`} ref={dropTarget}>
         {!bun && filling.length === 0 && <BurgerPlug hover={isHover} />}
-        {!bun && filling.length > 0 && <BunPlug position='top' hover={isHover} />}
+        {!bun && filling.length > 0 && <BunPlug position="top" hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
-            <ConstructorElement
-              type='top'
-              isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+            <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image_mobile} />
           </li>
         )}
         {filling.length === 0 && bun && <FillingPlug hover={isHover} />}
@@ -92,38 +82,23 @@ const BurgerConstructor = () => {
           <li>
             <ul className={`${styles.fillingList} mt-4 mb-4`}>
               {filling.map((item, index) => (
-                <FillingElement
-                  item={item}
-                  deleteHandler={handleDelete}
-                  index={index}
-                  key={item.uId}
-                />
+                <FillingElement item={item} deleteHandler={handleDelete} index={index} key={item.uId} />
               ))}
             </ul>
           </li>
         )}
-        {!bun && filling.length > 0 && <BunPlug position='bottom' hover={isHover} />}
+        {!bun && filling.length > 0 && <BunPlug position="bottom" hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
-            <ConstructorElement
-              type='bottom'
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+            <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image_mobile} />
           </li>
         )}
       </ul>
       <div className={`${styles.order} mt-10`}>
-        <span className='text text_type_digits-medium mr-10'>
+        <span className="text text_type_digits-medium mr-10">
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button
-          type='primary'
-          size='medium'
-          disabled={bun && filling.length > 0 ? false : true}
-          onClick={() => postOrder(orderIds)}>
+        <Button type="primary" size="medium" disabled={bun && filling.length > 0 ? false : true} onClick={() => postOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>
@@ -140,13 +115,7 @@ const BurgerConstructor = () => {
         </Modal>
       )}
 
-      {orderFailed && (
-        <Notification
-          heading='Что-то пошло не так =('
-          message='Ошибка при оформлении заказа.'
-          onClose={resetError}
-        />
-      )}
+      {orderFailed && <Notification heading="Что-то пошло не так =(" message="Ошибка при оформлении заказа." onClose={resetError} />}
     </section>
   );
 };
