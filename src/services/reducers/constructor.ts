@@ -1,6 +1,6 @@
 import { ADD, DELETE, RESET, REORDER_INGREDIENT, TConstructorActions } from '../actions/constructor';
 import update from 'immutability-helper';
-import { IConstructorState } from '../../types/types';
+import { IConstructorState } from '../../utils/interfaces';
 
 const initialState: IConstructorState = {
   bun: null,

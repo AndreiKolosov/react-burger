@@ -1,6 +1,17 @@
 import { getCookie } from './cookie';
 
-const IngredientType = {
+type TIngredient = {
+  type: string;
+  name: string;
+};
+
+export type TIngredientType = {
+  Bun: TIngredient;
+  Main: TIngredient;
+  Sauce: TIngredient;
+};
+
+const IngredientType: TIngredientType = {
   Bun: {
     type: 'bun',
     name: 'Булки',
@@ -15,15 +26,20 @@ const IngredientType = {
   },
 };
 
-const ariaLabels = {
+export type TAriaLabels = {
+  ingredients: string;
+  constructor: string;
+};
+
+const ariaLabels: TAriaLabels = {
   ingredients: 'Соберите свой бургер',
   constructor: 'Коструктор бургеров',
 };
 
-const apiConfig = {
+const apiConfig: { baseUrl: string } = {
   baseUrl: 'https://norma.nomoreparties.space/api',
 };
 
-const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+const wsUrl: string = 'wss://norma.nomoreparties.space/orders/all';
 
 export { IngredientType, ariaLabels, apiConfig, wsUrl };

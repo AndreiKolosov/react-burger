@@ -1,18 +1,24 @@
 .content {
-  display: flex;
-  gap: 60px;
-  min-height: 100vh;
+  display: grid;
+  justify-content: center;
+  grid-template-areas: 'sidebar profile';
+  grid-template-columns: 320px 480px 320px;
   width: 100%;
-  min-width: 1280px;
-  padding: 120px 0 0 340px;
+  gap: 60px;
+  min-height: 75vh;
+  padding: 120px 0 0 0;
   flex: 1;
 }
 
 .sidebar {
+  grid-area: sidebar;
+  justify-self: end;
   max-width: 320px;
   width: 100%;
 }
 
 .profile {
+  grid-area: profile;
+  max-width: 480px;
   width: 100%;
 }
