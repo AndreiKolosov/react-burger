@@ -1,18 +1,14 @@
-import {
-  POST_ORDER_FAILED,
-  POST_ORDER_SUCCESS,
-  POST_ORDER_REQUEST,
-  CLOSE_ORDER_DETAILS,
-  RESET_ORDER_ERROR_STATUS,
-} from '../actions/order';
+import { IOrderState } from '../../utils/interfaces';
+import { TOrderActions } from '../../utils/types';
+import { POST_ORDER_FAILED, POST_ORDER_SUCCESS, POST_ORDER_REQUEST, CLOSE_ORDER_DETAILS, RESET_ORDER_ERROR_STATUS } from '../constants/order';
 
-const initialState = {
+const initialState: IOrderState = {
   orderNumber: null,
   orderRequest: false,
   orderFailed: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case POST_ORDER_REQUEST: {
       return {

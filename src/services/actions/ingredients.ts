@@ -1,7 +1,14 @@
 import api from '../../utils/api';
-import { IIngredient, IResetIngredientsError, IGetIngredientsFailed, IGetIngredientsRequest, IGetIngredientsSuccess } from '../../utils/interfaces';
+import {
+  IIngredient,
+  IResetIngredientsError,
+  IGetIngredientsFailed,
+  IGetIngredientsRequest,
+  IGetIngredientsSuccess,
+  IIngredientResponse,
+} from '../../utils/interfaces';
 import { AppThunk } from '../store';
-import { RESET_INGREDIENTS_ERROR_STATUS, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from '../constants/ingredinets';
+import { RESET_INGREDIENTS_ERROR_STATUS, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from '../constants/ingredients';
 
 export function resetIngredientsError(): IResetIngredientsError {
   return {
@@ -9,7 +16,7 @@ export function resetIngredientsError(): IResetIngredientsError {
   };
 }
 
-export function getIngredientsSuccess(res: { data: IIngredient[]; success: boolean }): IGetIngredientsSuccess {
+export function getIngredientsSuccess(res: IIngredientResponse): IGetIngredientsSuccess {
   return {
     type: GET_INGREDIENTS_SUCCESS,
     ingredients: res.data,
@@ -34,9 +41,7 @@ export function getIngredients(): AppThunk {
     api
       .ingredientsRequest()
       .then((res) => {
-        if (res.data) {
-          dispatch(getIngredientsSuccess(res));
-        }
+        dispatch(getIngredientsSuccess(res));
       })
       .catch((err) => dispatch(getIngredientsFailed()));
   };

@@ -1,4 +1,5 @@
-import { ADD, DELETE, RESET, REORDER_INGREDIENT, TConstructorActions } from '../actions/constructor';
+import { ADD, DELETE, RESET, REORDER_INGREDIENT } from '../constants/constructor';
+import { TConstructorActions } from '../../utils/types';
 import update from 'immutability-helper';
 import { IConstructorState } from '../../utils/interfaces';
 

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Loader from '../../components/loader/loader';
-import Modal from '../../components/modal/modal';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
 import { resetOrderError } from '../../services/actions/order';
@@ -37,14 +36,9 @@ const HomePage = () => {
       )}
 
       {ingredientsFailed && orderFailed && (
-        <Notification message='Сервер не ответил на запрос и не дал вам ингредиенты. Возможно вы ему не нравитесь...' />
+        <Notification message="Сервер не ответил на запрос и не дал вам ингредиенты. Возможно вы ему не нравитесь..." />
       )}
-      {registerSuccess && (
-        <Notification
-          heading='Поздравляем!'
-          message={`${user.name}, Вы успешно зарегестрированы!`}
-        />
-      )}
+      {registerSuccess && <Notification heading="Поздравляем!" message={`${user.name}, Вы успешно зарегестрированы!`} />}
     </div>
   );
 };

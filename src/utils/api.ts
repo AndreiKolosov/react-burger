@@ -1,4 +1,4 @@
-import { TIngredientResponse } from './types';
+import { IIngredientResponse, INewOrderResponse } from './interfaces';
 import { apiConfig } from './variables';
 
 class Api {
@@ -13,7 +13,7 @@ class Api {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then((res) => this.parseResponse<TIngredientResponse>(res));
+    }).then((res) => this.parseResponse<IIngredientResponse>(res));
   }
 
   postOrder(accessToken: string, order: string[]) {
@@ -26,7 +26,7 @@ class Api {
       body: JSON.stringify({
         ingredients: order,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<INewOrderResponse>(res));
   }
 
   createUser(name: string, email: string, password: string) {

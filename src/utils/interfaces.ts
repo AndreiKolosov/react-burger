@@ -3,8 +3,15 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-} from '../services/constants/ingredinets';
+} from '../services/constants/ingredients';
 import { ADD, DELETE, REORDER_INGREDIENT, RESET } from '../services/constants/constructor';
+import {
+  CLOSE_ORDER_DETAILS,
+  POST_ORDER_FAILED,
+  POST_ORDER_REQUEST,
+  POST_ORDER_SUCCESS,
+  RESET_ORDER_ERROR_STATUS,
+} from '../services/constants/order';
 
 export interface IIngredient {
   calories: number;
@@ -21,6 +28,35 @@ export interface IIngredient {
   _id: string;
   uId?: string;
   qty?: number;
+}
+
+export interface IOwner {
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface IOrder {
+  createdAt: string;
+  ingredients: IIngredient[];
+  name: string;
+  number: number;
+  price: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+  owner: IOwner;
+}
+
+export interface IIngredientResponse {
+  data: IIngredient[];
+  success: boolean;
+}
+
+export interface INewOrderResponse {
+  name: string;
+  success: boolean;
+  order: IOrder;
 }
 
 // Ingredients
@@ -73,4 +109,32 @@ export interface IReorderIngredientAction {
   readonly type: typeof REORDER_INGREDIENT;
   readonly dragIndex: number;
   readonly hoverIndex: number;
+}
+
+//Order
+export interface IOrderState {
+  orderNumber: number | null;
+  orderRequest: boolean;
+  orderFailed: boolean;
+}
+
+export interface ICloseOrderModalAction {
+  readonly type: typeof CLOSE_ORDER_DETAILS;
+}
+
+export interface IResetOrderError {
+  readonly type: typeof RESET_ORDER_ERROR_STATUS;
+}
+
+export interface IPostOrderRequest {
+  readonly type: typeof POST_ORDER_REQUEST;
+}
+
+export interface IPostOrderFailed {
+  readonly type: typeof POST_ORDER_FAILED;
+}
+
+export interface IPostOrderSuccess {
+  readonly type: typeof POST_ORDER_SUCCESS;
+  readonly orderNumber: number;
 }

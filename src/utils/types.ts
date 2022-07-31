@@ -8,11 +8,15 @@ import {
   IRemoveItemAction,
   IReorderIngredientAction,
   IResetConstructorAction,
+  ICloseOrderModalAction,
+  IResetOrderError,
+  IPostOrderFailed,
+  IPostOrderRequest,
+  IPostOrderSuccess,
 } from './interfaces';
 
-type TIngredientsActions = IResetIngredientsError | IGetIngredientsSuccess | IGetIngredientsFailed | IGetIngredientsRequest;
-type TConstructorActions = IRemoveItemAction | IResetConstructorAction | IDropItemAction | IReorderIngredientAction;
+export type TIngredientsActions = IResetIngredientsError | IGetIngredientsSuccess | IGetIngredientsFailed | IGetIngredientsRequest;
+export type TConstructorActions = IRemoveItemAction | IResetConstructorAction | IDropItemAction | IReorderIngredientAction;
+export type TOrderActions = ICloseOrderModalAction | IResetOrderError | IPostOrderFailed | IPostOrderRequest | IPostOrderSuccess;
 
-export type TApplicationActions = TIngredientsActions | TConstructorActions;
-
-export type TIngredientResponse = { data: IIngredient[]; success: boolean };
+export type TApplicationActions = TIngredientsActions | TConstructorActions | TOrderActions;

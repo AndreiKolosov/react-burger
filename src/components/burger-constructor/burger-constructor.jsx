@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
-import { postOrderRequest, resetOrderError } from '../../services/actions/order';
+import { postOrder, resetOrderError } from '../../services/actions/order';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ariaLabels } from '../../utils/variables';
 import Modal from '../modal/modal';
@@ -35,8 +35,8 @@ const BurgerConstructor = () => {
     dispatch(resetOrderError());
   }, [dispatch]);
 
-  const postOrder = (orderData) => {
-    user && dispatch(postOrderRequest({ accessToken: `Bearer ${accessToken}`, order: orderData }));
+  const postNewOrder = (orderData) => {
+    user && dispatch(postOrder({ accessToken: `Bearer ${accessToken}`, order: orderData }));
     !user &&
       history.replace({
         pathname: '/login',
@@ -98,7 +98,7 @@ const BurgerConstructor = () => {
         <span className="text text_type_digits-medium mr-10">
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type="primary" size="medium" disabled={bun && filling.length > 0 ? false : true} onClick={() => postOrder(orderIds)}>
+        <Button type="primary" size="medium" disabled={bun && filling.length > 0 ? false : true} onClick={() => postNewOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>
