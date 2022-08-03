@@ -1,5 +1,9 @@
 import { IIngredient } from './interfaces';
 
+function notEmptyFilter<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
+}
+
 const formatDate = (date: string): string => {
   const orderDate = Number(
     date
@@ -30,18 +34,17 @@ const formatDate = (date: string): string => {
   return formattedDate;
 };
 
-const getIngredientsByIds = (ids: ReadonlyArray<string>, allIng: ReadonlyArray<IIngredient>) => {
-  const data: any = ids.map((id) => {
-    return allIng.find((ing) => ing._id === id);
-  });
+const getIngredientsByIds = (ids: string[], allIng: IIngredient[]): IIngredient[] => {
+  const data = ids.map((id) => allIng.find((ing) => ing._id === id));
+  const filteredData = data.filter(notEmptyFilter);
 
-  const bun = Array.from(new Set(data.filter((ing: any) => ing && ing.type === 'bun'))); // коллекция уникальных элементов через new Set
-  const filling = data.filter((ing: any) => ing && ing.type !== 'bun');
+  const bun = Array.from(new Set(filteredData.filter((ing) => ing && ing.type === 'bun'))); // коллекция уникальных элементов через new Set
+  const filling = filteredData.filter((ing) => ing && ing.type !== 'bun');
 
   return bun.concat(filling);
 };
 
-const getQuantity = (array: ReadonlyArray<IIngredient>, item: IIngredient): number | any => {
+const getQuantity = (array: IIngredient[], item: IIngredient): number => {
   let counter = 0;
 
   array.forEach((element) => {
@@ -52,27 +55,24 @@ const getQuantity = (array: ReadonlyArray<IIngredient>, item: IIngredient): numb
   return counter;
 };
 
-const getUniqIngredientsByIds = (ids: ReadonlyArray<string>, allIng: ReadonlyArray<IIngredient>) => {
-  const data: any = ids.map((id) => {
-    return allIng.find((ing) => ing._id === id);
-  });
-  data.forEach((el: any) => {
-    if (el !== undefined) {
-      el.qty = getQuantity(data, el);
-      // В присланном заказе может оказаться как 2 булки, так и одна
-      // По этому делаем такую проверку и добаваляем в поле коллчества еще 1
-      if (el && el.type === 'bun' && el.qty !== 2) {
-        el.qty++;
-      }
+const getUniqIngredientsByIds = (ids: string[], allIng: IIngredient[]): IIngredient[] => {
+  const data = ids.map((id) => allIng.find((ing) => ing._id === id));
+  const filteredData = data.filter(notEmptyFilter);
+  filteredData.forEach((el) => {
+    el.qty = getQuantity(filteredData, el);
+    // В присланном заказе может оказаться как 2 булки, так и одна
+    // По этому делаем такую проверку и добаваляем в поле коллчества еще 1
+    if (el.qty && el.type === 'bun' && el.qty !== 2) {
+      el.qty++;
     }
   });
 
-  const bun = Array.from(new Set(data.filter((ing: any) => ing && ing.type === 'bun'))); // коллекция уникальных элементов через new Set
-  const filling = Array.from(new Set(data.filter((ing: any) => ing && ing.type !== 'bun')));
+  const bun = Array.from(new Set(filteredData.filter((ing) => ing && ing.type === 'bun'))); // коллекция уникальных элементов через new Set
+  const filling = Array.from(new Set(filteredData.filter((ing) => ing && ing.type !== 'bun')));
   return bun.concat(filling);
 };
 
-const getTotalPrice = (ingredients: ReadonlyArray<IIngredient>) => {
+const getTotalPrice = (ingredients: IIngredient[]): number => {
   const bun = ingredients.find((item) => item.type === 'bun');
   const filling = ingredients.filter((item) => item.type !== 'bun');
   const total = bun ? bun?.price * 2 : 0 + filling.reduce((acc, item) => acc + item?.price, 0);
