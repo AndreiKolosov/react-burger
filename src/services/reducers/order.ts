@@ -1,4 +1,4 @@
-import { IOrderState } from '../../utils/interfaces';
+import { IOrderState } from '../../utils/interfaces/order';
 import { TOrderActions } from '../../utils/types';
 import { POST_ORDER_FAILED, POST_ORDER_SUCCESS, POST_ORDER_REQUEST, CLOSE_ORDER_DETAILS, RESET_ORDER_ERROR_STATUS } from '../constants/order';
 

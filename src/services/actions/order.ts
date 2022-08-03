@@ -1,12 +1,6 @@
 import api from '../../utils/api';
-import {
-  ICloseOrderModalAction,
-  INewOrderResponse,
-  IPostOrderFailed,
-  IPostOrderRequest,
-  IPostOrderSuccess,
-  IResetOrderError,
-} from '../../utils/interfaces';
+import { ICloseOrderModalAction, IPostOrderFailed, IPostOrderRequest, IPostOrderSuccess, IResetOrderError } from '../../utils/interfaces/order';
+import { INewOrderResponse } from '../../utils/interfaces/api';
 import { CLOSE_ORDER_DETAILS, RESET_ORDER_ERROR_STATUS, POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from '../constants/order';
 import { AppThunk } from '../store';
 

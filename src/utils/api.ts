@@ -1,4 +1,13 @@
-import { IIngredientResponse, INewOrderResponse } from './interfaces';
+import {
+  IUserResponse,
+  IIngredientResponse,
+  ILoginResponse,
+  ILogoutResponse,
+  INewOrderResponse,
+  IRegistrationResponse,
+  IPwdResponse,
+  IRefreshTokenResponse,
+} from './interfaces/api';
 import { apiConfig } from './variables';
 
 class Api {
@@ -40,7 +49,7 @@ class Api {
         email,
         password,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IRegistrationResponse>(res));
   }
 
   logIn(email: string, password: string) {
@@ -53,7 +62,7 @@ class Api {
         email,
         password,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<ILoginResponse>(res));
   }
 
   logOut(refreshToken: string) {
@@ -65,7 +74,7 @@ class Api {
       body: JSON.stringify({
         token: refreshToken,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<ILogoutResponse>(res));
   }
 
   getUser(accessToken: string) {
@@ -74,7 +83,7 @@ class Api {
         'Content-Type': 'application/json',
         authorization: accessToken,
       },
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IUserResponse>(res));
   }
 
   patchUser(accessToken: string, name: string, email: string, password: string) {
@@ -89,7 +98,7 @@ class Api {
         name: name,
         password: password,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IUserResponse>(res));
   }
 
   forgotPassword(email: string) {
@@ -101,7 +110,7 @@ class Api {
       body: JSON.stringify({
         email,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IPwdResponse>(res));
   }
 
   resetPassword(password: string, token: string) {
@@ -114,7 +123,7 @@ class Api {
         password,
         token,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IPwdResponse>(res));
   }
 
   refreshToken(refreshToken: string) {
@@ -126,7 +135,7 @@ class Api {
       body: JSON.stringify({
         token: refreshToken,
       }),
-    }).then((res) => this.parseResponse(res));
+    }).then((res) => this.parseResponse<IRefreshTokenResponse>(res));
   }
 }
 

@@ -1,6 +1,10 @@
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return (store) => {
-    let socket = null;
+import { Middleware, MiddlewareAPI } from 'redux';
+import { AppDispatch } from '../services/store';
+import { IWsActions, IWsState } from '../utils/interfaces/ws';
+
+export const socketMiddleware = (wsUrl: string, wsActions: IWsActions): Middleware => {
+  return (store: MiddlewareAPI<AppDispatch, IWsState>) => {
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
@@ -15,7 +19,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       }
 
       if (type === wsClose) {
-        socket.close();
+        socket && socket.close();
       }
 
       if (socket) {

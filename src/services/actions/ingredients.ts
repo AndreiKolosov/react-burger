@@ -1,12 +1,6 @@
 import api from '../../utils/api';
-import {
-  IIngredient,
-  IResetIngredientsError,
-  IGetIngredientsFailed,
-  IGetIngredientsRequest,
-  IGetIngredientsSuccess,
-  IIngredientResponse,
-} from '../../utils/interfaces';
+import { IResetIngredientsError, IGetIngredientsFailed, IGetIngredientsRequest, IGetIngredientsSuccess } from '../../utils/interfaces/ingredients';
+import { IIngredientResponse } from '../../utils/interfaces/api';
 import { AppThunk } from '../store';
 import { RESET_INGREDIENTS_ERROR_STATUS, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from '../constants/ingredients';
 

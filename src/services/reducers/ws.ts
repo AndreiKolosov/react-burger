@@ -1,4 +1,7 @@
+import { IWsState } from '../../utils/interfaces/ws';
+import { TWsActions } from '../../utils/types';
 import {
+  WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_START,
@@ -6,9 +9,9 @@ import {
   WS_CONNECTION_WITH_TOKEN,
   WS_GET_MESSAGE,
   WS_RESET_ERROR_STATUS,
-} from '../actions/ws';
+} from '../constants/ws';
 
-const initialState = {
+const initialState: IWsState = {
   wsRequest: false,
   wsOpen: false,
   wsFailed: false,
@@ -17,7 +20,7 @@ const initialState = {
   totalToday: '',
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWsActions) => {
   switch (action.type) {
     case WS_CONNECTION_START: {
       return {

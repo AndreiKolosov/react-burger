@@ -1,4 +1,4 @@
-import { IIngredientsState } from '../../utils/interfaces';
+import { IIngredientsState } from '../../utils/interfaces/ingredients';
 import { TIngredientsActions } from '../../utils/types';
 import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, RESET_INGREDIENTS_ERROR_STATUS } from '../constants/ingredients';
 

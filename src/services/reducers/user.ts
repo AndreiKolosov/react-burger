@@ -1,3 +1,5 @@
+import { IUserState } from '../../utils/interfaces/user';
+import { TUserActions } from '../../utils/types';
 import {
   REGISTR_USER_FAILED,
   REGISTR_USER_REQUEST,
@@ -33,9 +35,9 @@ import {
   RESET_PWD_RESET_ERR,
   RESET_REFRESH_TOKEN_ERR,
   RESET_REGISTER_ERR,
-} from '../actions/user';
+} from '../constants/user';
 
-const initialState = {
+const initialState: IUserState = {
   user: null,
   isAuthChecked: false,
 
@@ -73,7 +75,7 @@ const initialState = {
   checkAuthFailed: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case REGISTR_USER_REQUEST: {
       return {
