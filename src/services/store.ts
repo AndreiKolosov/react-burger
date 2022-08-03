@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk, { ThunkDispatch, ThunkAction } from 'redux-thunk';
-import { useDispatch } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { rootReducer } from './reducers';
 import { socketMiddleware } from '../middleware/socketMiddleware';
 import { wsActions } from './actions/ws';
@@ -14,6 +14,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unk
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
 
 export const useAppDispatch = () => useDispatch<AppDispatch & AppThunk>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)));
 

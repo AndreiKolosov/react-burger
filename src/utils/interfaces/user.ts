@@ -37,7 +37,7 @@ import {
 import { IUser } from '.';
 
 export interface IUserState {
-  user: object | null;
+  user: IUser | null;
   isAuthChecked: boolean;
   errMessage: string;
   registerUserRequest: boolean;
