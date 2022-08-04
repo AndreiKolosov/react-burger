@@ -1,7 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IIngredient } from '../../utils/interfaces';
 import { DELETE, RESET, ADD, REORDER_INGREDIENT } from '../constants/constructor';
-import { IResetConstructorAction, IDropItemAction, IRemoveItemAction, IReorderIngredientAction } from '../../utils/interfaces/constructor';
+import {
+  IResetConstructorAction,
+  IDropItemAction,
+  IRemoveItemAction,
+  IReorderIngredientAction,
+} from '../../utils/interfaces/constructor';
 
 export function removeItem(item: IIngredient): IRemoveItemAction {
   return {

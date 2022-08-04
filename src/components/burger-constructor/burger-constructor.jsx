@@ -59,7 +59,7 @@ const BurgerConstructor = () => {
   });
 
   const handleDelete = (item) => {
-    dispatch(removeItem({ item }));
+    dispatch(removeItem(item));
   };
 
   return (
