@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { postOrder, resetOrderError } from '../../services/actions/order';
@@ -62,11 +62,6 @@ const BurgerConstructor = () => {
     dispatch(removeItem({ item }));
   };
 
-  // Аналог того, что происходит с totalPrice в reducer
-  // const price = useMemo(() => {
-  //   return (bun ? bun.price * 2 : 0) + filling.reduce((acc, item) => acc + item.price, 0);
-  // }, [order]);
-
   return (
     <section className={`${styles.container} pt-25 pl-4`} aria-label={ariaLabels.constructor}>
       <ul className={`${styles.ingredientList}`} ref={dropTarget}>
@@ -74,7 +69,13 @@ const BurgerConstructor = () => {
         {!bun && filling.length > 0 && <BunPlug position="top" hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
-            <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image_mobile} />
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image_mobile}
+            />
           </li>
         )}
         {filling.length === 0 && bun && <FillingPlug hover={isHover} />}
@@ -90,7 +91,13 @@ const BurgerConstructor = () => {
         {!bun && filling.length > 0 && <BunPlug position="bottom" hover={isHover} />}
         {bun && (
           <li className={`ml-4`}>
-            <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image_mobile} />
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image_mobile}
+            />
           </li>
         )}
       </ul>
@@ -98,7 +105,11 @@ const BurgerConstructor = () => {
         <span className="text text_type_digits-medium mr-10">
           {totalPrice} <CurrencyIcon />
         </span>
-        <Button type="primary" size="medium" disabled={bun && filling.length > 0 ? false : true} onClick={() => postNewOrder(orderIds)}>
+        <Button
+          type="primary"
+          size="medium"
+          disabled={bun && filling.length > 0 ? false : true}
+          onClick={() => postNewOrder(orderIds)}>
           Оформить заказ
         </Button>
       </div>
@@ -115,7 +126,13 @@ const BurgerConstructor = () => {
         </Modal>
       )}
 
-      {orderFailed && <Notification heading="Что-то пошло не так =(" message="Ошибка при оформлении заказа." onClose={resetError} />}
+      {orderFailed && (
+        <Notification
+          heading="Что-то пошло не так =("
+          message="Ошибка при оформлении заказа."
+          onClose={resetError}
+        />
+      )}
     </section>
   );
 };
