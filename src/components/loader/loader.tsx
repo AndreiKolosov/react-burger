@@ -1,7 +1,7 @@
-import React, { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
+import React, { FC } from 'react';
 import styles from './loader.module.css';
 
-const Loader: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = () => {
+const Loader: FC = () => {
   return (
     <>
       <div className={`${styles.dualRing} pt-30`}></div>

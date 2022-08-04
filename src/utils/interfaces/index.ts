@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, LiHTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes } from 'react';
 
 export interface IIngredient {
   calories: number;
@@ -53,9 +53,12 @@ export interface IBunPlug extends IBurgerPlug {
   position: 'top' | 'bottom';
 }
 
-export interface IFillingElement
-  extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
+export interface IFillingElement extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
   item: IIngredient;
   deleteHandler: (item: IIngredient) => void;
   index: number;
+}
+
+export interface IModalOverlay extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  handleClick: () => void;
 }
