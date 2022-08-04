@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from 'react';
 
 export interface IIngredient {
   calories: number;
@@ -61,4 +61,10 @@ export interface IFillingElement extends DetailedHTMLProps<LiHTMLAttributes<HTML
 
 export interface IModalOverlay extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   handleClick: () => void;
+}
+
+export interface IModal extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
+  closeModal: () => void;
+  heading: string;
+  children: ReactNode;
 }
