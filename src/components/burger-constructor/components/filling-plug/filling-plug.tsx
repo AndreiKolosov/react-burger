@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './filling-plug.module.css';
 
-const FillingPlug = ({ hover }) => {
+const FillingPlug: FC<{ hover: boolean }> = ({ hover }) => {
   return (
     <div
       className={

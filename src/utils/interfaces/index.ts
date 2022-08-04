@@ -1,3 +1,5 @@
+import { DetailedHTMLProps, LiHTMLAttributes } from 'react';
+
 export interface IIngredient {
   calories: number;
   carbohydrates: number;
@@ -41,4 +43,19 @@ export interface IError {
 export interface IUser {
   email: string;
   name: string;
+}
+
+export interface IBurgerPlug {
+  hover: boolean;
+}
+
+export interface IBunPlug extends IBurgerPlug {
+  position: 'top' | 'bottom';
+}
+
+export interface IFillingElement
+  extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
+  item: IIngredient;
+  deleteHandler: (item: IIngredient) => void;
+  index: number;
 }

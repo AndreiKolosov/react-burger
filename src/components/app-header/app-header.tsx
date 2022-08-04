@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import { useAppSelector } from '../../services/store';
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const { pathname } = useLocation();
   const { user } = useAppSelector((store) => store.user);
 

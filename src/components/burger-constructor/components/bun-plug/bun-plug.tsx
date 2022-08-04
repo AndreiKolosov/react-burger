@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { IBunPlug } from '../../../../utils/interfaces';
 import styles from './bun-plug.module.css';
 
-const BunPlug = ({ position, hover }) => {
+const BunPlug: FC<IBunPlug> = ({ position, hover }) => {
   return (
     <div
       className={

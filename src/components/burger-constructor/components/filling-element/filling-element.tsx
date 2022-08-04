@@ -1,14 +1,18 @@
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import styles from './filling-element.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  ConstructorElement,
+  DragIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop, useDrag } from 'react-dnd';
 import { reorderIngredient } from '../../../../services/actions/constructor';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../../services/store';
+import { IFillingElement, IIngredient } from '../../../../utils/interfaces';
 
-const FillingElement = ({ item, deleteHandler, index }) => {
+const FillingElement: FC<IFillingElement> = ({ item, deleteHandler, index }) => {
   const ref = useRef(null);
   const id = item.uId;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'filling',
@@ -17,7 +21,7 @@ const FillingElement = ({ item, deleteHandler, index }) => {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: { index: number }) {
       if (!ref.current) {
         return;
       }
@@ -27,17 +31,7 @@ const FillingElement = ({ item, deleteHandler, index }) => {
       if (dragIndex === hoverIndex) {
         return;
       }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
       dispatch(reorderIngredient(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },
@@ -64,7 +58,7 @@ const FillingElement = ({ item, deleteHandler, index }) => {
       data-handler-id={handlerId}
       style={{ opacity }}>
       <div className={`mr-2`}>
-        <DragIcon />
+        <DragIcon type="primary" />
       </div>
       <ConstructorElement
         text={item.name}
