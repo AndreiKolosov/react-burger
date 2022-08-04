@@ -68,3 +68,5 @@ export interface IModal extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, H
   heading: string;
   children?: ReactNode;
 }
+
+export interface IOrderDetails extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
