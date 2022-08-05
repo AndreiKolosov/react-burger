@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { IReadinessStats } from '../../../../utils/interfaces';
 import styles from './readiness-stat.module.css';
 
-const ReadinessStats: FC<IReadinessStats> = ({ title, ready, orders }) => {
+const ReadinessStats: FC<IReadinessStats> = ({ title, ready = false, orders }) => {
   const color: { color?: string } = ready
     ? {
         color: '#00cccc',

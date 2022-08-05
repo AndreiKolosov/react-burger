@@ -84,11 +84,13 @@ export interface IOrderList extends DetailedHTMLProps<HTMLAttributes<HTMLUListEl
 
 export interface IReadinessStats extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
-  ready: boolean;
-  orders: string[];
+  orders: number[];
+  ready?: boolean;
 }
 
 export interface ITotalStat extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   heading: string;
-  quantity: number;
+  quantity: number | null;
 }
+
+export interface IOrderStatistic extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
