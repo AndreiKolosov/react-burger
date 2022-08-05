@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { FC } from 'react';
 import styles from './order-card.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formatDate, getIngredientsByIds, getTotalPrice } from '../../../../utils/utils';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
+import { IOrderCard } from '../../../../utils/interfaces';
+import { useAppSelector } from '../../../../services/store';
 
-const OrderCard = ({ order }) => {
+const OrderCard: FC<IOrderCard> = ({ order }) => {
   const location = useLocation();
   const { number, _id, createdAt, name } = order;
-  const { ingredients } = useSelector((store) => store.ingredients);
+  const { ingredients } = useAppSelector((store) => store.ingredients);
   const { url } = useRouteMatch();
 
   const formattedDate = formatDate(createdAt);
@@ -26,10 +27,8 @@ const OrderCard = ({ order }) => {
           state: { background: location, from: location.pathname },
         }}>
         <div className={styles.card__header}>
-          <p
-            className={`${styles.card__orderNumber} text text_type_digits-default`}>{`# ${number}`}</p>
-          <span
-            className={`${styles.card__orderTime} text text_type_main-default text_color_inactive`}>
+          <p className={`${styles.card__orderNumber} text text_type_digits-default`}>{`# ${number}`}</p>
+          <span className={`${styles.card__orderTime} text text_type_main-default text_color_inactive`}>
             {formattedDate}
           </span>
         </div>
@@ -52,18 +51,15 @@ const OrderCard = ({ order }) => {
                 className={styles.card__ingredientExtraItem}
                 style={{ zIndex: `${orderIngredients.length - 6}` }}>
                 <div className={styles.card__extraCounter}>
-                  <p className='text text_type_main-default'>{`+${orderIngredients.length - 5}`}</p>
+                  <p className="text text_type_main-default">{`+${orderIngredients.length - 5}`}</p>
                 </div>
-                <IngredientIcon
-                  img={orderIngredients[5].image_mobile}
-                  alt={orderIngredients[5].name}
-                />
+                <IngredientIcon img={orderIngredients[5].image_mobile} alt={orderIngredients[5].name} />
               </li>
             )}
           </ul>
           <p className={`${styles.card__price} text text_type_digits-default`}>
             {price}&nbsp;
-            <CurrencyIcon type='primary' />
+            <CurrencyIcon type="primary" />
           </p>
         </div>
       </Link>

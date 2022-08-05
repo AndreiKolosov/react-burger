@@ -25,14 +25,14 @@ export interface IOwner {
 }
 export interface IOrder {
   createdAt: string;
-  ingredients: IIngredient[];
+  ingredients: string[];
   name: string;
   number: number;
   price: number;
   status: string;
   updatedAt: string;
   _id: string;
-  owner: IOwner;
+  owner?: IOwner;
 }
 
 export interface IError {
@@ -72,3 +72,7 @@ export interface IModal extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, H
 export interface IOrderDetails extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export interface IProfileNav extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {}
+
+export interface IOrderCard extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
+  order: IOrder;
+}
