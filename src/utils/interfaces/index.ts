@@ -81,3 +81,9 @@ export interface IOrderCard extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIEle
 export interface IOrderList extends DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
   personal: boolean;
 }
+
+export interface IReadinessStats extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  title: string;
+  ready: boolean;
+  orders: string[];
+}
