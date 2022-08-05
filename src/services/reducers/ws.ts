@@ -16,11 +16,11 @@ const initialState: IWsState = {
   wsOpen: false,
   wsFailed: false,
   orders: null,
-  total: '',
-  totalToday: '',
+  total: null,
+  totalToday: null,
 };
 
-export const wsReducer = (state = initialState, action: TWsActions) => {
+export const wsReducer = (state = initialState, action: TWsActions): IWsState => {
   switch (action.type) {
     case WS_CONNECTION_START: {
       return {
@@ -61,8 +61,8 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
         wsOpen: false,
         wsFailed: false,
         orders: null,
-        total: '',
-        totalToday: '',
+        total: null,
+        totalToday: null,
       };
     }
     case WS_GET_MESSAGE: {
@@ -80,8 +80,8 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
         wsOpen: false,
         wsFailed: false,
         orders: null,
-        total: '',
-        totalToday: '',
+        total: null,
+        totalToday: null,
       };
     }
     default: {

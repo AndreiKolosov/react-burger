@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from 'react';
+import { IWsOrder } from './ws';
 
 export interface IIngredient {
   calories: number;
@@ -74,5 +75,9 @@ export interface IOrderDetails extends DetailedHTMLProps<HTMLAttributes<HTMLDivE
 export interface IProfileNav extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {}
 
 export interface IOrderCard extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-  order: IOrder;
+  order: IWsOrder;
+}
+
+export interface IOrderList extends DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
+  personal: boolean;
 }

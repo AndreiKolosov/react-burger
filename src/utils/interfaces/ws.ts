@@ -42,8 +42,8 @@ export interface IWsState {
   wsOpen: boolean;
   wsFailed: boolean;
   orders: IWsOrder[] | null;
-  total: string;
-  totalToday: string;
+  total: number | null;
+  totalToday: number | null;
 }
 
 export interface IWsInitWithTokenAction {
