@@ -70,3 +70,5 @@ export interface IModal extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, H
 }
 
 export interface IOrderDetails extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+
+export interface IProfileNav extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {}

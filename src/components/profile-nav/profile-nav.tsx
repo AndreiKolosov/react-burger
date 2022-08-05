@@ -1,18 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import styles from './profile-nav.module.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { logOut } from '../../services/actions/user';
+import { useAppDispatch } from '../../services/store';
+import { IProfileNav } from '../../utils/interfaces';
 
-const ProfileNav = () => {
-  const dispatch = useDispatch();
+const ProfileNav: FC<IProfileNav> = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const refreshToken = localStorage.getItem('refreshToken');
 
   const handleLogOut = useCallback(() => {
-    dispatch(logOut(refreshToken));
-
-    history.replace({ path: '/login' });
+    refreshToken && dispatch(logOut(refreshToken));
   }, [dispatch, logOut, history, refreshToken]);
 
   return (
@@ -20,7 +19,7 @@ const ProfileNav = () => {
       <ul className={`${styles.nav__list}`}>
         <li>
           <NavLink
-            to='/profile'
+            to="/profile"
             exact
             className={`${styles.nav__link} text text_type_main-medium pt-4 pb-4`}
             activeClassName={styles.nav__link_active}>
@@ -29,7 +28,7 @@ const ProfileNav = () => {
         </li>
         <li>
           <NavLink
-            to='/profile/orders'
+            to="/profile/orders"
             exact
             className={`${styles.nav__link} text text_type_main-medium pt-4 pb-4`}
             activeClassName={styles.nav__link_active}>
