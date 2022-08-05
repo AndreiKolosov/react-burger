@@ -87,3 +87,8 @@ export interface IReadinessStats extends DetailedHTMLProps<HTMLAttributes<HTMLDi
   ready: boolean;
   orders: string[];
 }
+
+export interface ITotalStat extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  heading: string;
+  quantity: number;
+}
