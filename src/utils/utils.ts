@@ -65,6 +65,7 @@ const getUniqIngredientsByIds = (ids: string[], allIng: IIngredient[]): IIngredi
     if (el.qty && el.type === 'bun' && el.qty !== 2) {
       el.qty++;
     }
+    return filteredData;
   });
 
   const bun = Array.from(new Set(filteredData.filter((ing) => ing && ing.type === 'bun'))); // коллекция уникальных элементов через new Set

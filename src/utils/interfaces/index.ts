@@ -12,8 +12,8 @@ export interface IIngredient {
   price: number;
   proteins: number;
   type: string;
-  __v: number;
   _id: string;
+  __v?: number;
   uId?: string;
   qty?: number;
 }
@@ -94,3 +94,9 @@ export interface ITotalStat extends DetailedHTMLProps<HTMLAttributes<HTMLDivElem
 }
 
 export interface IOrderStatistic extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+
+export interface IOrderInfoIngredient extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  ingredient: IIngredient;
+}
+
+export interface IOrderInfoCard extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
