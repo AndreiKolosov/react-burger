@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { Redirect, Route, RouterProps, useLocation } from 'react-router-dom';
+import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom';
 import Loader from '../loader/loader';
 import { useAppSelector } from '../../services/store';
 
-const ProtectedRoute: FC<RouterProps> = ({ children, ...rest }) => {
+const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { user, isAuthChecked } = useAppSelector((store) => store.user);
   const location = useLocation();
 

@@ -18,20 +18,20 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfoCard from '../order-info-card/order-info-card';
 import Loader from '../loader/loader';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../services/store';
 
 const ModalSwitch = () => {
-  const location = useLocation();
+  const location = useLocation<any>();
   const history = useHistory();
-  const background = location.state?.background;
-  const from = location.state?.from;
+  const background = location?.state?.background;
+  const from = location?.state?.from;
 
   // так при перезагрузке страницы будет открываться отдельная страничка, а не модалка
   // const background = history.action === 'PUSH' && location.state?.background;
 
   useEffect(() => {}, []);
 
-  const { wsOpen, orders, wsRequest } = useSelector((store) => store.ws);
+  const { wsOpen, orders, wsRequest } = useAppSelector((store) => store.ws);
   const closeModal = useCallback(
     (path) => {
       history.push(path);
@@ -42,22 +42,22 @@ const ModalSwitch = () => {
   return (
     <>
       <Switch location={background || location}>
-        <Route path='/' exact children={<HomePage />} />
-        <Route path='/login' exact children={<LoginPage />} />
-        <Route path='/register' exact children={<RegistrationPage />} />
-        <Route path='/forgot-password' exact children={<ForgotPasswordPage />} />
-        <Route path='/reset-password' exact children={<ResetPasswordPage />} />
-        <Route path='/ingredients/:id' exact children={<IngredientPage />} />
-        <Route path='/feed' exact children={<OrderFeed />} />
-        <Route path='/feed/:id' exact children={<OrderInfo />} />
-        <ProtectedRoute path='/profile' exact children={<ProfilePage />} />
-        <ProtectedRoute path='/profile/orders' exact children={<OrderHistory />} />
-        <ProtectedRoute path='/profile/orders/:id' exact children={<OrderInfo personal />} />
+        <Route path="/" exact children={<HomePage />} />
+        <Route path="/login" exact children={<LoginPage />} />
+        <Route path="/register" exact children={<RegistrationPage />} />
+        <Route path="/forgot-password" exact children={<ForgotPasswordPage />} />
+        <Route path="/reset-password" exact children={<ResetPasswordPage />} />
+        <Route path="/ingredients/:id" exact children={<IngredientPage />} />
+        <Route path="/feed" exact children={<OrderFeed />} />
+        <Route path="/feed/:id" exact children={<OrderInfo />} />
+        <ProtectedRoute path="/profile" exact children={<ProfilePage />} />
+        <ProtectedRoute path="/profile/orders" exact children={<OrderHistory />} />
+        <ProtectedRoute path="/profile/orders/:id" exact children={<OrderInfo personal />} />
         <Route children={<NotFound404 />} />
       </Switch>
 
       {background && (
-        <Route path='/ingredients/:id' exact>
+        <Route path="/ingredients/:id" exact>
           <Modal heading={'Детали ингредиента'} closeModal={() => closeModal('/')}>
             <IngredientDetails />
           </Modal>
