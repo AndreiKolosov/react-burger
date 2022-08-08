@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
+import { IOrdersList } from './orders-list.props';
 import { useAppSelector } from '../../services/store';
-import { IOrderList } from '../../utils/interfaces';
 import OrderCard from './components/order-card/order-card';
 import styles from './orders-list.module.css';
 
-const OrdersList: FC<IOrderList> = ({ personal }) => {
+const OrdersList: FC<IOrdersList> = ({ personal }) => {
   const { orders } = useAppSelector((store) => store.ws);
   if (personal) {
     orders && orders.reverse();

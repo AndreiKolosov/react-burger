@@ -1,9 +1,9 @@
 import React, { FC, useCallback } from 'react';
 import styles from './profile-nav.module.css';
+import { IProfileNav } from './profile-nav.props';
 import { NavLink, useHistory } from 'react-router-dom';
 import { logOut } from '../../services/actions/user';
 import { useAppDispatch } from '../../services/store';
-import { IProfileNav } from '../../utils/interfaces';
 
 const ProfileNav: FC<IProfileNav> = () => {
   const dispatch = useAppDispatch();

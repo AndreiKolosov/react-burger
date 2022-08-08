@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
+import { IOrderInfoIngredient } from './ingredient.props';
 import styles from './ingredient.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientIcon from '../../ingredient-icon/ingredient-icon';
-import { IOrderInfoIngredient } from '../../../utils/interfaces';
 
 const Ingredient: FC<IOrderInfoIngredient> = ({ ingredient }) => {
   return (

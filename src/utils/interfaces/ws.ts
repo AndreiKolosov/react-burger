@@ -1,4 +1,3 @@
-import { Interface } from 'readline';
 import {
   WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,
@@ -9,6 +8,7 @@ import {
   WS_GET_MESSAGE,
   WS_RESET_ERROR_STATUS,
 } from '../../services/constants/ws';
+import { IWsOrder, IWsResponse } from '.';
 
 export interface IWsActions {
   wsInit: typeof WS_CONNECTION_START;
@@ -18,23 +18,6 @@ export interface IWsActions {
   onError: typeof WS_CONNECTION_ERROR;
   onMessage: typeof WS_GET_MESSAGE;
   wsInitWithToken: typeof WS_CONNECTION_WITH_TOKEN;
-}
-
-export interface IWsOrder {
-  createdAt: string;
-  ingredients: string[];
-  name: string;
-  number: number;
-  status: string;
-  updatedAt: string;
-  _id: string;
-}
-
-export interface IWsResponse {
-  orders: IWsOrder[];
-  success: boolean;
-  total: number;
-  totalToday: number;
 }
 
 export interface IWsState {

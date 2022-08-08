@@ -3,7 +3,7 @@ import styles from './order-details.module.css';
 import doneIcon from './images/orderDetails_done_icon.svg';
 import Loader from '../loader/loader';
 import { useAppSelector } from '../../services/store';
-import { IOrderDetails } from '../../utils/interfaces';
+import { IOrderDetails } from './order-details.props';
 
 const OrderDetails: FC<IOrderDetails> = () => {
   const { orderNumber } = useAppSelector((store) => store.order);

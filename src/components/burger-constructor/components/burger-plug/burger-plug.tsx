@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styles from './burger-plug.module.css';
-import { IBurgerPlug } from '../../../../utils/interfaces';
+import { IBurgerPlug } from './burger-plug.props';
+
 const BurgerPlug: FC<IBurgerPlug> = ({ hover }) => {
   return (
     <div className={hover ? `${styles.plugContainerOnHover}` : `${styles.plugContainer} text text_type_main-large`}>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './components/modal-overlay/modal-overlay';
-import { IModal } from '../../utils/interfaces';
+import { IModal } from './modal.props';
 
 const rootModals = document.getElementById('modals');
 

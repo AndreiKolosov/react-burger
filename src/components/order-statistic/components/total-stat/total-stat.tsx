@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ITotalStat } from '../../../../utils/interfaces';
+import { ITotalStat } from './total-stat.props';
 import styles from './total-stat.module.css';
 
 const TotalStat: FC<ITotalStat> = ({ heading, quantity }) => {

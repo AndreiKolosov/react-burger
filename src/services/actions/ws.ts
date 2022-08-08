@@ -8,9 +8,8 @@ import {
   IWsInitWithTokenAction,
   IWsOnCloseAction,
   IWsResetError,
-  IWsResponse,
 } from '../../utils/interfaces/ws';
-import { TWsActions } from '../../utils/types';
+import { IWsResponse } from '../../utils/interfaces';
 import {
   WS_CONNECTION_CLOSE,
   WS_CONNECTION_CLOSED,

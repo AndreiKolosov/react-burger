@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { IBunPlug } from '../../../../utils/interfaces';
+import { IBunPlug } from './bun-plug.props';
 import styles from './bun-plug.module.css';
 
 const BunPlug: FC<IBunPlug> = ({ position, hover }) => {

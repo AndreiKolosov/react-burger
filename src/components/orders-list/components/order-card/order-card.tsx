@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styles from './order-card.module.css';
+import { IOrderCard } from './order-card.props';
 import { v4 as uuidv4 } from 'uuid';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formatDate, getIngredientsByIds, getTotalPrice } from '../../../../utils/utils';
 import IngredientIcon from '../../../ingredient-icon/ingredient-icon';
-import { IOrderCard } from '../../../../utils/interfaces';
 import { useAppSelector } from '../../../../services/store';
 
 const OrderCard: FC<IOrderCard> = ({ order }) => {
@@ -47,9 +47,7 @@ const OrderCard: FC<IOrderCard> = ({ order }) => {
               );
             })}
             {orderIngredients.length > 5 && (
-              <li
-                className={styles.card__ingredientExtraItem}
-                style={{ zIndex: `${orderIngredients.length - 6}` }}>
+              <li className={styles.card__ingredientExtraItem} style={{ zIndex: `${orderIngredients.length - 6}` }}>
                 <div className={styles.card__extraCounter}>
                   <p className="text text_type_main-default">{`+${orderIngredients.length - 5}`}</p>
                 </div>

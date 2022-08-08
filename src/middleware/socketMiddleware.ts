@@ -1,6 +1,6 @@
 import { Middleware, MiddlewareAPI } from 'redux';
 import { AppDispatch, RootState } from '../services/store';
-import { IWsActions, IWsState } from '../utils/interfaces/ws';
+import { IWsActions } from '../utils/interfaces/ws';
 
 export const socketMiddleware = (wsUrl: string, wsActions: IWsActions): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {

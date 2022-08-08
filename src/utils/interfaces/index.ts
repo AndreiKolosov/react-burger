@@ -1,6 +1,3 @@
-import { DetailedHTMLProps, HTMLAttributes, LiHTMLAttributes, ReactNode } from 'react';
-import { IWsOrder } from './ws';
-
 export interface IIngredient {
   calories: number;
   carbohydrates: number;
@@ -46,57 +43,19 @@ export interface IUser {
   name: string;
 }
 
-export interface IBurgerPlug {
-  hover: boolean;
+export interface IWsOrder {
+  createdAt: string;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
 }
 
-export interface IBunPlug extends IBurgerPlug {
-  position: 'top' | 'bottom';
+export interface IWsResponse {
+  orders: IWsOrder[];
+  success: boolean;
+  total: number;
+  totalToday: number;
 }
-
-export interface IFillingElement extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-  item: IIngredient;
-  deleteHandler: (item: IIngredient) => void;
-  index: number;
-}
-
-export interface IModalOverlay extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  handleClick: () => void;
-}
-
-export interface IModal extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
-  closeModal: () => void;
-  heading: string;
-  children?: ReactNode;
-}
-
-export interface IOrderDetails extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
-
-export interface IProfileNav extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {}
-
-export interface IOrderCard extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-  order: IWsOrder;
-}
-
-export interface IOrderList extends DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
-  personal: boolean;
-}
-
-export interface IReadinessStats extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  title: string;
-  orders: number[];
-  ready?: boolean;
-}
-
-export interface ITotalStat extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  heading: string;
-  quantity: number | null;
-}
-
-export interface IOrderStatistic extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
-
-export interface IOrderInfoIngredient extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  ingredient: IIngredient;
-}
-
-export interface IOrderInfoCard extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}

@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
+import { IOrderStatistic } from './order-statistic.props';
+import styles from './order-statistic.module.css';
 import ReadinessStats from './components/readiness-stat/readiness-stat';
 import TotalStat from './components/total-stat/total-stat';
-import styles from './order-statistic.module.css';
-import { IOrderStatistic } from '../../utils/interfaces';
 import { useAppSelector } from '../../services/store';
 
 const OrderStatistic: FC<IOrderStatistic> = () => {

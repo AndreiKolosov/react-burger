@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import styles from './order-info-card.module.css';
+import { IOrderInfoCard } from './order-info-card.props';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formatDate, getUniqIngredientsByIds } from '../../utils/utils';
 import Ingredient from './components/ingredient';
 import Loader from '../loader/loader';
-import { IOrderInfoCard } from '../../utils/interfaces';
 import { useAppSelector } from '../../services/store';
 
 const OrderInfoCard: FC<IOrderInfoCard> = () => {

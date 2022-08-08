@@ -1,13 +1,10 @@
 import React, { FC, useRef } from 'react';
 import styles from './filling-element.module.css';
-import {
-  ConstructorElement,
-  DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrop, useDrag } from 'react-dnd';
 import { reorderIngredient } from '../../../../services/actions/constructor';
 import { useAppDispatch } from '../../../../services/store';
-import { IFillingElement, IIngredient } from '../../../../utils/interfaces';
+import { IFillingElement } from './filling-element.props';
 
 const FillingElement: FC<IFillingElement> = ({ item, deleteHandler, index }) => {
   const ref = useRef(null);
@@ -52,11 +49,7 @@ const FillingElement: FC<IFillingElement> = ({ item, deleteHandler, index }) => 
   drag(drop(ref));
 
   return (
-    <li
-      className={`${styles.fillingElement} mb-4 pr-2`}
-      ref={ref}
-      data-handler-id={handlerId}
-      style={{ opacity }}>
+    <li className={`${styles.fillingElement} mb-4 pr-2`} ref={ref} data-handler-id={handlerId} style={{ opacity }}>
       <div className={`mr-2`}>
         <DragIcon type="primary" />
       </div>
