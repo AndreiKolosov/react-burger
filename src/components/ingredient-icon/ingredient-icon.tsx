@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './ingredient-icon.module.css';
+import { IIngredientIcon } from './ingredient-icon.props';
 
-const IngredientIcon = ({ img, alt }) => {
+const IngredientIcon: FC<IIngredientIcon> = ({ img, alt }) => {
   return (
     <div className={styles.iconWrapper}>
       <img className={styles.icon} src={img} alt={alt} />
