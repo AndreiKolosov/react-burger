@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import Loader from '../loader/loader';
 import AppHeader from '../app-header/app-header';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkAuth } from '../../services/actions/user';
 import ModalSwitch from '../modal-switch/modal-switch';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 function App() {
-  const dispatch = useDispatch();
-  const { isAuthChecked } = useSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+  const { isAuthChecked } = useAppSelector((store) => store.user);
   const loaderWrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
@@ -28,7 +28,7 @@ function App() {
         </div>
       )}
       {isAuthChecked && (
-        <Router basename='/react-burger'>
+        <Router basename="/react-burger">
           <AppHeader />
           <ModalSwitch />
         </Router>
