@@ -76,9 +76,7 @@ const getUniqIngredientsByIds = (ids: string[], allIng: IIngredient[]): IIngredi
 const getTotalPrice = (ingredients: IIngredient[]): number => {
   const bun = ingredients.find((item) => item.type === 'bun');
   const filling = ingredients.filter((item) => item.type !== 'bun');
-  const total = bun ? bun?.price * 2 : 0 + filling.reduce((acc, item) => acc + item?.price, 0);
-
-  return total;
+  return filling.reduce((acc, item) => acc + item.price, 0) + (bun ? bun?.price * 2 : 0);
 };
 
 export { formatDate, getIngredientsByIds, getUniqIngredientsByIds, getTotalPrice, getQuantity };

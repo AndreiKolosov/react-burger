@@ -17,6 +17,7 @@ const OrderInfoCard: FC<IOrderInfoCard> = () => {
   const formattedDate = order && formatDate(order.createdAt);
   const uniqIng = order && getUniqIngredientsByIds(order.ingredients, ingredients);
   const price = uniqIng && uniqIng.reduce((acc, item) => acc + item?.price * item?.qty!, 0);
+
   const status =
     order?.status === 'created'
       ? 'Создан'
