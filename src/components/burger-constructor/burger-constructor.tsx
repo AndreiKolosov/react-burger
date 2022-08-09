@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useCallback } from 'react';
 import styles from './burger-constructor.module.css';
 import { postOrder, resetOrderError } from '../../services/actions/order';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -14,15 +13,18 @@ import BurgerPlug from './components/burger-plug/burger-plug';
 import FillingPlug from './components/filling-plug/filling-plug';
 import BunPlug from './components/bun-plug/bun-plug';
 import FillingElement from './components/filling-element/filling-element';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getCookie } from '../../utils/cookie';
 import Notification from '../notification/notification';
+import { IBurgerConstructor } from './burger-constructor.props';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import { IIngredient } from '../../utils/interfaces';
 
-const BurgerConstructor = () => {
-  const { bun, filling, totalPrice, orderIds } = useSelector((store) => store.burgerConstructor);
-  const { orderRequest, orderFailed, orderNumber } = useSelector((store) => store.order);
-  const { user } = useSelector((store) => store.user);
-  const dispatch = useDispatch();
+const BurgerConstructor: FC<IBurgerConstructor> = () => {
+  const { bun, filling, totalPrice, orderIds } = useAppSelector((store) => store.burgerConstructor);
+  const { orderRequest, orderFailed, orderNumber } = useAppSelector((store) => store.order);
+  const { user } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const accessToken = getCookie('accessToken');
 
@@ -35,7 +37,7 @@ const BurgerConstructor = () => {
     dispatch(resetOrderError());
   }, [dispatch]);
 
-  const postNewOrder = (orderData) => {
+  const postNewOrder = (orderData: string[]) => {
     user && dispatch(postOrder({ accessToken: `Bearer ${accessToken}`, order: orderData }));
     !user &&
       history.replace({
@@ -50,7 +52,7 @@ const BurgerConstructor = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop({ item }) {
+    drop({ item }: { item: IIngredient }) {
       dispatch(dropItem(item));
     },
     collect: (monitor) => ({
@@ -58,7 +60,7 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const handleDelete = (item) => {
+  const handleDelete = (item: IIngredient) => {
     dispatch(removeItem(item));
   };
 
@@ -103,7 +105,7 @@ const BurgerConstructor = () => {
       </ul>
       <div className={`${styles.order} mt-10`}>
         <span className="text text_type_digits-medium mr-10">
-          {totalPrice} <CurrencyIcon />
+          {totalPrice} <CurrencyIcon type="primary" />
         </span>
         <Button
           type="primary"
@@ -127,11 +129,7 @@ const BurgerConstructor = () => {
       )}
 
       {orderFailed && (
-        <Notification
-          heading="Что-то пошло не так =("
-          message="Ошибка при оформлении заказа."
-          onClose={resetError}
-        />
+        <Notification heading="Что-то пошло не так =(" message="Ошибка при оформлении заказа." onClose={resetError} />
       )}
     </section>
   );

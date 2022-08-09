@@ -5,7 +5,7 @@ import { IIngredient } from '.';
 export interface IConstructorState {
   bun: IIngredient | null;
   filling: ReadonlyArray<IIngredient>;
-  orderIds: ReadonlyArray<string>;
+  orderIds: string[];
   totalPrice: number;
 }
 
