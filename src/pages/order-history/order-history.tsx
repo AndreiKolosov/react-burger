@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useCallback, FC } from 'react';
 import { wsClose, wsInitWithToken, wsResetError } from '../../services/actions/ws';
 import styles from './order-history.module.css';
 import Loader from '../../components/loader/loader';
@@ -7,10 +6,12 @@ import OrdersList from '../../components/orders-list/orders-list';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Notification from '../../components/notification/notification';
 import { getCookie } from '../../utils/cookie';
+import { IOrderHistory } from './order-history.props';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
-const OrderHistory = () => {
-  const dispatch = useDispatch();
-  const { orders, wsRequest, wsFailed } = useSelector((store) => store.ws);
+const OrderHistory: FC<IOrderHistory> = () => {
+  const dispatch = useAppDispatch();
+  const { orders, wsRequest, wsFailed } = useAppSelector((store) => store.ws);
   const accessToken = getCookie('accessToken');
 
   const resetError = useCallback(() => {
@@ -35,9 +36,7 @@ const OrderHistory = () => {
           <OrdersList personal />
         </section>
       )}
-      {wsFailed && !orders && (
-        <Notification heading='Не удалось загрузить данные...' canGoHome onClose={resetError} />
-      )}
+      {wsFailed && !orders && <Notification heading="Не удалось загрузить данные..." canGoHome onClose={resetError} />}
     </main>
   );
 };
