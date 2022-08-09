@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import IngredientsNav from './components/ingredients-nav/ingredients-nav';
 import IngredientList from './components/ingredient-list/ingredient-list';
 import { IngredientType, ariaLabels } from '../../utils/variables';
-import { useDispatch, useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
+import { IBurgerIngredients } from './burger-ingredients.props';
+import { useAppSelector } from '../../services/store';
 
-const BurgerIngredients = () => {
-  const { ingredients } = useSelector((store) => store.ingredients);
-  const dispatch = useDispatch();
+const BurgerIngredients: FC<IBurgerIngredients> = () => {
+  const { ingredients } = useAppSelector((store) => store.ingredients);
 
   const [currentTab, setCurrentTab] = useState('bun');
 
@@ -33,14 +33,14 @@ const BurgerIngredients = () => {
   const handleTabClick = useCallback(
     (type) => {
       setCurrentTab(type);
-      document.getElementById(type).scrollIntoView({ behavior: 'smooth' });
+      document.getElementById(type)?.scrollIntoView({ behavior: 'smooth' });
     },
     [setCurrentTab]
   );
 
   return (
     <section className={`${styles.ingredients} pt-10`} aria-label={ariaLabels.ingredients}>
-      <h2 className='text text_type_main-large mb-5'>Соберите бургер</h2>
+      <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <IngredientsNav
         tabs={[IngredientType.Bun, IngredientType.Sauce, IngredientType.Main]}
         current={currentTab}
@@ -51,12 +51,6 @@ const BurgerIngredients = () => {
         <IngredientList items={sauces} itemsType={IngredientType.Sauce} ref={saucesRef} />
         <IngredientList items={mains} itemsType={IngredientType.Main} ref={mainsRef} />
       </div>
-
-      {/* {selectedIngredient && (
-        <Modal heading={'Детали ингредиента'} closeModal={closeIngredientDetails}>
-          <IngredientDetails ingredient={selectedIngredient} />
-        </Modal>
-      )} */}
     </section>
   );
 };

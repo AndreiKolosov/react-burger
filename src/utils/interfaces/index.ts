@@ -59,3 +59,14 @@ export interface IWsResponse {
   total: number;
   totalToday: number;
 }
+
+export type TIngredientsType = {
+  type: string;
+  name: string;
+};
+
+export type TIngredientType = {
+  Bun: TIngredientsType;
+  Main: TIngredientsType;
+  Sauce: TIngredientsType;
+};

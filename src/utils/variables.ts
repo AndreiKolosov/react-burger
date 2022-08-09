@@ -1,15 +1,5 @@
 import { getCookie } from './cookie';
-
-type TIngredient = {
-  type: string;
-  name: string;
-};
-
-export type TIngredientType = {
-  Bun: TIngredient;
-  Main: TIngredient;
-  Sauce: TIngredient;
-};
+import { TIngredientType } from './interfaces';
 
 const IngredientType: TIngredientType = {
   Bun: {
