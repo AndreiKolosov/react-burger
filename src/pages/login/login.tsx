@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { logIn, resetLogInErr } from '../../services/actions/user';
 import { emailRegExp } from '../../utils/validate';
 import styles from './login.module.css';
@@ -11,17 +10,18 @@ import SubmitButton from '../../components/form/components/submit-btn/submit-btn
 import FormPrompt from '../../components/form/components/form-prompt/form-prompt';
 import Loader from '../../components/loader/loader';
 import Notification from '../../components/notification/notification';
-import { getCookie } from '../../utils/cookie';
+import { ILogin } from './login.props';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
-const LoginPage = () => {
-  const { user, logInRequest, logInErr, errMessage, isPasswordReset, getUserRequest } = useSelector(
+const LoginPage: FC<ILogin> = () => {
+  const { user, logInRequest, logInErr, errMessage, isPasswordReset, getUserRequest } = useAppSelector(
     (store) => store.user
   );
   const [email, setEmail] = useState('');
   const [hasEmailErr, setHasEmailErr] = useState(false);
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const location = useLocation<{ from: string }>();
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -30,15 +30,13 @@ const LoginPage = () => {
     [dispatch, email, password]
   );
 
-  // console.log(localStorage.getItem('refreshToken'));
-
   const validateEmail = useCallback(() => {
     email && setHasEmailErr(!emailRegExp.test(email));
   }, [email]);
 
-  const onEmailFocus = useCallback(() => {
+  const onEmailFocus = () => {
     setHasEmailErr(false);
-  });
+  };
 
   const resetError = useCallback(() => {
     dispatch(resetLogInErr());
@@ -52,16 +50,16 @@ const LoginPage = () => {
     <main className={styles.content}>
       {logInRequest && !logInErr && getUserRequest && <Loader />}
       {!logInRequest && !logInErr && !getUserRequest && (
-        <Form title='Вход' name='login' onSubmit={handleSubmit}>
-          <InputContainer gap='mb-6'>
+        <Form title="Вход" name="login" onSubmit={handleSubmit}>
+          <InputContainer gap="mb-6">
             <Input
-              name='email'
+              name="email"
               value={email}
-              errorText='Некорректный email'
+              errorText="Некорректный email"
               error={hasEmailErr}
-              type='text'
-              size='default'
-              placeholder='E-mail'
+              type="text"
+              size="default"
+              placeholder="E-mail"
               onBlur={validateEmail}
               onFocus={onEmailFocus}
               onChange={(e) => {
@@ -69,47 +67,33 @@ const LoginPage = () => {
               }}
             />
           </InputContainer>
-          <InputContainer gap='mb-6'>
+          <InputContainer gap="mb-6">
             <PasswordInput
-              name='password'
+              name="password"
               value={password}
-              size='default'
+              size="default"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
           </InputContainer>
           <SubmitButton
-            title='Войти'
+            title="Войти"
             disabled={email && password && !hasEmailErr ? false : true}
-            name='login'
-            gap='mb-20'
+            name="login"
+            gap="mb-20"
           />
-          <FormPrompt
-            link='/register'
-            prompt='Вы — новый пользователь?'
-            linkCaption='Зарегистрироваться'
-            gap='mb-4'
-          />
-          <FormPrompt
-            link='/forgot-password'
-            prompt='Забыли пароль?'
-            linkCaption='Восстановить пароль'
-          />
+          <FormPrompt link="/register" prompt="Вы — новый пользователь?" linkCaption="Зарегистрироваться" gap="mb-4" />
+          <FormPrompt link="/forgot-password" prompt="Забыли пароль?" linkCaption="Восстановить пароль" />
         </Form>
       )}
       {!logInRequest && logInErr && (
-        <Notification
-          heading='Что-то пошло не так... :('
-          message={errMessage}
-          onClose={resetError}
-          canGoHome
-        />
+        <Notification heading="Что-то пошло не так... :(" message={errMessage} onClose={resetError} canGoHome />
       )}
       {isPasswordReset && (
         <Notification
-          heading='Пароль успешно изменен!'
-          message='Попробуйте выполнить вход или вернитесь на главную страницу.'
+          heading="Пароль успешно изменен!"
+          message="Попробуйте выполнить вход или вернитесь на главную страницу."
           canGoHome
         />
       )}

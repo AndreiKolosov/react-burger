@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './not-found-404.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 
-const NotFound404 = () => {
+const NotFound404: FC = () => {
   return (
     <main className={styles.content}>
       <div className={styles.scene}>
@@ -27,12 +27,10 @@ const NotFound404 = () => {
       </div>
 
       <section className={styles.error}>
-        <h2 className={styles.errorMessage}>
-          Похоже, страница, которую вы ищете, не существует...
-        </h2>
+        <h2 className={styles.errorMessage}>Похоже, страница, которую вы ищете, не существует...</h2>
         <p className={styles.errorCode}>404</p>
-        <Link to='/'>
-          <Button type='primary' size='large'>
+        <Link to="/">
+          <Button type="primary" size="large">
             Вернуться домой
           </Button>
         </Link>
