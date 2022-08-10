@@ -1,26 +1,20 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { compose } from 'redux';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
-import thunk from 'redux-thunk';
-import { rootReducer } from './services/reducers';
-import { composeEnhancers } from './utils/redux-devtools';
-import { socketMiddleware } from './middleware/socketMiddleware';
-import { wsActions } from './services/actions/ws';
-import { wsUrl } from './utils/variables';
+import { store } from './services/store';
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)));
-
-const store = createStore(rootReducer, enhancer);
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
 ReactDOM.render(
-  //<React.StrictMode>
   <Provider store={store}>
     <App />
   </Provider>,
-  //</React.StrictMode>,
   document.getElementById('root')
 );
 reportWebVitals();
