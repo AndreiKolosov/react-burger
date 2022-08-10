@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import styles from './registration.module.css';
 import Form from '../../components/form/form';
@@ -31,7 +31,7 @@ const RegistrationPage: FC<IRegistration> = () => {
   };
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(createNewUser(userName, email, password));
     },

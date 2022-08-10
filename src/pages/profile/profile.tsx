@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, FC, ChangeEvent } from 'react';
+import React, { useState, useEffect, useCallback, useRef, FC, ChangeEvent, FormEvent } from 'react';
 import styles from './profile.module.css';
 import ProfileNav from '../../components/profile-nav/profile-nav';
 import Form from '../../components/form/form';
@@ -73,26 +73,22 @@ const ProfilePage: FC<IProfile> = () => {
   };
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(patchUser({ accessToken: `Bearer ${accessToken}`, name, email, password }));
     },
     [dispatch, name, email, password, accessToken]
   );
 
-  const handleCancel = useCallback(
-    (e) => {
-      e.preventDefault();
-      user && setEmail(user.email);
-      user && setName(user.name);
-      setPassword('');
-      setHasEmailErr(false);
-      setHasNameErr(false);
-      setHasPasswordErr(false);
-      setIsDataChanged(false);
-    },
-    [user]
-  );
+  const handleCancel = useCallback(() => {
+    user && setEmail(user.email);
+    user && setName(user.name);
+    setPassword('');
+    setHasEmailErr(false);
+    setHasNameErr(false);
+    setHasPasswordErr(false);
+    setIsDataChanged(false);
+  }, [user]);
 
   const resetError = useCallback(() => {
     dispatch(resetPatchUserErr());

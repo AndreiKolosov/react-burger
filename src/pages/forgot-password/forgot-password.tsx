@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import styles from './forgot-password.module.css';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
@@ -22,7 +22,7 @@ const ForgotPasswordPage: FC<IForgotPassword> = () => {
   const dispatch = useAppDispatch();
   const location = useLocation<{ from: string }>();
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(recoverPassword(email));
     },

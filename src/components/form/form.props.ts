@@ -1,8 +1,8 @@
-import { DetailedHTMLProps, FormHTMLAttributes, ReactNode, SyntheticEvent } from 'react';
+import { DetailedHTMLProps, FormEvent, FormHTMLAttributes, ReactNode } from 'react';
 
 export interface IForm extends DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   children: ReactNode;
   title?: string;
-  onSubmit: (e: SyntheticEvent) => void;
+  onSubmit: (e: FormEvent) => void;
   name: string;
 }

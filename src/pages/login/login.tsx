@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logIn, resetLogInErr } from '../../services/actions/user';
@@ -23,7 +23,7 @@ const LoginPage: FC<ILogin> = () => {
   const dispatch = useAppDispatch();
   const location = useLocation<{ from: string }>();
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(logIn(email, password));
     },

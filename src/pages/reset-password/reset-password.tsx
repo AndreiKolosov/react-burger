@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useCallback, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import styles from './reset-password.module.css';
 import Form from '../../components/form/form';
 import InputContainer from '../../components/form/components/input-container/input-container';
@@ -22,7 +22,7 @@ const ResetPasswordPage: FC<IResetPassword> = () => {
   const location = useLocation<{ from: string }>();
 
   const handleSubmit = useCallback(
-    (e: SyntheticEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(resetPassword(password, token));
     },
